@@ -1,0 +1,74 @@
+@startuml
+interface knou.seoul.hanwoori.domain.member.dao.MemberDAO {
+~ void save(Member)
+~ List<Member> findAll()
+~ Optional<Member> findById(int)
+~ void update(Member)
+}
+
+class knou.seoul.hanwoori.domain.member.dao.MemoryMemberDAO {
++ void save(Member)
++ List<Member> findAll()
++ Optional<Member> findById(int)
++ void update(Member)
+}
+
+class knou.seoul.hanwoori.domain.member.MemberController {
+- MemberService memberService
+}
+
+class knou.seoul.hanwoori.domain.member.dto.Member {
+- Long memberId
+- String loginId
+- String password
+- String name
+- MemberGrade memberGrade
+- String email
+- String phoneNumber
+- Gender gender
+- LocalDate birthdate
+- String studentNo
+- String remark
+- LocalDateTime createdDate
+- LocalDateTime updatedDate
+}
+
+enum knou.seoul.hanwoori.domain.member.dto.MemberGrade {
++  admin
++  basic
+- String displayName
+}
+
+enum knou.seoul.hanwoori.domain.member.dto.Gender {
++  male
++  female
+- String displayName
+}
+
+class knou.seoul.hanwoori.domain.member.dto.MemberResponseDTO {
+}
+class knou.seoul.hanwoori.domain.member.dto.MemberRequestDTO {
+}
+interface knou.seoul.hanwoori.domain.member.MemberService {
+~ void save(Member)
+~ List<Member> findAll()
+~ Optional<Member> findById(int)
+~ void update(Member)
+}
+
+class knou.seoul.hanwoori.domain.member.MemberServiceImpl {
+- MemberDAO memberDAO
++ void save(Member)
++ List<Member> findAll()
++ Optional<Member> findById(int)
++ void update(Member)
+}
+
+
+
+
+knou.seoul.hanwoori.domain.member.dao.MemberDAO <|.. knou.seoul.hanwoori.domain.member.dao.MemoryMemberDAO
+knou.seoul.hanwoori.domain.member.MemberService <|.. knou.seoul.hanwoori.domain.member.MemberServiceImpl
+knou.seoul.hanwoori.domain.member.MemberController --> knou.seoul.hanwoori.domain.member.MemberService
+knou.seoul.hanwoori.domain.member.MemberServiceImpl --> knou.seoul.hanwoori.domain.member.dao.MemberDAO
+@enduml
