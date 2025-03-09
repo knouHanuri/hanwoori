@@ -21,12 +21,12 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public List<Member> findAll() {
-        return List.of();
+        return memberDAO.findAll();
     }
 
     @Override
-    public Optional<Member> findById(int id) {
-        return Optional.empty();
+    public Optional<Member> findById(Long id) {
+        return memberDAO.findById(id);
     }
 
     @Override
@@ -35,7 +35,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public void update(Member member) {
-
+    public void modify(Member member) {
+        memberDAO.modify(member);
     }
 }

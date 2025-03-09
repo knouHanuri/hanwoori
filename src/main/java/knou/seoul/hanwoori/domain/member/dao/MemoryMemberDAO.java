@@ -25,12 +25,12 @@ public class MemoryMemberDAO implements MemberDAO {
     }
 
     @Override
-    public Optional<Member> findById(int id) {
+    public Optional<Member> findById(Long id) {
         return Optional.empty();
     }
 
     @Override
-    public void update(Member member) {
+    public void modify(Member member) {
 
     }
 }

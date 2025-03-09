@@ -3,16 +3,40 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="knou.seoul.hanwoori.domain.member.dao.MemberDAO">
+<!--    <resultMap id="memberMap" type="knou.seoul.hanwoori.domain.member.dto.Member">
+        <result property="memberId" column="member_id" />
+        <result property="loginId" column="login_id" />
+        <result property="password" column="password" />
+        <result property="name" column="name" />
+        <result property="gender" column="gender" />
+    </resultMap>-->
     <!--데이터 입력-->
     <insert id="save" parameterType="knou.seoul.hanwoori.domain.member.dto.Member" useGeneratedKeys="true" keyProperty="memberId">
         insert into member(login_id, password, name, grade)
         values (#{loginId}, #{password}, #{name}, #{grade})
     </insert>
-    <!--데이터 조회(Id)-->
+    <!--데이터 조회(name)-->
     <select id="findByName" parameterType="string" resultType="knou.seoul.hanwoori.domain.member.dto.Member">
         select *
         from member
         where name = #{name} limit 1
     </select>
-
+    <!--데이터 전체 조회-->
+    <select id="findAll" resultType="knou.seoul.hanwoori.domain.member.dto.Member">
+        select *
+        from member
+    </select>
+    <!--데이터 조회(id)-->
+    <select id="findById" parameterType="Long" resultType="knou.seoul.hanwoori.domain.member.dto.Member">
+        select *
+        from member
+        where member_id = #{memberId}
+    </select>
+    <!--데이터 수정-->
+    <update id="modify" parameterType="knou.seoul.hanwoori.domain.member.dto.Member">
+        update member
+        set name = #{name},
+            grade = #{grade}
+        where member_id = #{memberId}
+    </update>
 </mapper>

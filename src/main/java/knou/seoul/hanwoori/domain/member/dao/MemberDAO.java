@@ -10,8 +10,8 @@ import java.util.Optional;
 public interface MemberDAO {
     void save(Member member);
     List<Member> findAll();
-    Optional<Member> findById(int id);
+    Optional<Member> findById(Long id);
     Optional<Member> findByName(String name);
-    void update(Member member);
+    void modify(Member member);
 
 }
