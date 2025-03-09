@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="knou.seoul.hanwoori.domain.member.dao.MemberDAO">
+    <!--데이터 입력-->
+    <insert id="save" parameterType="knou.seoul.hanwoori.domain.member.dto.Member" useGeneratedKeys="true" keyProperty="memberId">
+        insert into member(login_id, password, name, grade)
+        values (#{loginId}, #{password}, #{name}, #{grade})
+    </insert>
+    <!--데이터 조회(Id)-->
+    <select id="findByName" parameterType="string" resultType="knou.seoul.hanwoori.domain.member.dto.Member">
+        select *
+        from member
+        where name = #{name} limit 1
+    </select>
+
+</mapper>

@@ -20,6 +20,11 @@ public class MemoryMemberDAO implements MemberDAO {
     }
 
     @Override
+    public Optional<Member> findByName(String name) {
+        return Optional.empty();
+    }
+
+    @Override
     public Optional<Member> findById(int id) {
         return Optional.empty();
     }

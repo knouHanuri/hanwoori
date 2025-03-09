@@ -13,7 +13,7 @@ public class Member {
     private String loginId;
     private String password;
     private String name;
-    private MemberGrade memberGrade;
+    private int grade;
     private String email;
     private String phoneNumber;
     private Gender gender;
@@ -24,13 +24,15 @@ public class Member {
     private LocalDateTime updatedDate;
 
     @Getter
-    public enum MemberGrade {
-        admin("관리자"),
-        basic("일반");
+    public enum Grade {
+        admin(0,"관리자"),
+        basic(1,"일반");
 
+        private final int value;
         private final String displayName;
 
-        MemberGrade(String displayName) {
+        Grade(int value, String displayName) {
+            this.value = value;
             this.displayName = displayName;
         }
     }

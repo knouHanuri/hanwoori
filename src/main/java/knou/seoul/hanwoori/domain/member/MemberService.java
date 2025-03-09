@@ -9,5 +9,7 @@ public interface MemberService {
     void save(Member member);
     List<Member> findAll();
     Optional<Member> findById(int id);
+    Optional<Member> findByName(String name);
     void update(Member member);
+
 }

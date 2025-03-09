@@ -16,7 +16,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void save(Member member) {
-
+        memberDAO.save(member);
     }
 
     @Override
@@ -27,6 +27,11 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public Optional<Member> findById(int id) {
         return Optional.empty();
+    }
+
+    @Override
+    public Optional<Member> findByName(String name) {
+        return memberDAO.findByName(name);
     }
 
     @Override
