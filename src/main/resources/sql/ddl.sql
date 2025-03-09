@@ -114,11 +114,14 @@ create table if not exists subject (
     remark varchar(200)
 );
 
--- 수강
-create table if not exists enrollment (
+-- 수강신청내역
+create table if not exists enrollment_history (
     enrollment_id int primary key auto_increment,
     member_id int,
     subject_id int,
+    year    int,
+    created_date timestamp not null default current_timestamp,
+    updated_date timestamp not null default current_timestamp
     constraint fk_enrollment_member_id foreign key (member_id) references member(member_id)
     on delete cascade,
     constraint fk_enrollment_subject_id foreign key (subject_id) references subject(subject_id)

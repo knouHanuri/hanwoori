@@ -1,9 +1,19 @@
 --- # change port
 server:
-  port: ${PORT:8088}
+  port: 8088
 
+--- # thymeleaf
 spring:
   thymeleaf:
     cache: false
     prefix: file:src/main/resources/templates/
     suffix: .html
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/hanwoori
+    username: root
+    password: root
+mybatis:
+  config-location: classpath:mybatis-config.xml
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: knou.seoul
