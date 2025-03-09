@@ -21,7 +21,7 @@ create table if not exists member_info(
     member_id int primary key,
     dummy1 int,
     dummy2 varchar(100),
-    constraint fk_member_info_member_id key(member_id) references member(member_id)
+    constraint fk_member_info_member_id foreign key(member_id) references member(member_id)
     on delete cascade
 );
 
@@ -86,10 +86,10 @@ create table if not exists study_participant (
     study_participant_id int primary key auto_increment,
     study_id int not null,
     member_id int,
-    CONSTRAINT fk_study_participant_study_id FOREIGN KEY (study_id) REFERENCES study(study_id)
-    ON DELETE CASCADE,
-    CONSTRAINT fk_study_participant_member_id FOREIGN KEY (member_id) REFERENCES member(member_id)
-    ON DELETE CASCADE
+    constraint fk_study_participant_study_id foreign key (study_id) references study(study_id)
+    on delete cascade,
+    constraint fk_study_participant_member_id foreign key (member_id) references member(member_id)
+    on delete cascade
 );
 
 -- 스터디 활동내역
@@ -121,7 +121,7 @@ create table if not exists enrollment_history (
     subject_id int,
     year    int,
     created_date timestamp not null default current_timestamp,
-    updated_date timestamp not null default current_timestamp
+    updated_date timestamp not null default current_timestamp,
     constraint fk_enrollment_member_id foreign key (member_id) references member(member_id)
     on delete cascade,
     constraint fk_enrollment_subject_id foreign key (subject_id) references subject(subject_id)
