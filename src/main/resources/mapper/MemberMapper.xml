@@ -10,33 +10,63 @@
         <result property="name" column="name" />
         <result property="gender" column="gender" />
     </resultMap>-->
-    <!--데이터 입력-->
+    <!--회원가입-->
     <insert id="save" parameterType="knou.seoul.hanwoori.domain.member.dto.Member" useGeneratedKeys="true" keyProperty="memberId">
-        insert into member(login_id, password, name, grade)
-        values (#{loginId}, #{password}, #{name}, #{grade})
+        insert into member
+        (
+            login_id,
+            password,
+            name,
+            grade,
+            email,
+            phone_number,
+            gender,
+            birthdate,
+            student_no,
+            remark
+        )
+        values
+        (
+            #{loginId},
+            #{password},
+            #{name},
+            #{grade},
+            #{email},
+            #{phoneNumber},
+            #{gender},
+            #{birthdate},
+            #{studentNo},
+            #{remark}
+        )
     </insert>
-    <!--데이터 조회(name)-->
+    <!--조회(name)-->
     <select id="findByName" parameterType="string" resultType="knou.seoul.hanwoori.domain.member.dto.Member">
         select *
         from member
         where name = #{name} limit 1
     </select>
-    <!--데이터 전체 조회-->
+    <!--전체 조회-->
     <select id="findAll" resultType="knou.seoul.hanwoori.domain.member.dto.Member">
         select *
         from member
     </select>
-    <!--데이터 조회(id)-->
+    <!--조회(id)-->
     <select id="findById" parameterType="Long" resultType="knou.seoul.hanwoori.domain.member.dto.Member">
         select *
         from member
         where member_id = #{memberId}
     </select>
-    <!--데이터 수정-->
+    <!--회원정보수정-->
     <update id="modify" parameterType="knou.seoul.hanwoori.domain.member.dto.Member">
         update member
         set name = #{name},
-            grade = #{grade}
+            grade = #{grade},
+            email = #{email},
+            phone_number = #{phoneNumber},
+            gender = #{gender},
+            birthdate = #{birthdate},
+            student_no = #{studentNo},
+            remark = #{remark}
         where member_id = #{memberId}
     </update>
 </mapper>
