@@ -33,7 +33,8 @@ dependencies {
 	implementation 'mysql:mysql-connector-java:8.0.33'
 	/*spring security*/
 	implementation 'org.springframework.boot:spring-boot-starter-security'
-
+	/*입력값 검증(NotBlank)*/
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
 }
 
 tasks.named('test') {

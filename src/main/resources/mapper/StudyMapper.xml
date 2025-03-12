@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="knou.seoul.hanwoori.domain.study.study.dao.StudyDAO">
+    <!--데이터 전체 조회-->
+    <select id="studyListAll" resultType="knou.seoul.hanwoori.domain.study.study.dto.Study">
+        select * from study order by study_id desc
+    </select>
+    <!--데이터 일정 수 조회-->
+    <select id="studyListLimited" parameterType="int" resultType="knou.seoul.hanwoori.domain.study.study.dto.Study">
+        select * from study order by study_id desc LIMIT #{limit}
+    </select>
+    <!--데이터 조회(Id)-->
+    <select id="findById" parameterType="int" resultType="knou.seoul.hanwoori.domain.study.study.dto.Study">
+        select * from study where study_id = #{studyId}
+    </select>
+<!--    &lt;!&ndash;데이터 조회(name)&ndash;&gt;-->
+<!--    <select id="findById" parameterType="string" resultType="hanuri.website.dto.Study" resultMap="Study" >-->
+<!--        select * from member where id = #{id} limit 1-->
+<!--    </select>-->
+<!--    &lt;!&ndash;데이터 조회(name)&ndash;&gt;-->
+<!--    <select id="findBySeq" parameterType="int" resultType="hanuri.website.dto.Study" resultMap="Study" >-->
+<!--        select * from member where seq = #{seq}-->
+<!--    </select>-->
+    <!--데이터 입력-->
+    <insert id="save" parameterType="knou.seoul.hanwoori.domain.study.study.dto.Study">
+        insert into study(member_id, subject_id, title, status, schedule, goal, start_date, end_date, remark)
+        values(#{memberId}, #{subjectId}, #{title}, #{status}, #{schedule}, #{goal}, #{startDate}, #{endDate}, #{remark})
+    </insert>
+    <!--데이터 수정-->
+    <update id="update" parameterType="knou.seoul.hanwoori.domain.study.study.dto.Study">
+        UPDATE study
+        SET subject_id = #{subjectId},
+            title = #{title},
+            status = #{status},
+            schedule = #{schedule},
+            goal = #{goal},
+            start_date = #{startDate},
+            end_date = #{endDate},
+            remark = #{remark}
+        WHERE study_id = #{studyId}
+    </update>
+    <!--데이터 삭제-->
+    <delete id="delete" parameterType="int">
+        delete from study WHERE study_id = #{studyId}
+    </delete>
+</mapper>
