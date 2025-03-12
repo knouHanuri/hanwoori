@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="knou.seoul.hanwoori.domain.post.dao.PostDAO">
+    <!--게시글 저장-->
+    <insert id="save" parameterType="knou.seoul.hanwoori.domain.post.dto.Post" useGeneratedKeys="true" keyProperty="postId">
+        insert into post
+        (
+            title,
+            member_id,
+            category,
+            content
+        )
+        values
+        (
+            #{title},
+            #{memberId},
+            #{category},
+            #{content}
+        )
+    </insert>
+    <!--전체 조회-->
+    <select id="findAll" resultType="knou.seoul.hanwoori.domain.post.dto.Post">
+        select *
+        from post
+    </select>
+    <!--조회(id)-->
+    <select id="findById" parameterType="Long" resultType="knou.seoul.hanwoori.domain.post.dto.Post">
+        select *
+        from post
+        where post_id = #{postId}
+    </select>
+    <!--게시글수정-->
+    <update id="modify" parameterType="knou.seoul.hanwoori.domain.post.dto.Post">
+        update post
+        set title = #{title},
+            category = #{category},
+            content = #{content},
+            updated_date = #{updatedDate}
+        where post_id = #{postId}
+    </update>
+</mapper>

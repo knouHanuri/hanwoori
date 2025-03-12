@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="knou.seoul.hanwoori.domain.subject.dao.SubjectDAO">
+    <!--과목 저장-->
+    <insert id="save" parameterType="knou.seoul.hanwoori.domain.subject.dto.Subject" useGeneratedKeys="true" keyProperty="subjectId">
+        insert into subject
+        (
+            subject_name,
+            grade,
+            semester,
+            professor,
+            remark
+        )
+        values
+            (
+                #{subjectName},
+                #{grade},
+                #{semester},
+                #{professor},
+                #{remark}
+            )
+    </insert>
+    <!--전체 조회-->
+    <select id="findAll" resultType="knou.seoul.hanwoori.domain.subject.dto.Subject">
+        select *
+        from subject
+    </select>
+    <!--조회(id)-->
+    <select id="findById" parameterType="Long" resultType="knou.seoul.hanwoori.domain.subject.dto.Subject">
+        select *
+        from subject
+        where subject_id = #{subjectId}
+    </select>
+    <!--과목 수정-->
+    <update id="modify" parameterType="knou.seoul.hanwoori.domain.subject.dto.Subject">
+        update subject
+        set subject_name = #{subjectName},
+            grade = #{grade},
+            semester = #{semester},
+            professor = #{professor},
+            remark = #{remark}
+        where subject_id = #{subjectId}
+    </update>
+</mapper>

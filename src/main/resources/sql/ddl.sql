@@ -3,14 +3,14 @@
 create table if not exists member (
     member_id int primary key auto_increment,
     login_id varchar(50) not null,
-    password varchar(200) not null,
+    password varchar(64) not null,
     name varchar(50) not null,
     grade enum('admin','basic') not null,   -- 관리자,일반
     email varchar(50),
-    phone_number varchar(15),
+    phone_number varchar(64),
     gender enum('male','female') not null,  -- 남자,여자
     birthdate DATE,
-    student_no varchar(20),
+    student_no varchar(64),
     remark varchar(200),
     created_date timestamp not null default current_timestamp,
     updated_date timestamp not null default current_timestamp
@@ -30,7 +30,7 @@ create table if not exists post (
     post_id int primary key auto_increment,
     title varchar(100),
     member_id int,
-    category enum('notice','qna','free','gallery') not null,    -- 공지사항,Q&A,자유게시판,갤러리
+    category int not null,    -- 공지사항,Q&A,자유게시판,갤러리
     content text,
     created_date timestamp not null default current_timestamp,
     updated_date timestamp not null default current_timestamp,
@@ -40,7 +40,7 @@ create table if not exists post (
 
 -- 게시판 댓글
 create table if not exists post_comment (
-    post_comment_id int primary key,
+    post_comment_id int primary key auto_increment,
     post_id int not null,
     member_id int,
     comment text,
@@ -56,7 +56,7 @@ create table if not exists post_comment (
 -- 파일
 create table if not exists file(
     file_id int primary key auto_increment,
-    source_kind enum('post','study','member') not null,    -- 게시판,스터디,회원
+    source_kind int not null,    -- 게시판,스터디,회원
     source_id int not null,
     file_path varchar(200) not null,
     original_file_name varchar(200) not null,

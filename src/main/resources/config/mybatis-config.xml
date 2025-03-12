@@ -7,7 +7,16 @@
         <setting name="callSettersOnNulls" value="true"/>
         <setting name="jdbcTypeForNull" value="NULL"/>
     </settings>
+    <typeHandlers>
+        <typeHandler handler="knou.seoul.hanwoori.common.mybatis.LocalDateTypeHandler"/>
+        <typeHandler handler="knou.seoul.hanwoori.common.mybatis.CategoryTypeHandler"/>
+        <typeHandler handler="knou.seoul.hanwoori.common.mybatis.SourceKindTypeHandler"/>
+    </typeHandlers>
     <mappers>
         <mapper resource="mapper/MemberMapper.xml"/>
+        <mapper resource="mapper/PostMapper.xml"/>
+        <mapper resource="mapper/PostCommentMapper.xml"/>
+        <mapper resource="mapper/SubjectMapper.xml"/>
+        <mapper resource="mapper/FileMapper.xml"/>
     </mappers>
 </configuration>

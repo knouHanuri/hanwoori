@@ -25,14 +25,12 @@ public class Member {
 
     @Getter
     public enum Grade {
-        admin(0,"관리자"),
-        basic(1,"일반");
+        admin("관리자"),
+        basic("일반");
 
-        private final int value;
         private final String displayName;
 
-        Grade(int value, String displayName) {
-            this.value = value;
+        Grade(String displayName) {
             this.displayName = displayName;
         }
     }

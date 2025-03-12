@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="knou.seoul.hanwoori.domain.post.comment.dao.PostCommentDAO">
+    <!--댓글 저장-->
+    <insert id="save" parameterType="knou.seoul.hanwoori.domain.post.comment.dto.PostComment" useGeneratedKeys="true" keyProperty="postCommentId">
+        insert into post_comment
+        (
+            post_id,
+            member_id,
+            comment
+        )
+        values
+        (
+            #{postId},
+            #{memberId},
+            #{comment}
+        )
+    </insert>
+    <!--전체 조회-->
+    <select id="findAll" resultType="knou.seoul.hanwoori.domain.post.comment.dto.PostComment">
+        select *
+        from post_comment
+    </select>
+    <!--조회(id)-->
+    <select id="findById" parameterType="Long" resultType="knou.seoul.hanwoori.domain.post.comment.dto.PostComment">
+        select *
+        from post_comment
+        where post_comment_id = #{postCommentId}
+    </select>
+    <!--게시글수정-->
+    <update id="modify" parameterType="knou.seoul.hanwoori.domain.post.comment.dto.PostComment">
+        update post_comment
+        set comment = #{comment},
+            updated_date = #{updatedDate}
+        where post_comment_id = #{postCommentId}
+    </update>
+</mapper>
