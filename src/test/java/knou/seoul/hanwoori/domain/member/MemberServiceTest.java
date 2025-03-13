@@ -1,13 +1,13 @@
 package knou.seoul.hanwoori.domain.member;
 
 import knou.seoul.hanwoori.domain.member.dto.Member;
-import knou.seoul.hanwoori.domain.member.dto.MemberRequestDTO;
-import org.assertj.core.api.Assertions;
+import knou.seoul.hanwoori.domain.member.dto.MemberPasswordRequestDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +17,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -26,6 +25,8 @@ public class MemberServiceTest {
 
     @Autowired
     MemberService memberService;
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     Member member;
 
@@ -126,8 +127,46 @@ public class MemberServiceTest {
 
         //Then
         Optional<Member> modifiedMember = memberService.findById(foundMember.get().getMemberId());
-        updates.forEach((getter,expectedValue) ->
-                    assertThat(expectedValue).isEqualTo(getter.apply(modifiedMember.get()))
-                );
+        updates.forEach((getter, expectedValue) ->
+                assertThat(expectedValue).isEqualTo(getter.apply(modifiedMember.get()))
+        );
+    }
+
+    @Test
+    @DisplayName("삭제")
+    @Rollback
+    public void delete() {
+        //Given
+        memberService.save(member);
+
+        //When
+        memberService.delete(member.getMemberId());
+        Optional<Member> foundMember = memberService.findById(member.getMemberId());
+
+        //Then
+        assertThat(foundMember).isEmpty();
+    }
+
+    @Test
+    @DisplayName("비밀번호수정")
+    @Rollback()
+    public void modifyPassword() {
+
+        //Given
+        memberService.save(member);
+        Optional<Member> beforeModifiedMember = memberService.findById(member.getMemberId());
+
+        MemberPasswordRequestDTO requestDTO = new MemberPasswordRequestDTO();
+        requestDTO.setMemberId(beforeModifiedMember.get().getMemberId());
+        requestDTO.setOldPassword(beforeModifiedMember.get().getPassword());
+        requestDTO.setNewPassword(passwordEncoder.encode("newPassword"));
+
+        //When
+        memberService.modifyPassword(requestDTO);
+
+        //Then
+        Optional<Member> afterModifiedMember = memberService.findById(requestDTO.getMemberId());
+        assertThat(afterModifiedMember.get().getPassword()).isEqualTo(requestDTO.getNewPassword());
+
     }
 }

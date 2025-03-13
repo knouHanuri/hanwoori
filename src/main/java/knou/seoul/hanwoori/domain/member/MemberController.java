@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/members")
 @RequiredArgsConstructor
 public class MemberController {
-
     private final MemberService memberService;
 
 }

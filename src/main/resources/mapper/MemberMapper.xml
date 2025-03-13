@@ -66,7 +66,23 @@
             gender = #{gender},
             birthdate = #{birthdate},
             student_no = #{studentNo},
-            remark = #{remark}
+            remark = #{remark},
+            updated_date = CURRENT_TIMESTAMP
         where member_id = #{memberId}
     </update>
+    <!--회원삭제-->
+    <delete id="delete" parameterType="knou.seoul.hanwoori.domain.member.dto.Member">
+        delete from member where member_id = #{memberId}
+    </delete>
+    <!--비밀번호수정-->
+    <update id="modifyPassword" parameterType="knou.seoul.hanwoori.domain.member.dto.Member">
+        update member
+        set password = #{password},
+            updated_date = CURRENT_TIMESTAMP
+        where member_id = #{memberId}
+    </update>
+
+
+
+
 </mapper>

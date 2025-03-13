@@ -106,13 +106,11 @@ public class PostServiceTest {
         Optional<Post> foundPost = postService.findById(post.getPostId());
         foundPost.get().setCategory(Post.Category.qna);
         foundPost.get().setContent("###수정된내용");
-        foundPost.get().setUpdatedDate(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
 
         //변경확인용 Map
         Map<Function<Post, Object>, Object> updates = Map.of(
                 Post::getCategory, foundPost.get().getCategory(),
-                Post::getContent, foundPost.get().getContent(),
-                Post::getUpdatedDate, foundPost.get().getUpdatedDate()
+                Post::getContent, foundPost.get().getContent()
         );
 
         //When

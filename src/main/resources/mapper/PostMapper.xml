@@ -37,7 +37,7 @@
         set title = #{title},
             category = #{category},
             content = #{content},
-            updated_date = #{updatedDate}
+            updated_date = CURRENT_TIMESTAMP
         where post_id = #{postId}
     </update>
 </mapper>
