@@ -2,6 +2,7 @@ package knou.seoul.hanwoori.domain.member;
 
 import knou.seoul.hanwoori.domain.member.dto.Member;
 import knou.seoul.hanwoori.domain.member.dto.MemberPasswordRequestDTO;
+import org.apache.ibatis.session.SqlSession;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,6 +30,8 @@ public class MemberServiceTest {
     PasswordEncoder passwordEncoder;
 
     Member member;
+    @Autowired
+    private SqlSession sqlSession;
 
     @BeforeEach
     public void setUpMember() {
@@ -158,15 +161,16 @@ public class MemberServiceTest {
 
         MemberPasswordRequestDTO requestDTO = new MemberPasswordRequestDTO();
         requestDTO.setMemberId(beforeModifiedMember.get().getMemberId());
-        requestDTO.setOldPassword(beforeModifiedMember.get().getPassword());
-        requestDTO.setNewPassword(passwordEncoder.encode("newPassword"));
+        requestDTO.setOldPassword("pwd");
+        requestDTO.setNewPassword("newPassword");
 
         //When
         memberService.modifyPassword(requestDTO);
 
         //Then
+        sqlSession.clearCache();
         Optional<Member> afterModifiedMember = memberService.findById(requestDTO.getMemberId());
-        assertThat(afterModifiedMember.get().getPassword()).isEqualTo(requestDTO.getNewPassword());
+        assertThat(passwordEncoder.matches("newPassword",afterModifiedMember.get().getPassword())).isTrue();
 
     }
 }

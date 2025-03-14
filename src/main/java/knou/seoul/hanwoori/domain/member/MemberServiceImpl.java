@@ -66,9 +66,17 @@ public class MemberServiceImpl implements MemberService {
     public void modifyPassword(MemberPasswordRequestDTO requestDTO) {
 
         memberDAO.findById(requestDTO.getMemberId()).ifPresent(member -> {
-            if (member.getPassword().equals(passwordEncoder.encode(requestDTO.getOldPassword()))) {
+            if (passwordEncoder.matches(requestDTO.getOldPassword(),member.getPassword())){
                 member.setPassword(passwordEncoder.encode(requestDTO.getNewPassword()));
                 memberDAO.modifyPassword(member);
+            } else {
+                try {
+                    System.out.println("requestDTO.getOldPassword = " + requestDTO.getOldPassword());
+                    System.out.println("member.getPassword() = " + member.getPassword());
+                    throw new Exception("modifyPassword oldpassword match 실패");
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
             }
 
         });
