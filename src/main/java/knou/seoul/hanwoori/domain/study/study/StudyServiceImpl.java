@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import jakarta.validation.Valid;
 import org.springframework.validation.annotation.Validated;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,17 +21,24 @@ public class StudyServiceImpl implements StudyService {
 
     /* 저장 */
     @Override
-    public void save(@Valid Study study){
-        //중복 회원 확인
-        //validateDuplicateMember(member);
-        StudyDAO.save(study);
-        //return member.getSeq();
+    public long save(@Valid Study study){
+        if(isDateRangeValid(study.getStartDate(), study.getEndDate())){
+            StudyDAO.save(study);
+            return study.getStudyId();
+        }
+        else {
+            System.out.println("시작일이 종료일보다 앞설 수 없습니다.");
+            return 0;
+        }
     }
 
     /* 수정 */
     @Override
     public void update(@Valid Study study){
-        StudyDAO.update(study);
+        if(isDateRangeValid(study.getStartDate(), study.getEndDate())) {
+            StudyDAO.update(study);
+        }
+        else System.out.println("시작일이 종료일보다 앞설 수 없습니다.");
     }
 
     //    private void validateDuplicateMember(Study member){
@@ -52,15 +60,26 @@ public class StudyServiceImpl implements StudyService {
 
     /* studyId로 조회 */
     @Override
-    public Optional<Study> findById(long studyId) { return StudyDAO.findById(studyId); }
+    public Optional<Study> findById(long studyId) {
+        return StudyDAO.findById(studyId); }
 
     /* 삭제 */
     @Override
     public int delete(long studyId) {
+        int cnt = 0;
         Optional<Study> _study = StudyDAO.findById(studyId);
         if(_study.isEmpty()) {
-            throw new StudyExceptionHandler(studyId + "번 스터디 없음");
+            System.out.println("삭제할 스터디 없음");
         }
-        return StudyDAO.delete(studyId);
+        else {
+            cnt = StudyDAO.delete(studyId);
+        }
+        return cnt;
+    }
+
+    /* 시작일, 종료일 날짜 체크 */
+    public boolean isDateRangeValid(LocalDate startDate, LocalDate endDate) {
+        // 종료일이 시작일보다 앞서면 유효하지 않음
+        return !endDate.isBefore(startDate);
     }
 }

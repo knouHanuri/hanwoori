@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface StudyService {
-    void save(@Valid Study study);
+    long save(@Valid Study study);
     void update(@Valid Study study);
     Optional<Study> findById(long studyId);
     List<Study> studyListAll();

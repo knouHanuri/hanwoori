@@ -12,7 +12,7 @@
         select * from study order by study_id desc LIMIT #{limit}
     </select>
     <!--데이터 조회(Id)-->
-    <select id="findById" parameterType="int" resultType="knou.seoul.hanwoori.domain.study.study.dto.Study">
+    <select id="findById" parameterType="long" resultType="knou.seoul.hanwoori.domain.study.study.dto.Study">
         select * from study where study_id = #{studyId}
     </select>
 <!--    &lt;!&ndash;데이터 조회(name)&ndash;&gt;-->
@@ -24,7 +24,7 @@
 <!--        select * from member where seq = #{seq}-->
 <!--    </select>-->
     <!--데이터 입력-->
-    <insert id="save" parameterType="knou.seoul.hanwoori.domain.study.study.dto.Study">
+    <insert id="save" parameterType="knou.seoul.hanwoori.domain.study.study.dto.Study" useGeneratedKeys="true" keyProperty="studyId">
         insert into study(member_id, subject_id, title, status, schedule, goal, start_date, end_date, remark)
         values(#{memberId}, #{subjectId}, #{title}, #{status}, #{schedule}, #{goal}, #{startDate}, #{endDate}, #{remark})
     </insert>
@@ -42,7 +42,7 @@
         WHERE study_id = #{studyId}
     </update>
     <!--데이터 삭제-->
-    <delete id="delete" parameterType="int">
+    <delete id="delete" parameterType="long">
         delete from study WHERE study_id = #{studyId}
     </delete>
 </mapper>
