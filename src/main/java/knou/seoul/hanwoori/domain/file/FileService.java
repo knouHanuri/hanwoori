@@ -1,5 +1,7 @@
 package knou.seoul.hanwoori.domain.file;
 
+import knou.seoul.hanwoori.domain.file.dto.File;
+
 import java.util.List;
 import java.util.Optional;
 
