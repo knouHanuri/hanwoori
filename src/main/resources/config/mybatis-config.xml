@@ -18,5 +18,6 @@
         <mapper resource="mapper/PostCommentMapper.xml"/>
         <mapper resource="mapper/SubjectMapper.xml"/>
         <mapper resource="mapper/FileMapper.xml"/>
+        <mapper resource="mapper/AuthMapper.xml"/>
     </mappers>
 </configuration>

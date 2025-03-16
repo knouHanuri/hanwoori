@@ -12,4 +12,5 @@ public interface PostCommentDAO {
     List<PostComment> findAll();
     Optional<PostComment> findById(Long id);
     void modify(PostComment postComment);
+    void delete(Long id);
 }

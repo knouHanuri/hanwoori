@@ -1,5 +1,6 @@
 package knou.seoul.hanwoori.domain.subject;
 
+import knou.seoul.hanwoori.domain.post.dto.Post;
 import knou.seoul.hanwoori.domain.subject.dto.Subject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -112,5 +113,22 @@ public class SubjectServiceTest {
         updates.forEach((getter,expectedValue) ->
                 assertThat(expectedValue).isEqualTo(getter.apply(modifiedSubject.get()))
         );
+    }
+
+    @Test
+    @DisplayName("삭제")
+    @Rollback()
+    public void delete() {
+
+        //Given
+        subjectService.save(subject);
+
+        //When
+        subjectService.delete(subject.getSubjectId());
+        Optional<Subject> foundSubject = subjectService.findById(subject.getSubjectId());
+
+        //Then
+        assertThat(foundSubject).isEmpty();
+
     }
 }

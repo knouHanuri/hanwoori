@@ -1,5 +1,6 @@
 package knou.seoul.hanwoori.domain.post;
 
+import knou.seoul.hanwoori.domain.file.File;
 import knou.seoul.hanwoori.domain.member.MemberService;
 import knou.seoul.hanwoori.domain.member.dto.Member;
 import knou.seoul.hanwoori.domain.post.dto.Post;
@@ -121,6 +122,23 @@ public class PostServiceTest {
         updates.forEach((getter,expectedValue) ->
                 assertThat(expectedValue).isEqualTo(getter.apply(modifiedPost.get()))
         );
+    }
+
+    @Test
+    @DisplayName("삭제")
+    @Rollback()
+    public void delete() {
+
+        //Given
+        postService.save(post);
+
+        //When
+        postService.delete(post.getPostId());
+        Optional<Post> foundPost = postService.findById(post.getPostId());
+
+        //Then
+        assertThat(foundPost).isEmpty();
+
     }
 
 

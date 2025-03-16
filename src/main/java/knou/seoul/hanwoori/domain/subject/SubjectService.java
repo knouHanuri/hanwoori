@@ -10,4 +10,6 @@ public interface SubjectService {
     List<Subject> findAll();
     Optional<Subject> findById(Long id);
     void modify(Subject subject);
+    void delete(Long id);
+
 }

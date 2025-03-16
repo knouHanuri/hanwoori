@@ -136,5 +136,22 @@ public class PostCommentServiceTest {
         );
     }
 
+    @Test
+    @DisplayName("삭제")
+    @Rollback()
+    public void delete() {
+
+        //Given
+        postCommentService.save(postComment);
+
+        //When
+        postCommentService.delete(postComment.getPostCommentId());
+        Optional<PostComment> foundPostCommon = postCommentService.findById(postComment.getPostCommentId());
+
+        //Then
+        assertThat(foundPostCommon).isEmpty();
+
+    }
+
 
 }

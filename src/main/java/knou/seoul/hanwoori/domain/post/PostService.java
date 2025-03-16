@@ -8,4 +8,5 @@ public interface PostService {
     List<Post> findAll();
     Optional<Post> findById(Long id);
     void modify(Post post);
+    void delete(Long id);
 }
