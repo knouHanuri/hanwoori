@@ -28,7 +28,7 @@ public class StudyServiceImpl implements StudyService {
         }
         else {
             System.out.println("시작일이 종료일보다 앞설 수 없습니다.");
-            return 0;
+            return -1;
         }
     }
 

@@ -23,7 +23,7 @@ public class StudyActivityServiceImpl implements StudyActivityService {
 
     @Override
     public long save(@Valid StudyActivity studyActivity) {
-        long _studyActivityId = 0;
+        long _studyActivityId = -1;
 
         Optional<Study> study = studyDAO.findById(studyActivity.getStudyId());
         if(study.isPresent()) {

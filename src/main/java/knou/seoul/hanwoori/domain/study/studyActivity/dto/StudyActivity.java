@@ -11,8 +11,6 @@ import java.time.LocalDateTime;
 @Setter
 public class StudyActivity {
     private long studyActivityId;
-
-    @NotNull(message = "연결 스터디 없음")
     private long studyId;
 
     @NotNull(message = "스터디 날짜 입력해라")

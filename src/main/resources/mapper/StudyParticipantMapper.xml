@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="knou.seoul.hanwoori.domain.study.studyParticipant.dao.StudyParticipantDAO">
+    <!--데이터 전체 조회-->
+    <select id="studyParticipantListAll" resultType="knou.seoul.hanwoori.domain.study.studyParticipant.dto.StudyParticipant">
+        select * from study_participant order by study_participant_id desc
+    </select>
+    <!--데이터 일정 수 조회-->
+    <select id="studyParticipantListLimited" parameterType="int" resultType="knou.seoul.hanwoori.domain.study.studyParticipant.dto.StudyParticipant">
+        select * from study_participant order by study_participant_id desc LIMIT #{limit}
+    </select>
+    <!--데이터 조회(Id)-->
+    <select id="findStudyParticipantByIds" parameterType="knou.seoul.hanwoori.domain.study.studyParticipant.dto.StudyParticipantParam" resultType="knou.seoul.hanwoori.domain.study.studyParticipant.dto.StudyParticipant">
+        select * from study_participant where study_participant_id = #{studyParticipantId} and study_id = #{studyId} and member_id = #{memberId}
+    </select>
+    <!--데이터 입력-->
+    <insert id="save" parameterType="knou.seoul.hanwoori.domain.study.studyParticipant.dto.StudyParticipant" useGeneratedKeys="true" keyProperty="studyParticipantId">
+        insert into study_participant(
+              study_id, member_id)
+        values(#{studyId}, #{memberId})
+    </insert>
+    <!--데이터 삭제-->
+    <delete id="delete" parameterType="knou.seoul.hanwoori.domain.study.studyParticipant.dto.StudyParticipantParam">
+        delete from study_participant
+               WHERE study_participant_id = #{studyParticipantId} and study_id = #{studyId} and member_id = #{memberId}
+    </delete>
+</mapper>
