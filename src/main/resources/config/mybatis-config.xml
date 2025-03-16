@@ -19,5 +19,6 @@
         <mapper resource="mapper/SubjectMapper.xml"/>
         <mapper resource="mapper/FileMapper.xml"/>
         <mapper resource="mapper/StudyMapper.xml"/>
+        <mapper resource="mapper/StudyActivityMapper.xml"/>
     </mappers>
 </configuration>

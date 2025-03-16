@@ -15,14 +15,7 @@
     <select id="findById" parameterType="long" resultType="knou.seoul.hanwoori.domain.study.study.dto.Study">
         select * from study where study_id = #{studyId}
     </select>
-<!--    &lt;!&ndash;데이터 조회(name)&ndash;&gt;-->
-<!--    <select id="findById" parameterType="string" resultType="hanuri.website.dto.Study" resultMap="Study" >-->
-<!--        select * from member where id = #{id} limit 1-->
-<!--    </select>-->
-<!--    &lt;!&ndash;데이터 조회(name)&ndash;&gt;-->
-<!--    <select id="findBySeq" parameterType="int" resultType="hanuri.website.dto.Study" resultMap="Study" >-->
-<!--        select * from member where seq = #{seq}-->
-<!--    </select>-->
+
     <!--데이터 입력-->
     <insert id="save" parameterType="knou.seoul.hanwoori.domain.study.study.dto.Study" useGeneratedKeys="true" keyProperty="studyId">
         insert into study(member_id, subject_id, title, status, schedule, goal, start_date, end_date, remark)
@@ -38,7 +31,8 @@
             goal = #{goal},
             start_date = #{startDate},
             end_date = #{endDate},
-            remark = #{remark}
+            remark = #{remark},
+            updated_date = CURRENT_TIMESTAMP
         WHERE study_id = #{studyId}
     </update>
     <!--데이터 삭제-->

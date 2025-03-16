@@ -1,5 +1,6 @@
 package knou.seoul.hanwoori.domain.file;
 
+import knou.seoul.hanwoori.domain.file.dto.File;
 import knou.seoul.hanwoori.domain.member.MemberService;
 import knou.seoul.hanwoori.domain.member.dto.Member;
 import org.junit.jupiter.api.BeforeEach;

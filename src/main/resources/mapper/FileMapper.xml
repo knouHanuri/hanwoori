@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="knou.seoul.hanwoori.domain.file.FileDAO">
+<mapper namespace="knou.seoul.hanwoori.domain.file.dao.FileDAO">
     <!--파일 저장-->
-    <insert id="save" parameterType="knou.seoul.hanwoori.domain.file.File" useGeneratedKeys="true" keyProperty="fileId">
+    <insert id="save" parameterType="knou.seoul.hanwoori.domain.file.dto.File" useGeneratedKeys="true" keyProperty="fileId">
         insert into file
         (
             source_kind,
@@ -23,18 +23,18 @@
             )
     </insert>
     <!--전체 조회-->
-    <select id="findAll" resultType="knou.seoul.hanwoori.domain.file.File">
+    <select id="findAll" resultType="knou.seoul.hanwoori.domain.file.dto.File">
         select *
         from file
     </select>
     <!--조회(id)-->
-    <select id="findById" parameterType="Long" resultType="knou.seoul.hanwoori.domain.file.File">
+    <select id="findById" parameterType="Long" resultType="knou.seoul.hanwoori.domain.file.dto.File">
         select *
         from file
         where file_id = #{fileId}
     </select>
     <!--파일삭제-->
-    <update id="delete" parameterType="knou.seoul.hanwoori.domain.file.File">
+    <update id="delete" parameterType="knou.seoul.hanwoori.domain.file.dto.File">
         delete from file where file_id = #{fileId}
     </update>
 </mapper>

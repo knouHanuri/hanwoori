@@ -1,5 +1,7 @@
 package knou.seoul.hanwoori.domain.file;
 
+import knou.seoul.hanwoori.domain.file.dao.FileDAO;
+import knou.seoul.hanwoori.domain.file.dto.File;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

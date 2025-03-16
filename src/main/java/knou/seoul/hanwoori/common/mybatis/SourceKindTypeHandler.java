@@ -1,6 +1,6 @@
 package knou.seoul.hanwoori.common.mybatis;
 
-import knou.seoul.hanwoori.domain.file.File;
+import knou.seoul.hanwoori.domain.file.dto.File;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.MappedJdbcTypes;

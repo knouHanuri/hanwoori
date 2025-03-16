@@ -8,7 +8,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.Optional;
 
 @SpringBootTest
 public class StudyServiceTest {
@@ -30,7 +29,9 @@ public class StudyServiceTest {
     }
 
     @Nested
-    class InputTest {
+    class InputTest{
+        //TODO: subjectId 있을 경우 해당 과목 조회해서 없으면 저장 안함
+        
         @Test
         @DisplayName("성공")
         @Transactional
@@ -117,7 +118,7 @@ public class StudyServiceTest {
 
         @AfterEach
         public void deleteStudy() {
-            studyService.delete(study.getStudyId());
+            studyService.delete(_studyId);
         }
 
         @Test
