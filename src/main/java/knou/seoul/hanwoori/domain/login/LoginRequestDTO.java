@@ -1,7 +1,8 @@
-package knou.seoul.hanwoori.domain.auth;
+package knou.seoul.hanwoori.domain.login;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.context.annotation.Bean;
 
 @Getter
 @Setter

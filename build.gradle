@@ -33,6 +33,8 @@ dependencies {
 	implementation 'mysql:mysql-connector-java:8.0.33'
 	/*spring security*/
 	implementation 'org.springframework.boot:spring-boot-starter-security'
+	/*bean-validation 추가*/
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
 
 }
 
