@@ -18,6 +18,9 @@
         <mapper resource="mapper/PostCommentMapper.xml"/>
         <mapper resource="mapper/SubjectMapper.xml"/>
         <mapper resource="mapper/FileMapper.xml"/>
+        <mapper resource="mapper/StudyMapper.xml"/>
+        <mapper resource="mapper/StudyActivityMapper.xml"/>
+        <mapper resource="mapper/StudyParticipantMapper.xml"/>
         <mapper resource="mapper/LoginMapper.xml"/>
     </mappers>
 </configuration>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="knou.seoul.hanwoori.domain.study.studyActivity.dao.StudyActivityDAO">
+    <!--데이터 전체 조회-->
+    <select id="studyActivityListAll" resultType="knou.seoul.hanwoori.domain.study.studyActivity.dto.StudyActivity">
+        select * from study_activity order by study_activity_id desc
+    </select>
+    <!--데이터 일정 수 조회-->
+    <select id="studyActivityListLimited" parameterType="int" resultType="knou.seoul.hanwoori.domain.study.studyActivity.dto.StudyActivity">
+        select * from study_activity order by study_activity_id desc LIMIT #{limit}
+    </select>
+    <!--데이터 조회(Id)-->
+    <select id="findById" parameterType="long" resultType="knou.seoul.hanwoori.domain.study.studyActivity.dto.StudyActivity">
+        select * from study_activity where study_activity_id = #{studyActivityId}
+    </select>
+
+    <!--데이터 입력-->
+    <insert id="save" parameterType="knou.seoul.hanwoori.domain.study.studyActivity.dto.StudyActivity" useGeneratedKeys="true" keyProperty="studyActivityId">
+        insert into study_activity(
+              study_id, study_date, title, content, created_member_id)
+        values(#{studyId}, #{studyDate}, #{title}, #{content}, #{createdMemberId})
+    </insert>
+    <!--데이터 수정-->
+    <update id="update" parameterType="knou.seoul.hanwoori.domain.study.studyActivity.dto.StudyActivity">
+        UPDATE study_activity
+        SET study_date = #{studyDate},
+            title = #{title},
+            content = #{content},
+            updated_date = CURRENT_TIMESTAMP
+        WHERE study_activity_id = #{studyActivityId}
+    </update>
+    <!--데이터 삭제-->
+    <delete id="delete" parameterType="long">
+        delete from study_activity WHERE study_activity_id = #{studyActivityId}
+    </delete>
+</mapper>

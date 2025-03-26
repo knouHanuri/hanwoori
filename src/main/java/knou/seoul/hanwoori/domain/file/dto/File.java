@@ -1,4 +1,4 @@
-package knou.seoul.hanwoori.domain.file;
+package knou.seoul.hanwoori.domain.file.dto;
 
 import lombok.Getter;
 import lombok.Setter;

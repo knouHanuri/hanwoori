@@ -1,6 +1,5 @@
 package knou.seoul.hanwoori.domain.post;
 
-import knou.seoul.hanwoori.domain.file.File;
 import knou.seoul.hanwoori.domain.member.MemberService;
 import knou.seoul.hanwoori.domain.member.dto.Member;
 import knou.seoul.hanwoori.domain.post.dto.Post;
@@ -12,9 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;

@@ -1,5 +1,6 @@
-package knou.seoul.hanwoori.domain.file;
+package knou.seoul.hanwoori.domain.file.dao;
 
+import knou.seoul.hanwoori.domain.file.dto.File;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
