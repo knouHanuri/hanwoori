@@ -35,7 +35,7 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public void delete(Long id) {
-        subjectDAO.delete(id);
+    public int delete(Long id) {
+        return subjectDAO.delete(id);
     }
 }
