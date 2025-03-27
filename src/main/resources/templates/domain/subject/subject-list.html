@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 560px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="py-5 text-center">
+        <h2>과목 리스트</h2>
+    </div>
+    <table>
+        <thead>
+        <th>과목명</th>
+        <th>학년</th>
+        <th>학기</th>
+        <th>교수님</th>
+        <th>비고</th>
+        </thead>
+        <tbody>
+        <tr th:if="${subjects != null}" th:each="s : ${subjects}">
+            <td th:text="${s.subjectName}"></td>
+            <td th:text="${s.grade}"></td>
+            <td th:text="${s.semester}"></td>
+            <td th:text="${s.professor}"></td>
+            <td th:text="${s.remark}"></td>
+            <td>
+                <button th:onclick="'view(' + ${s.subjectId} + ')'">보기</button>
+                <button th:onclick="'edit(' + ${s.subjectId} + ')'">수정</button>
+                <button th:onclick="'del(' + ${s.subjectId} + ')'">삭제</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a th:href="@{/}">홈으로</a>
+</div>
+<script>
+    function view(id){
+        window.location.href = "/subjects/" + id;
+    }
+    function edit(id){
+        window.location.href = "/subjects/" + id + '/edit';
+    }
+    function del(id){
+        if (confirm('과목을 삭제하시겠습니까?')) {
+            let msg = "다시 시도해주세요.";
+            let url = "/subjects/" + id;
+            fetch(url, {
+                method: 'DELETE',
+            })
+                .then(response => {
+                    if (response.ok) msg = "과목이 삭제되었습니다.";
+                })
+                .catch(error => {
+                    console.error("삭제 중 오류 발생:", error);
+                    alert(msg);
+                })
+                .finally(()=>{
+                    alert(msg);
+                    location.reload();
+                });
+        }
+    }
+</script>
+</body>
+</html>

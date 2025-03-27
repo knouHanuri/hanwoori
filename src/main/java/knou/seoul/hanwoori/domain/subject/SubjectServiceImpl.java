@@ -33,4 +33,9 @@ public class SubjectServiceImpl implements SubjectService {
     public void modify(Subject subject) {
         subjectDAO.modify(subject);
     }
+
+    @Override
+    public int delete(Long id) {
+        return subjectDAO.delete(id);
+    }
 }

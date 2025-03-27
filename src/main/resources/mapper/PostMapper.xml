@@ -37,7 +37,11 @@
         set title = #{title},
             category = #{category},
             content = #{content},
-            updated_date = #{updatedDate}
+            updated_date = CURRENT_TIMESTAMP
         where post_id = #{postId}
     </update>
+    <!--게시글삭제-->
+    <delete id="delete" parameterType="knou.seoul.hanwoori.domain.post.dto.Post">
+        delete from post where post_id = #{postId}
+    </delete>
 </mapper>

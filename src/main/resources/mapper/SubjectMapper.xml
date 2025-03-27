@@ -43,4 +43,8 @@
             remark = #{remark}
         where subject_id = #{subjectId}
     </update>
+    <!--과목 삭제-->
+    <delete id="delete" parameterType="knou.seoul.hanwoori.domain.subject.dto.Subject">
+        delete from subject where subject_id = #{subjectId}
+    </delete>
 </mapper>

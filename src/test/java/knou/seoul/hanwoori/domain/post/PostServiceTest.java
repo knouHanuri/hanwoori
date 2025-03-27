@@ -11,9 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -106,13 +103,11 @@ public class PostServiceTest {
         Optional<Post> foundPost = postService.findById(post.getPostId());
         foundPost.get().setCategory(Post.Category.qna);
         foundPost.get().setContent("###수정된내용");
-        foundPost.get().setUpdatedDate(LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS));
 
         //변경확인용 Map
         Map<Function<Post, Object>, Object> updates = Map.of(
                 Post::getCategory, foundPost.get().getCategory(),
-                Post::getContent, foundPost.get().getContent(),
-                Post::getUpdatedDate, foundPost.get().getUpdatedDate()
+                Post::getContent, foundPost.get().getContent()
         );
 
         //When
@@ -123,6 +118,23 @@ public class PostServiceTest {
         updates.forEach((getter,expectedValue) ->
                 assertThat(expectedValue).isEqualTo(getter.apply(modifiedPost.get()))
         );
+    }
+
+    @Test
+    @DisplayName("삭제")
+    @Rollback()
+    public void delete() {
+
+        //Given
+        postService.save(post);
+
+        //When
+        postService.delete(post.getPostId());
+        Optional<Post> foundPost = postService.findById(post.getPostId());
+
+        //Then
+        assertThat(foundPost).isEmpty();
+
     }
 
 

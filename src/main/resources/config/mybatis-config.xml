@@ -21,5 +21,6 @@
         <mapper resource="mapper/StudyMapper.xml"/>
         <mapper resource="mapper/StudyActivityMapper.xml"/>
         <mapper resource="mapper/StudyParticipantMapper.xml"/>
+        <mapper resource="mapper/LoginMapper.xml"/>
     </mappers>
 </configuration>

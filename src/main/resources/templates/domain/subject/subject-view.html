@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 560px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="py-5 text-center">
+        <h2>과목 뷰</h2>
+    </div>
+    <ul>
+        <li th:text="'과목명 : ' + *{subject.subjectName}"></li>
+        <li th:text="'학년 : ' + *{subject.grade}"></li>
+        <li th:text="'학기 : ' + *{subject.semester}"></li>
+        <li th:text="'교수님 : ' + *{subject.professor}"></li>
+        <li th:text="'비고 : ' + *{subject.remark}"></li>
+    </ul>
+    <a th:href="@{/}">홈으로</a>
+</div> <!-- /container -->
+</body>
+</html>

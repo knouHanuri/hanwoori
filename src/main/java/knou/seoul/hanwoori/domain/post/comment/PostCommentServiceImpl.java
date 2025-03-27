@@ -37,4 +37,9 @@ public class PostCommentServiceImpl implements PostCommentService {
     public void modify(PostComment postComment) {
         postCommentDAO.modify(postComment);
     }
+
+    @Override
+    public void delete(Long id) {
+        postCommentDAO.delete(id);
+    }
 }

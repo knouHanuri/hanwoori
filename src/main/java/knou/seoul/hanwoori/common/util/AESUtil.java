@@ -31,6 +31,10 @@ public class AESUtil {
 
     public static String decrypt(String cipherText) {
         try {
+
+            //null 체크
+            cipherText = (cipherText == null) ? "" : cipherText;
+
             Cipher cipher = Cipher.getInstance(KEY_ALGORITHM);
             SecretKey secretKey = new SecretKeySpec(SECRET_KEY, KEY_ALGORITHM);
             cipher.init(Cipher.DECRYPT_MODE, secretKey);

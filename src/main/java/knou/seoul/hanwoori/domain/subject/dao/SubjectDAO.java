@@ -12,4 +12,5 @@ public interface SubjectDAO {
     List<Subject> findAll();
     Optional<Subject> findById(Long id);
     void modify(Subject subject);
+    int delete(Long id);
 }

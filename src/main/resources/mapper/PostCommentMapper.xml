@@ -29,11 +29,15 @@
         from post_comment
         where post_comment_id = #{postCommentId}
     </select>
-    <!--게시글수정-->
+    <!--댓글수정-->
     <update id="modify" parameterType="knou.seoul.hanwoori.domain.post.comment.dto.PostComment">
         update post_comment
         set comment = #{comment},
             updated_date = #{updatedDate}
         where post_comment_id = #{postCommentId}
     </update>
+    <!--댓글 삭제-->
+    <delete id="delete" parameterType="knou.seoul.hanwoori.domain.post.comment.dto.PostComment">
+        delete from post_comment where post_comment_id = #{postCommentId}
+    </delete>
 </mapper>

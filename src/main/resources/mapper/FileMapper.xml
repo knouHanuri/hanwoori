@@ -34,7 +34,7 @@
         where file_id = #{fileId}
     </select>
     <!--파일삭제-->
-    <update id="delete" parameterType="knou.seoul.hanwoori.domain.file.dto.File">
+    <delete id="delete" parameterType="knou.seoul.hanwoori.domain.file.dto.File">
         delete from file where file_id = #{fileId}
-    </update>
+    </delete>
 </mapper>
