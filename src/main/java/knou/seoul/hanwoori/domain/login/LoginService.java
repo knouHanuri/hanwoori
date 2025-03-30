@@ -1,6 +1,8 @@
 package knou.seoul.hanwoori.domain.login;
 
+import knou.seoul.hanwoori.domain.member.dto.Member;
+
 public interface LoginService {
-    LoginRequestDTO login(LoginRequestDTO loginRequestDTO);
+    Member login(LoginRequestDTO loginRequestDTO);
 
 }

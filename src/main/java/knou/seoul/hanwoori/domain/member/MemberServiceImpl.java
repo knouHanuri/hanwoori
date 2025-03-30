@@ -3,7 +3,7 @@ package knou.seoul.hanwoori.domain.member;
 import knou.seoul.hanwoori.common.util.AESUtil;
 import knou.seoul.hanwoori.domain.member.dao.MemberDAO;
 import knou.seoul.hanwoori.domain.member.dto.Member;
-import knou.seoul.hanwoori.domain.member.dto.MemberPasswordRequestDTO;
+import knou.seoul.hanwoori.domain.member.dto.MemberPasswordModifyRequestDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -58,28 +58,33 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public void delete(Long id) {
-        memberDAO.delete(id);
+    public int delete(Long id) {
+        return memberDAO.delete(id);
     }
 
     @Override
-    public void modifyPassword(MemberPasswordRequestDTO requestDTO) {
-
-        memberDAO.findById(requestDTO.getMemberId()).ifPresent(member -> {
-            if (passwordEncoder.matches(requestDTO.getOldPassword(),member.getPassword())){
-                member.setPassword(passwordEncoder.encode(requestDTO.getNewPassword()));
-                memberDAO.modifyPassword(member);
+    public void modifyPassword(MemberPasswordModifyRequestDTO memberPasswordModifyRequestDTO) {
+        memberDAO.findById(memberPasswordModifyRequestDTO.getMemberId()).ifPresent(member -> {
+            if (passwordEncoder.matches(memberPasswordModifyRequestDTO.getOldPassword(),member.getPassword())){
+                memberPasswordModifyRequestDTO.setNewPassword(passwordEncoder.encode(memberPasswordModifyRequestDTO.getNewPassword()));
+                memberDAO.modifyPassword(memberPasswordModifyRequestDTO);
             } else {
-                try {
-                    System.out.println("requestDTO.getOldPassword = " + requestDTO.getOldPassword());
-                    System.out.println("member.getPassword() = " + member.getPassword());
-                    throw new Exception("modifyPassword oldpassword match 실패");
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            }
+                System.out.println("memberPasswordModifyRequestDTO.getOldPassword = " + memberPasswordModifyRequestDTO.getOldPassword());
+                System.out.println("member.getPassword() = " + member.getPassword());
 
+            }
         });
+    }
+
+    @Override
+    public boolean checkOldPasswordMatch(MemberPasswordModifyRequestDTO memberPasswordModifyRequestDTO) {
+        Long memberId = memberPasswordModifyRequestDTO.getMemberId();
+        Optional<Member> findMember = memberDAO.findById(memberId);
+        if(findMember.isPresent()){
+            Member member = findMember.get();
+            return passwordEncoder.matches(memberPasswordModifyRequestDTO.getOldPassword(),member.getPassword());
+        }
+        return false;
     }
 
     // region : 개인정보 암복호화

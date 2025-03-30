@@ -1,12 +1,8 @@
 package knou.seoul.hanwoori.domain.post.comment;
 
-import knou.seoul.hanwoori.common.util.AESUtil;
-import knou.seoul.hanwoori.domain.member.dao.MemberDAO;
-import knou.seoul.hanwoori.domain.member.dto.Member;
 import knou.seoul.hanwoori.domain.post.comment.dao.PostCommentDAO;
 import knou.seoul.hanwoori.domain.post.comment.dto.PostComment;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
