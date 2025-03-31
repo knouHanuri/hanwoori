@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/css/common.css}"
+          href="../css/common.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <div class="py-5 text-center">
+        <h2>과목 수정</h2>
+    </div>
+    <form th:action="@{/subjects/{id}/edit(id=${subject.subjectId})}" th:object="${subject}" method="post">
+        <input type="hidden" id="subjectId" th:field="*{subjectId}"/>
+        <div>
+            <label for="subjectName">과목명</label>
+            <input type="text" id="subjectName" th:field="*{subjectName}" th:errorclass="field-error" class="form-control" placeholder="과목명을 입력하세요">
+            <div class="field-error" th:errors="*{subjectName}"></div>
+        </div>
+        <div>
+            <label for="grade">학년</label>
+            <select id="grade" th:field="*{grade}" class="form-select" th:errorclass="field-error">
+                <option value="">==학년 선택==</option>
+                <option th:each="grade : ${grades}" th:value="${grade.value}"
+                        th:text="${grade.key}"></option>
+            </select>
+            <div class="field-error" th:errors="*{grade}"></div>
+        </div>
+        <div>
+            <label for="semester">학기</label>
+            <select id="semester" th:field="*{semester}" class="form-select" th:errorclass="field-error">
+                <option value="">==학기 선택==</option>
+                <option th:each="semester : ${semesters}" th:value="${semester.value}"
+                        th:text="${semester.key}"></option>
+            </select>
+            <div class="field-error" th:errors="*{semester}"></div>
+        </div>
+        <div>
+            <label for="professor">교수님</label>
+            <input type="text" id="professor" th:field="*{professor}" th:errorclass="field-error" class="form-control" placeholder="교수님 입력하세요">
+            <div class="field-error" th:errors="*{professor}"></div>
+        </div>
+        <div>
+            <label for="remark">비고</label>
+            <input type="text" id="remark" th:field="*{remark}" class="form-control" placeholder="비고를 입력하세요">
+        </div>
+        <hr class="my-4">
+        <div class="row">
+            <div class="col">
+                <button class="w-100 btn btn-primary btn-lg" type="submit">과목 수정</button>
+            </div>
+            <div class="col">
+                <button class="w-100 btn btn-secondary btn-lg"
+                        type="button"
+                        th:onclick="'history.back();'">취소</button>
+            </div>
+        </div>
+    </form>
+</div> <!-- /container -->
+</body>
+</html>

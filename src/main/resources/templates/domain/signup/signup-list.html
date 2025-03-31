@@ -8,17 +8,17 @@
           href="../css/common.css" rel="stylesheet">
 </head>
 <body>
-<div class="container" style="max-width: 780px">
+<div class="container" style="max-width: 600px">
     <div class="py-5 text-center">
-        <h2>회원 리스트</h2>
+        <h2>과목 리스트</h2>
     </div>
 
     <div class="row">
         <div class="col">
             <button class="btn btn-primary float-end"
-                    onclick="location.href='member-form.html'"
-                    th:onclick="|location.href='@{/members/new}'|"
-                    type="button">회원 등록</button>
+                    onclick="location.href='subject-form.html'"
+                    th:onclick="|location.href='@{/subjects/new}'|"
+                    type="button">과목 등록</button>
         </div>
     </div>
 
@@ -27,22 +27,22 @@
         <table class="table">
             <thead>
             <tr>
-                <th>로그인ID</th>
-                <th>이름</th>
-                <th>이메일</th>
-                <th>전화번호</th>
-                <th>가입일</th>
+                <th>과목명</th>
+                <th>학년</th>
+                <th>학기</th>
+                <th>교수님</th>
+                <th>비고</th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="m : ${members}">
-                <td><a href="member-view.html" th:href="@{|/members/${m.memberId}|}" th:text="${m.loginId}">로그인ID</a></td>
-                <td th:text="${m.name}"></td>
-                <td th:text="${m.email}"></td>
-                <td th:text="${m.phoneNumber}"></td>
-                <td th:text="${m.createdDate}"></td>
-                <td><button class="btn btn-danger btn-sm" th:onclick="'del(' + ${m.memberId} + ')'">삭제</button></td>
+            <tr th:each="s : ${subjects}">
+                <td><a href="signup-view.html" th:href="@{|/subjects/${s.subjectId}|}" th:text="${s.subjectName}">과목명</a></td>
+                <td th:text="${s.grade}"></td>
+                <td th:text="${s.semester}"></td>
+                <td th:text="${s.professor}"></td>
+                <td th:text="${s.remark}"></td>
+                <td><button class="btn btn-danger btn-sm" th:onclick="'del(' + ${s.subjectId} + ')'">삭제</button></td>
             </tr>
             </tbody>
         </table>
@@ -58,14 +58,14 @@
 </div><!-- /container -->
 <script>
     function del(id){
-        if (confirm('회원을 삭제하시겠습니까?')) {
+        if (confirm('과목을 삭제하시겠습니까?')) {
             let msg = "다시 시도해주세요.";
-            let url = "/members/" + id;
+            let url = "/subjects/" + id;
             fetch(url, {
                 method: 'DELETE',
             })
                 .then(response => {
-                    if (response.ok) msg = "회원이 삭제되었습니다.";
+                    if (response.ok) msg = "과목이 삭제되었습니다.";
                 })
                 .catch(error => {
                     console.error("삭제 중 오류 발생:", error);

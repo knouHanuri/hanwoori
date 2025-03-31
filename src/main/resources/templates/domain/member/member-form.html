@@ -63,7 +63,7 @@
         <div>
             <label for="birthdate">생년월일</label>
             <input type="date" id="birthdate" th:field="*{birthdate}" th:errorclass="field-error"
-                   class="form-control">
+                   class="form-control" min="1900-01-01" max="2100-12-31">
             <div class="field-error" th:errors="*{birthdate}"></div>
         </div>
         <div>
