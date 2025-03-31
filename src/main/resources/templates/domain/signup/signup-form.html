@@ -10,45 +10,29 @@
 <body>
 <div class="container">
     <div class="py-5 text-center">
-        <h2>과목 등록</h2>
+        <h2>수강신청 </h2>
     </div>
-    <form action="/subject/new" th:action th:object="${subject}" method="post">
+    <form action="/subject/new" th:action th:object="${signup}" method="post">
+        <input type="hidden" id="memberId" th:field="*{memberId}"/>
         <div>
-            <label for="subjectName">과목명</label>
-            <input type="text" id="subjectName" th:field="*{subjectName}" th:errorclass="field-error" class="form-control" placeholder="과목명을 입력하세요">
-            <div class="field-error" th:errors="*{subjectName}"></div>
-        </div>
-        <div>
-            <label for="grade">학년</label>
-            <select id="grade" th:field="*{grade}" class="form-select" th:errorclass="field-error">
-                <option value="">==학년 선택==</option>
-                <option th:each="grade : ${grades}" th:value="${grade.value}"
-                        th:text="${grade.key}"></option>
+            <label for="grade">과목</label>
+            <select id="grade" th:field="*{subjectId}" class="form-select" th:errorclass="field-error">
+                <option value="">==과목 선택==</option>
+                <option th:each="s : ${subjects}" th:value="${s.subjectId}"
+                        th:text="${s.subjectName}"></option>
             </select>
-            <div class="field-error" th:errors="*{grade}"></div>
+            <div class="field-error" th:errors="*{subjectId}"></div>
         </div>
         <div>
-            <label for="semester">학기</label>
-            <select id="semester" th:field="*{semester}" class="form-select" th:errorclass="field-error">
-                <option value="">==학기 선택==</option>
-                <option th:each="semester : ${semesters}" th:value="${semester.value}"
-                        th:text="${semester.key}"></option>
-            </select>
-            <div class="field-error" th:errors="*{semester}"></div>
-        </div>
-        <div>
-            <label for="professor">교수님</label>
-            <input type="text" id="professor" th:field="*{professor}" th:errorclass="field-error" class="form-control" placeholder="교수님 입력하세요" >
-            <div class="field-error" th:errors="*{professor}"></div>
-        </div>
-        <div>
-            <label for="remark">비고</label>
-            <input type="text" id="remark" th:field="*{remark}" class="form-control" placeholder="비고를 입력하세요">
+            <label for="year">년도</label>
+            <input type="number" id="year" min="1900" max="2100" step="1"
+                   th:field="*{year}" th:errorclass="field-error" class="form-control">
+            <div class="field-error" th:errors="*{year}"></div>
         </div>
         <hr class="my-4">
         <div class="row">
             <div class="col">
-                <button class="w-100 btn btn-primary btn-lg" type="submit">과목 등록</button>
+                <button class="w-100 btn btn-primary btn-lg" type="submit">수강 신청</button>
             </div>
             <div class="col">
                 <button class="w-100 btn btn-secondary btn-lg"

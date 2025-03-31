@@ -71,6 +71,9 @@ public class MemberServiceTest {
     public void findAll() {
 
         //Given
+        int count = memberService.findAll().size();
+        sqlSession.clearCache();
+
         memberService.save(member);
         memberService.save(member);
 
@@ -78,7 +81,7 @@ public class MemberServiceTest {
         List<Member> members = memberService.findAll();
 
         //Then
-        assertThat(members).hasSize(2);
+        assertThat(members).hasSize(count + 2);
     }
 
     @Test

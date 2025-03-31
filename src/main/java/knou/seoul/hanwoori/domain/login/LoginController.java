@@ -4,6 +4,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import knou.seoul.hanwoori.domain.member.dto.Member;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,6 +13,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import static knou.seoul.hanwoori.common.SessionConst.LOGIN_MEMBER;
 
 @Controller
 @RequiredArgsConstructor
@@ -26,7 +31,8 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String login(@Validated @ModelAttribute LoginRequestDTO loginRequestDTO, BindingResult bindingResult, HttpServletRequest request) {
+    public String login(@Validated @ModelAttribute LoginRequestDTO loginRequestDTO, BindingResult bindingResult,
+                        @RequestParam(defaultValue="/") String redirectURL,HttpServletRequest request) {
 
         if(bindingResult.hasErrors()) {
             return "domain/login/login-form";
@@ -40,12 +46,11 @@ public class LoginController {
 
         //로그인 성공
         HttpSession session = request.getSession();
-        session.setAttribute("loginMember",loginMember);
+        session.setAttribute(LOGIN_MEMBER,loginMember);
 
-        return "redirect:/";
+        return "redirect:" + redirectURL;
     }
-/*
-    SecurityConfig 사용
+
     @GetMapping("/logout")
     public String logout(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
@@ -54,5 +59,4 @@ public class LoginController {
         }
         return "redirect:/";
     }
-*/
 }

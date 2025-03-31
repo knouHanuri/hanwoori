@@ -19,9 +19,16 @@
             )
     </insert>
     <!--전체 조회-->
-    <select id="findAll" resultType="knou.seoul.hanwoori.domain.signup.dto.Signup">
-        select *
-        from signup_history
+    <select id="findAll" resultType="knou.seoul.hanwoori.domain.signup.dto.SignupListDTO">
+        select h.signup_id,
+               h.member_id,
+               h.subject_id,
+               h.year,
+               m.name       as memberName,
+               s.subject_name
+        from signup_history as h
+        join member         as m on m.member_id  = h.member_id
+        join subject        as s on s.subject_id = h.subject_id
     </select>
     <!--조회(id)-->
     <select id="findById" parameterType="Long" resultType="knou.seoul.hanwoori.domain.signup.dto.Signup">

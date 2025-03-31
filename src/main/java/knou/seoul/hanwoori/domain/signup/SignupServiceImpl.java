@@ -2,6 +2,7 @@ package knou.seoul.hanwoori.domain.signup;
 
 import knou.seoul.hanwoori.domain.signup.dao.SignupDAO;
 import knou.seoul.hanwoori.domain.signup.dto.Signup;
+import knou.seoul.hanwoori.domain.signup.dto.SignupListDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,7 @@ public class SignupServiceImpl implements SignupService {
     }
 
     @Override
-    public List<Signup> findAll() {
+    public List<SignupListDTO> findAll() {
         return signupDAO.findAll();
     }
 

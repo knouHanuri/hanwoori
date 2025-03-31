@@ -35,12 +35,12 @@ public class SignupServiceTest {
     @Autowired
     SubjectService subjectService;
 
-    Signup signup;
-    Member member;
-    Subject subject;
     @Autowired
     private SqlSession sqlSession;
 
+    Signup signup;
+    Member member;
+    Subject subject;
 
     @BeforeEach
     public void setUpSignup() {
@@ -87,6 +87,9 @@ public class SignupServiceTest {
     public void findAll() {
 
         //Given
+        int count = signupService.findAll().size();
+        sqlSession.clearCache();
+
         signupService.save(signup);
         signupService.save(signup);
 
@@ -94,7 +97,7 @@ public class SignupServiceTest {
         List<Signup> signups = signupService.findAll();
 
         //Then
-        assertThat(signups).hasSize(2);
+        assertThat(signups).hasSize(count + 2);
     }
 
     @Test

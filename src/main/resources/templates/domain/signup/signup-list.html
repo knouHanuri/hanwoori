@@ -10,15 +10,15 @@
 <body>
 <div class="container" style="max-width: 600px">
     <div class="py-5 text-center">
-        <h2>과목 리스트</h2>
+        <h2>수강신청 리스트</h2>
     </div>
 
     <div class="row">
         <div class="col">
             <button class="btn btn-primary float-end"
                     onclick="location.href='subject-form.html'"
-                    th:onclick="|location.href='@{/subjects/new}'|"
-                    type="button">과목 등록</button>
+                    th:onclick="|location.href='@{/signups/new}'|"
+                    type="button">수강 신청</button>
         </div>
     </div>
 
@@ -27,22 +27,20 @@
         <table class="table">
             <thead>
             <tr>
-                <th>과목명</th>
-                <th>학년</th>
-                <th>학기</th>
-                <th>교수님</th>
-                <th>비고</th>
+                <th>이름</th>
+                <th>과목</th>
+                <th>년도</th>
+                <th>등록일</th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="s : ${subjects}">
-                <td><a href="signup-view.html" th:href="@{|/subjects/${s.subjectId}|}" th:text="${s.subjectName}">과목명</a></td>
-                <td th:text="${s.grade}"></td>
-                <td th:text="${s.semester}"></td>
-                <td th:text="${s.professor}"></td>
-                <td th:text="${s.remark}"></td>
-                <td><button class="btn btn-danger btn-sm" th:onclick="'del(' + ${s.subjectId} + ')'">삭제</button></td>
+            <tr th:each="s : ${signups}">
+                <td><a href="signup-view.html" th:href="@{|/signups/${s.signupId}|}" th:text="${s.memberName}">이름</a></td>
+                <td th:text="${s.subjectName}"></td>
+                <td th:text="${s.year}"></td>
+                <td th:text="${s.createdDate}"></td>
+                <td><button class="btn btn-danger btn-sm" th:onclick="'del(' + ${s.signupId} + ')'">삭제</button></td>
             </tr>
             </tbody>
         </table>
@@ -58,9 +56,9 @@
 </div><!-- /container -->
 <script>
     function del(id){
-        if (confirm('과목을 삭제하시겠습니까?')) {
+        if (confirm('수강신청을 삭제하시겠습니까?')) {
             let msg = "다시 시도해주세요.";
-            let url = "/subjects/" + id;
+            let url = "/signups/" + id;
             fetch(url, {
                 method: 'DELETE',
             })
