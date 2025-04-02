@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/main">
+<head>
+    <title>스터디 활동 생성</title>
+    <style>
+        input[type="date"] { width:105px; }
+    </style>
+</head>
+<body>
+<section layout:fragment="content">
+    <div class="container">
+        <form id="studyActivityForm" th:object="${studyActivity}" enctype="multipart/form-data">
+<!--            <input type="hidden" id="studyId" th:field="*{studyActivityId}"/> &lt;!&ndash; 수정할 경우 ID를 숨긴 필드로 보냄 &ndash;&gt;-->
+            <div class="form-group">
+                <table>
+                    <tr>
+                        <td><label for="studyDate">* 스터디 날짜</label></td>
+                        <td><input type="date" id="studyDate" name="studyDate" th:field="*{studyDate}"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="title">* 제목</label></td>
+                        <td><input type="text" id="title" name="title" th:field="*{title}" placeholder="스터디명을 입력하세요"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="content">내용</label></td>
+                        <td><textarea id="content" name="content" rows="5" maxlength="70" th:field="*{content}"></textarea>
+                    </tr>
+                    <tr>
+                        <td><label for="file">파일</label></td>
+                        <td><input id="file" type="file" name="file" /></td>
+                    </tr>
+                </table>
+            </div>
+        </form>
+<!--        <button id="submitBtn" type="button" th:text="${study.studyId > 0 ? '수정' : '등록'}"></button>-->
+<!--        <button th:if="${study.studyId > 0}" th:onclick="'del(' + ${study.studyId} + ')'">삭제</button>-->
+<!--        <button onclick="window.history.back()">닫기</button>-->
+    </div>
+    <script type="application/javascript" src="/js/study.js"></script>
+</section>
+</body>
+</html>

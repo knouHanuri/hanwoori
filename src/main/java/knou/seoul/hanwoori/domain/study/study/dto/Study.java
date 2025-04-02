@@ -2,19 +2,22 @@ package knou.seoul.hanwoori.domain.study.study.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import knou.seoul.hanwoori.domain.subject.SubjectService;
+import knou.seoul.hanwoori.domain.subject.dto.Subject;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Getter
 @Setter
 public class Study {
-    private int studyId;
-    private int memberId;
-    private int subjectId;
+    private long studyId;
+    private long memberId;
+    private long subjectId;
 
     @NotBlank(message = "제목입력해라")
     private String title;
@@ -49,5 +52,10 @@ public class Study {
         Status(String displayName) {
             this.displayName = displayName;
         }
+    }
+
+    public String getSubjectName(SubjectService subjectService) {
+        Optional<Subject> optionalSubject = subjectService.findById(subjectId);
+        return optionalSubject.isPresent() ? optionalSubject.get().getSubjectName() : "";
     }
 }

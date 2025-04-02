@@ -1,3 +1,7 @@
+function addStudyActivity(studyId){
+    window.location.href = `/studyActivity/form?studyId=${studyId}`;
+}
+
 /* 스터디 조회 */
 function edit(studyId){
     window.location.href = `/study/form?studyId=${studyId}`;
@@ -42,13 +46,15 @@ const inputs = {
     endDate: document.getElementById('endDate')
 };
 
-inputs['startDate'].addEventListener('change', function () {
-    inputs['endDate'].min = inputs['startDate'].value; // 시작 날짜를 종료 날짜의 최소값으로 설정
-});
+if(inputs['startDate'] != null && inputs['endDate'] != null ){
+    inputs['startDate'].addEventListener('change', function () {
+        inputs['endDate'].min = inputs['startDate'].value; // 시작 날짜를 종료 날짜의 최소값으로 설정
+    });
 
-inputs['endDate'].addEventListener('change', function () {
-    inputs['startDate'].max = inputs['endDate'].value; // 종료 날짜를 시작 날짜의 최대값으로 설정
-});
+    inputs['endDate'].addEventListener('change', function () {
+        inputs['startDate'].max = inputs['endDate'].value; // 종료 날짜를 시작 날짜의 최대값으로 설정
+    });
+}
 
 // 버튼 클릭 이벤트 핸들러
 document.getElementById("submitBtn").addEventListener("click", function() {

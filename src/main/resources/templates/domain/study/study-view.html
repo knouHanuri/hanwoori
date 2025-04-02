@@ -16,7 +16,7 @@
         <h2>스터디 뷰</h2>
     </div>
     <ul>
-        <li th:text="'과목명 : ' + (${subject != null ? subject.subjectName : ''})"></li>
+        <li th:text="'과목명 : ' + (${subjectName})"></li>
         <li th:text="'스터디명 : ' + *{study.title}"></li>
         <li th:text="'상태 : ' + *{study.status.getDisplayName()}"></li>
         <li th:text="'요일 및 시간 : ' + *{study.schedule}"></li>

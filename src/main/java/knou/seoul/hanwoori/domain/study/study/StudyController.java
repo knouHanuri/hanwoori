@@ -79,14 +79,11 @@ public class StudyController {
         if (optionalStudy.isPresent()) {
             // 조회한 Study 정보를 모델에 추가
             Study study = optionalStudy.get();
+            String subjectName = study.getSubjectName(subjectService);
+
             model.addAttribute("study", study);
-//            model.addAttribute("status", optionalStudy.get().getStatus().values());
-            System.out.println(study.getSubjectId() );
-            if(study.getSubjectId() > 0) {
-                Optional<Subject> optionalSubject = subjectService.findById((long)study.getSubjectId());
-                optionalSubject.ifPresent(subject -> model.addAttribute("subject", optionalSubject.get()));
-            }
-            System.out.println(study.getSubjectId() );
+            model.addAttribute("subjectName", subjectName);
+
             return "domain/study/study-view"; // Thymeleaf 템플릿 반환
         } else {
             // studyId가 잘못되었을 경우
