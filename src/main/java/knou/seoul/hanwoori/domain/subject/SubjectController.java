@@ -1,6 +1,5 @@
 package knou.seoul.hanwoori.domain.subject;
 
-import jakarta.servlet.http.HttpServletRequest;
 import knou.seoul.hanwoori.domain.subject.dto.Subject;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

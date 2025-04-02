@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 560px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="py-5 text-center">
+        <h2>스터디 뷰</h2>
+    </div>
+    <ul>
+        <li th:text="'과목명 : ' + (${subject != null ? subject.subjectName : ''})"></li>
+        <li th:text="'스터디명 : ' + *{study.title}"></li>
+        <li th:text="'상태 : ' + *{study.status.getDisplayName()}"></li>
+        <li th:text="'요일 및 시간 : ' + *{study.schedule}"></li>
+        <li th:text="'시작일 : ' + *{study.startDate}"></li>
+        <li th:text="'종료일 : ' + *{study.endDate}"></li>
+        <li th:text="'스터디 목표 : ' + *{study.goal}"></li>
+    </ul>
+    <a th:href="@{/study/list}">목록으로</a>
+</div> <!-- /container -->
+</body>
+</html>
