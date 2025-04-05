@@ -31,9 +31,9 @@
                 <li th:text="'제목 : ' + ${studyActivity.title}"></li>
                 <li th:text="'내용 : ' + ${studyActivity.content}"></li>
                 <!-- 수정 버튼 -->
-                <a th:href="@{/studyActivity/form(studyId=${studyActivity.studyId}, studyActivityId=${studyActivity.studyActivityId})}" class="btn btn-warning btn-sm">수정</a>
+                <a th:if="${studyActivity.createdMemberId == memberId}" th:href="@{/studyActivity/form(studyId=${studyActivity.studyId}, studyActivityId=${studyActivity.studyActivityId})}" class="btn btn-warning btn-sm">수정</a>
                 <!-- 삭제 버튼 -->
-                <a th:onclick="|del(${studyActivity.studyActivityId})|" class="btn btn-danger btn-sm" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</a>
+                <a th:if="${studyActivity.createdMemberId == memberId}" th:onclick="|del(${studyActivity.studyActivityId})|" class="btn btn-danger btn-sm" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</a>
             </ul>
 
             <a th:href="@{/study/list}">목록으로</a>
