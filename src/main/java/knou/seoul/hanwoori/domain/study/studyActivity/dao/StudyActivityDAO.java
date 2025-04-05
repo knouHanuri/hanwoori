@@ -11,6 +11,7 @@ public interface StudyActivityDAO {
     void save(StudyActivity studyActivity);
     void update(StudyActivity studyActivity);
     Optional<StudyActivity> findById(long studyActivityId);
+    List<StudyActivity> findByStudyId(long studyId);
     List<StudyActivity> studyActivityListAll();
     List<StudyActivity> studyActivityListLimited(int limit);
     int delete(long studyActivityId);
