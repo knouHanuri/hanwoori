@@ -36,8 +36,8 @@
             </thead>
             <tbody>
             <tr th:each="s : ${signups}">
-                <td><a href="signup-view.html" th:href="@{|/signups/${s.signupId}|}" th:text="${s.memberName}">이름</a></td>
-                <td th:text="${s.subjectName}"></td>
+                <td><a href="signup-view.html" th:href="@{|/signups/${s.signupId}|}" th:text="${s.member.name}">이름</a></td>
+                <td th:text="${s.subject.subjectName}"></td>
                 <td th:text="${s.year}"></td>
                 <td th:text="${s.createdDate}"></td>
                 <td><button class="btn btn-danger btn-sm" th:onclick="'del(' + ${s.signupId} + ')'">삭제</button></td>

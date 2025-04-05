@@ -12,7 +12,7 @@
     <div class="py-5 text-center">
         <h2>수강신청 </h2>
     </div>
-    <form action="/subject/new" th:action th:object="${signup}" method="post">
+    <form action="/signups/new" th:action th:object="${signupFormRequestDTO}" method="post">
         <input type="hidden" id="memberId" th:field="*{memberId}"/>
         <div>
             <label for="grade">과목</label>

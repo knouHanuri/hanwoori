@@ -3,6 +3,7 @@ package knou.seoul.hanwoori.domain.signup;
 import knou.seoul.hanwoori.domain.member.MemberService;
 import knou.seoul.hanwoori.domain.member.dto.Member;
 import knou.seoul.hanwoori.domain.signup.dto.Signup;
+import knou.seoul.hanwoori.domain.signup.dto.SignupFormRequestDTO;
 import knou.seoul.hanwoori.domain.subject.SubjectService;
 import knou.seoul.hanwoori.domain.subject.dto.Subject;
 import org.apache.ibatis.session.SqlSession;
@@ -61,23 +62,24 @@ public class SignupServiceTest {
         subjectService.save(subject);
 
         signup = new Signup();
-        signup.setMemberId(member.getMemberId());
-        signup.setSubjectId(subject.getSubjectId());
+        signup.setMember(member);
+        signup.setSubject(subject);
         signup.setYear(2025);
 
     }
 
     @Test
-    @DisplayName("과목 저장")
+    @DisplayName("수강신청 저장")
     @Rollback()
     public void save() {
         //Given
 
         //When
-        signupService.save(signup);
+        SignupFormRequestDTO signupFormRequestDTO = Signup.form(signup);
+        signupService.save(signupFormRequestDTO);
 
         //then
-        assertThat(signup.getSignupId()).isNotNull();
+        assertThat(signupFormRequestDTO.getSignupId()).isNotNull();
 
     }
 
@@ -90,8 +92,8 @@ public class SignupServiceTest {
         int count = signupService.findAll().size();
         sqlSession.clearCache();
 
-        signupService.save(signup);
-        signupService.save(signup);
+        signupService.save(Signup.form(signup));
+        signupService.save(Signup.form(signup));
 
         //When
         List<Signup> signups = signupService.findAll();
@@ -106,13 +108,14 @@ public class SignupServiceTest {
     public void findById() {
 
         //Given
-        signupService.save(signup);
+        SignupFormRequestDTO signupFormRequestDTO = Signup.form(signup);
+        signupService.save(signupFormRequestDTO);
 
         //When
-        Optional<Signup> findSignup = signupService.findById(signup.getSignupId());
+        Optional<Signup> findSignup = signupService.findById(signupFormRequestDTO.getSignupId());
 
         //Then
-        assertThat(findSignup.get().getSignupId()).isEqualTo(signup.getSignupId());
+        assertThat(findSignup.get().getSignupId()).isEqualTo(signupFormRequestDTO.getSignupId());
     }
 
     @Test
@@ -121,8 +124,9 @@ public class SignupServiceTest {
     public void modify() {
 
         //Given
-        signupService.save(signup);
-        Optional<Signup> findSignup = signupService.findById(signup.getSignupId());
+        SignupFormRequestDTO signupFormRequestDTO = Signup.form(signup);
+        signupService.save(signupFormRequestDTO);
+        Optional<Signup> findSignup = signupService.findById(signupFormRequestDTO.getSignupId());
 
         sqlSession.clearCache();
 
@@ -142,22 +146,21 @@ public class SignupServiceTest {
         subject.setRemark("비고");
         subjectService.save(subject);
 
-        findSignup.get().setMemberId(member.getMemberId());
-        findSignup.get().setSubjectId(subject.getSubjectId());
+        findSignup.get().setMember(member);
+        findSignup.get().setSubject(subject);
         findSignup.get().setYear(2024);
 
         //변경확인용 Map
         Map<Function<Signup, Object>, Object> updates = Map.of(
-                Signup::getMemberId, findSignup.get().getMemberId(),
-                Signup::getSubjectId, findSignup.get().getSubjectId(),
                 Signup::getYear, findSignup.get().getYear()
         );
 
         //When
-        signupService.modify(findSignup.get());
+        SignupFormRequestDTO findSignupFormRequestDTO = Signup.form(findSignup.get());
+        signupService.modify(findSignupFormRequestDTO);
 
         //Then
-        Optional<Signup> modifiedSignup = signupService.findById(findSignup.get().getSignupId());
+        Optional<Signup> modifiedSignup = signupService.findById(findSignupFormRequestDTO.getSignupId());
         updates.forEach((getter,expectedValue) ->
                 assertThat(expectedValue).isEqualTo(getter.apply(modifiedSignup.get()))
         );
@@ -169,7 +172,7 @@ public class SignupServiceTest {
     public void delete() {
 
         //Given
-        signupService.save(signup);
+        signupService.save(Signup.form(signup));
 
         //When
         signupService.delete(signup.getSignupId());
@@ -186,10 +189,12 @@ public class SignupServiceTest {
     public void findByMemberIdAndYear() {
 
         //Given
-        signupService.save(signup);
+        SignupFormRequestDTO signupFormRequestDTO = Signup.form(signup);
+        signupService.save(signupFormRequestDTO);
+        Optional<Signup> findSignup = signupService.findById(signupFormRequestDTO.getSignupId());
 
         //When
-        List<Signup> signups = signupService.findByMemberIdAndYear(signup);
+        List<Signup> signups = signupService.findByMemberIdAndYear(findSignup.orElse(new Signup()));
 
         //Then
         assertThat(signups).hasSize(1);
@@ -201,14 +206,16 @@ public class SignupServiceTest {
     public void deleteByMemberIdAndYear() {
 
         //Given
-        signupService.save(signup);
+        SignupFormRequestDTO signupFormRequestDTO = Signup.form(signup);
+        signupService.save(signupFormRequestDTO);
+        Optional<Signup> findSignup = signupService.findById(signupFormRequestDTO.getSignupId());
 
         //When
-        signupService.deleteByMemberIdAndYear(signup);
-        Optional<Signup> findSignup = signupService.findById(signup.getSignupId());
+        signupService.deleteByMemberIdAndYear(findSignup.orElse(new Signup()));
+        Optional<Signup> findSignup2 = signupService.findById(findSignup.orElse(new Signup()).getSignupId());
 
         //Then
-        assertThat(findSignup).isEmpty();
+        assertThat(findSignup2).isEmpty();
 
     }
 }
