@@ -1,6 +1,7 @@
 package knou.seoul.hanwoori.domain.member.dao;
 
 import knou.seoul.hanwoori.domain.member.dto.Member;
+import knou.seoul.hanwoori.domain.member.dto.MemberPasswordModifyRequestDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -13,7 +14,7 @@ public interface MemberDAO {
     Optional<Member> findById(Long id);
     Optional<Member> findByName(String name);
     void modify(Member member);
-    void delete(Long id);
-    void modifyPassword(Member member);
-
+    int delete(Long id);
+    void modifyPassword(MemberPasswordModifyRequestDTO memberPasswordModifyRequestDTO);
+    Optional<Member> findByLoginId(String loginId);
 }

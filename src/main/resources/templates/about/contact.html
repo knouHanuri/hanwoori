@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/main">
+<head>
+    <meta charset="UTF-8">
+    <title>문의하기</title>
+    <link rel="stylesheet"  th:href="@{/css/about.css}">
+</head>
+
+<body>
+<section layout:fragment="content">
+    <article class="intro-section">
+        <h2>문의하기</h2>
+        <p>자세한 사항이나 문의 사항이 있으시면 아래 정보를 통해 연락하실 수 있습니다.</p>
+    </article>
+    <!-- 연락처 정보 -->
+    <div class="contact-info">
+        <em>진주영</em>
+        <ul>
+            <li><span>직책</span> : 한우리 학생 회장</li>
+            <li><span>카카오톡 ID</span> : jjy3385</li>
+        </ul>
+        <p>※ 응답시간 : 평일 10:00 ~ 20:00</p>
+    </div>
+    <div class="contact-info">
+        <em>최선화</em>
+        <ul>
+            <li><span>직책</span> : 학생 교육 부장</li>
+            <li><span>카카오톡 ID</span> : 교육부장님 카톡 아이디</li>
+        </ul>
+        <p>※ 응답시간 : 평일 10:00 ~ 20:00</p>
+    </div>
+    <div class="contact-info">
+        <em>김형섭</em>
+        <ul>
+            <li><span>직책</span> : 환경 부장</li>
+            <li><span>카카오톡 ID</span> : 환경부장님 카톡 아이디</li>
+        </ul>
+        <p>※ 응답시간 : 평일 10:00 ~ 20:00</p>
+    </div>
+</section>
+</body>
+</html>

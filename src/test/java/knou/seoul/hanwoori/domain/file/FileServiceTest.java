@@ -3,6 +3,7 @@ package knou.seoul.hanwoori.domain.file;
 import knou.seoul.hanwoori.domain.file.dto.File;
 import knou.seoul.hanwoori.domain.member.MemberService;
 import knou.seoul.hanwoori.domain.member.dto.Member;
+import org.apache.ibatis.session.SqlSession;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,6 +26,9 @@ public class FileServiceTest {
 
     @Autowired
     MemberService memberService;
+
+    @Autowired
+    private SqlSession sqlSession;
 
     File file;
     Member member;
@@ -70,6 +74,9 @@ public class FileServiceTest {
     public void findAll() {
 
         //Given
+        int count = fileService.findAll().size();
+        sqlSession.clearCache();
+
         fileService.save(file);
         fileService.save(file);
 
@@ -77,7 +84,7 @@ public class FileServiceTest {
         List<File> files = fileService.findAll();
 
         //Then
-        assertThat(files).hasSize(2);
+        assertThat(files).hasSize(count + 2);
     }
 
     @Test

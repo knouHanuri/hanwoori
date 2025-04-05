@@ -3,6 +3,7 @@ package knou.seoul.hanwoori.domain.post;
 import knou.seoul.hanwoori.domain.member.MemberService;
 import knou.seoul.hanwoori.domain.member.dto.Member;
 import knou.seoul.hanwoori.domain.post.dto.Post;
+import org.apache.ibatis.session.SqlSession;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,6 +28,9 @@ public class PostServiceTest {
 
     @Autowired
     MemberService memberService;
+
+    @Autowired
+    SqlSession sqlSession;
 
     Post post;
     Member newMember;
@@ -68,6 +72,9 @@ public class PostServiceTest {
     public void findAll() {
 
         //Given
+        int count = postService.findAll().size();
+        sqlSession.clearCache();
+
         postService.save(post);
         postService.save(post);
 
@@ -75,7 +82,7 @@ public class PostServiceTest {
         List<Post> posts = postService.findAll();
 
         //Then
-        assertThat(posts).hasSize(2);
+        assertThat(posts).hasSize(count + 2);
     }
 
     @Test

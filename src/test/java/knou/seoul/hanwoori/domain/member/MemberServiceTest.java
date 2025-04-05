@@ -1,7 +1,7 @@
 package knou.seoul.hanwoori.domain.member;
 
 import knou.seoul.hanwoori.domain.member.dto.Member;
-import knou.seoul.hanwoori.domain.member.dto.MemberPasswordRequestDTO;
+import knou.seoul.hanwoori.domain.member.dto.MemberPasswordModifyRequestDTO;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -71,6 +71,9 @@ public class MemberServiceTest {
     public void findAll() {
 
         //Given
+        int count = memberService.findAll().size();
+        sqlSession.clearCache();
+
         memberService.save(member);
         memberService.save(member);
 
@@ -78,7 +81,7 @@ public class MemberServiceTest {
         List<Member> members = memberService.findAll();
 
         //Then
-        assertThat(members).hasSize(2);
+        assertThat(members).hasSize(count + 2);
     }
 
     @Test
@@ -159,7 +162,7 @@ public class MemberServiceTest {
         memberService.save(member);
         Optional<Member> beforeModifiedMember = memberService.findById(member.getMemberId());
 
-        MemberPasswordRequestDTO requestDTO = new MemberPasswordRequestDTO();
+        MemberPasswordModifyRequestDTO requestDTO = new MemberPasswordModifyRequestDTO();
         requestDTO.setMemberId(beforeModifiedMember.get().getMemberId());
         requestDTO.setOldPassword("pwd");
         requestDTO.setNewPassword("newPassword");

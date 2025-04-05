@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/css/common.css}"
+          href="../css/common.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <div class="py-5 text-center">
+        <h2>회원정보 보기</h2>
+    </div>
+    <div>
+        <label for="loginId">아이디</label>
+        <input type="text" id="loginId" name="loginId" class="form-control"
+               th:value="${member.loginId}" readonly>
+    </div>
+    <div>
+        <label for="name">이름</label>
+        <input type="text" id="name" name="name" class="form-control"
+               th:value="${member.name}" readonly>
+    </div>
+    <div>
+        <label for="email">이메일</label>
+        <input type="text" id="email" name="email" class="form-control"
+               th:value="${member.email}" readonly>
+    </div>
+    <div>
+        <label for="phoneNumber">전화번호</label>
+        <input type="text" id="phoneNumber" name="phoneNumber" class="form-control"
+               th:value="${member.phoneNumber}" readonly>
+    </div>
+    <div>
+        <div>성별</div>
+        <div th:each="gender : ${genders}" class="form-check form-check-inline">
+            <input type="radio" th:field="${member.gender}" th:value="${gender.name()}"
+                   class="form-check-input" disabled>
+            <label th:for="${#ids.prev('gender')}" th:text="${gender.displayName}" class="form-check-label">
+            </label>
+        </div>
+    </div>
+    <div>
+        <label for="birthdate">생년월일</label>
+        <input type="date" id="birthdate" class="form-control"
+               th:value="${member.birthdate}" readonly>
+    </div>
+    <div>
+        <label for="studentNo">학번</label>
+        <input type="text" id="studentNo" name="studentNo" class="form-control"
+               th:value="${member.studentNo}" readonly>
+    </div>
+    <div>
+        <label for="remark">우리 스터디에서 얻어가고 싶은 것은 무엇인가요?</label>
+        <input type="text" id="remark" name="remark" class="form-control"
+               th:value="${member.remark}" readonly>
+    </div>
+    <div>
+        <div>회원등급</div>
+        <div th:each="grade : ${grades}" class="form-check form-check-inline">
+            <input type="radio" th:field="*{member.grade}" th:value="${grade.name()}"
+                   class="form-check-input" disabled>
+            <label th:for="${#ids.prev('grade')}" th:text="${grade.displayName}" class="form-check-label">
+            </label>
+        </div>
+    </div>
+
+    <hr class="my-4">
+
+    <div class="row">
+        <div class="col">
+            <button class="w-100 btn btn-primary btn-lg"
+                    onclick="location.href='member-edit-form.html'"
+                    th:onclick="|location.href='@{/members/{memberId}/edit(memberId=${member.memberId})}'|"
+                    type="button">회원정보 수정
+            </button>
+        </div>
+        <div class="col">
+            <button class="w-100 btn btn-secondary btn-lg"
+                    onclick="location.href='member-list.html'"
+                    th:onclick="|location.href='@{/members}'|"
+                    type="button">목록으로
+            </button>
+        </div>
+    </div>
+</div> <!-- /container -->
+</body>
+</html>

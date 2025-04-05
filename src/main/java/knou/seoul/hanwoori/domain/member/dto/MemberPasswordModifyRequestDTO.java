@@ -1,14 +1,18 @@
 package knou.seoul.hanwoori.domain.member.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
-
 @Setter
 @Getter
-public class MemberPasswordRequestDTO {
+public class MemberPasswordModifyRequestDTO {
     private Long memberId;
+    @NotBlank
     private String oldPassword;
+    @NotBlank
     private String newPassword;
+    @NotBlank
+    private String confirmNewPassword;
+
 }

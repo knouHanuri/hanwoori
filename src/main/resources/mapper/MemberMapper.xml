@@ -74,15 +74,17 @@
     <delete id="delete" parameterType="knou.seoul.hanwoori.domain.member.dto.Member">
         delete from member where member_id = #{memberId}
     </delete>
-    <!--비밀번호수정-->
-    <update id="modifyPassword" parameterType="knou.seoul.hanwoori.domain.member.dto.Member">
+    <!--비밀번호 수정-->
+    <update id="modifyPassword" parameterType="knou.seoul.hanwoori.domain.member.dto.MemberPasswordModifyRequestDTO">
         update member
-        set password = #{password},
+        set password = #{newPassword},
             updated_date = CURRENT_TIMESTAMP
         where member_id = #{memberId}
     </update>
-
-
-
-
+    <!--조회(id)-->
+    <select id="findByLoginId" parameterType="string" resultType="knou.seoul.hanwoori.domain.member.dto.Member">
+        select *
+        from member
+        where login_id = #{loginId}
+    </select>
 </mapper>
