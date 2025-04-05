@@ -2,6 +2,8 @@ package knou.seoul.hanwoori.domain.study.study;
 
 import jakarta.validation.Valid;
 import knou.seoul.hanwoori.domain.study.study.dto.Study;
+import knou.seoul.hanwoori.domain.study.studyActivity.StudyActivityService;
+import knou.seoul.hanwoori.domain.study.studyActivity.dto.StudyActivity;
 import knou.seoul.hanwoori.domain.subject.SubjectService;
 import knou.seoul.hanwoori.domain.subject.dto.Subject;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +25,7 @@ import java.util.Optional;
 public class StudyController {
     private final StudyService studyService;
     private final SubjectService subjectService;
+    private final StudyActivityService studyActivityService;
 
     @GetMapping("/list")
     public String studyList(Model model){
@@ -83,6 +87,10 @@ public class StudyController {
 
             model.addAttribute("study", study);
             model.addAttribute("subjectName", subjectName);
+
+            //studyActivity 추가
+            List<StudyActivity> studyActivityList = studyActivityService.findByStudyId(studyId);
+            model.addAttribute("studyActivity", studyActivityList);
 
             return "domain/study/study-view"; // Thymeleaf 템플릿 반환
         } else {

@@ -11,6 +11,10 @@
     <select id="studyActivityListLimited" parameterType="int" resultType="knou.seoul.hanwoori.domain.study.studyActivity.dto.StudyActivity">
         select * from study_activity order by study_activity_id desc LIMIT #{limit}
     </select>
+    <!--데이터 조회(스터디id, 여러개일수 있음)-->
+    <select id="findByStudyId" parameterType="long" resultType="knou.seoul.hanwoori.domain.study.studyActivity.dto.StudyActivity">
+        select * from study_activity where study_id = #{studyId} order by study_date desc
+    </select>
     <!--데이터 조회(Id)-->
     <select id="findById" parameterType="long" resultType="knou.seoul.hanwoori.domain.study.studyActivity.dto.StudyActivity">
         select * from study_activity where study_activity_id = #{studyActivityId}

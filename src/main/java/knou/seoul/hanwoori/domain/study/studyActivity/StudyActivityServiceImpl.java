@@ -64,7 +64,7 @@ public class StudyActivityServiceImpl implements StudyActivityService {
             else{
                 Optional<Study> study = studyDAO.findById(studyActivity.getStudyId());
                 if(study.isPresent()) {
-                    studyActivityDAO.save(studyActivity);
+                    studyActivityDAO.update(studyActivity);
                 }
                 else System.out.println("스터디 없음");
             }
@@ -75,6 +75,11 @@ public class StudyActivityServiceImpl implements StudyActivityService {
     @Override
     public Optional<StudyActivity> findById(long studyActivityId) {
         return studyActivityDAO.findById(studyActivityId);
+    }
+
+    @Override
+    public List<StudyActivity> findByStudyId(long studyId) {
+        return studyActivityDAO.findByStudyId(studyId);
     }
 
     @Override

@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -19,7 +20,7 @@ public class StudyActivity {
 
     @NotNull(message = "스터디 날짜 입력해라")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDateTime studyDate;
+    private LocalDate studyDate;
 
     @NotBlank(message = "제목입력해라")
     private String title;

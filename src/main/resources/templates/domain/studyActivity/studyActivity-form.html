@@ -10,8 +10,15 @@
 <body>
 <section layout:fragment="content">
     <div class="container">
+        <div class="py-5 text-center">
+            <h2>
+                <span th:if="${subjectName != null}" th:text="${subjectName}"></span>
+                <span th:if="${studyName != null}" th:text="${studyName}"></span>
+            </h2>
+        </div>
         <form id="studyActivityForm" th:object="${studyActivity}" enctype="multipart/form-data">
-<!--            <input type="hidden" id="studyId" th:field="*{studyActivityId}"/> &lt;!&ndash; 수정할 경우 ID를 숨긴 필드로 보냄 &ndash;&gt;-->
+            <input type="hidden" id="studyId" th:field="*{studyId}"/> <!-- 수정할 경우 ID를 숨긴 필드로 보냄 -->
+            <input type="hidden" id="studyActivityId" th:field="*{studyActivityId}"/> <!-- 수정할 경우 ID를 숨긴 필드로 보냄 -->
             <div class="form-group">
                 <table>
                     <tr>
@@ -24,7 +31,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><label for="content">내용</label></td>
+                        <td><label for="content">* 내용</label></td>
                         <td><textarea id="content" name="content" rows="5" maxlength="70" th:field="*{content}"></textarea>
                     </tr>
                     <tr>
@@ -34,11 +41,11 @@
                 </table>
             </div>
         </form>
-<!--        <button id="submitBtn" type="button" th:text="${study.studyId > 0 ? '수정' : '등록'}"></button>-->
+        <button id="submitBtn" type="button" th:text="${studyActivity.studyActivityId > 0 ? '수정' : '등록'}"></button>
 <!--        <button th:if="${study.studyId > 0}" th:onclick="'del(' + ${study.studyId} + ')'">삭제</button>-->
 <!--        <button onclick="window.history.back()">닫기</button>-->
     </div>
-    <script type="application/javascript" src="/js/study.js"></script>
+    <script type="application/javascript" src="/js/studyActivity.js"></script>
 </section>
 </body>
 </html>
