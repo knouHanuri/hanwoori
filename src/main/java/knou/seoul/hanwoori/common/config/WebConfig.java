@@ -16,7 +16,7 @@ public class WebConfig implements WebMvcConfigurer {
                         , "/login"
                         , "/logout"
                         , "/members/**"
-                        , "/posts/**"
+                        //, "/posts/**"
                         , "/study/**"
                         //, "/signups/**"
                         , "/subjects/**"

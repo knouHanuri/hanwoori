@@ -23,7 +23,7 @@ public class Signup {
         return SignupFormRequestDTO.builder()
                 .signupId(signup.getSignupId())
                 .memberId(signup.getMember().getMemberId())
-                .subjectId(signup.getSubject().getSubjectId())
+                //.subjectIds(signup.getSubject().getSubjectId())
                 .year(signup.getYear())
                 .createdDate(signup.getCreatedDate())
                 .updatedDate(signup.getUpdatedDate())

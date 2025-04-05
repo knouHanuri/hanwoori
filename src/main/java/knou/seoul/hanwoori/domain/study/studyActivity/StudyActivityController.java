@@ -1,6 +1,8 @@
 package knou.seoul.hanwoori.domain.study.studyActivity;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import knou.seoul.hanwoori.domain.member.dto.Member;
 import knou.seoul.hanwoori.domain.study.study.StudyService;
 import knou.seoul.hanwoori.domain.study.study.dto.Study;
 import knou.seoul.hanwoori.domain.study.studyActivity.dto.StudyActivity;
@@ -17,6 +19,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Optional;
+
+import static knou.seoul.hanwoori.common.SessionConst.LOGIN_MEMBER;
 
 @Controller
 @RequiredArgsConstructor
@@ -56,15 +60,16 @@ public class StudyActivityController {
     }
 
     @PostMapping("/formSave")
-    public String create(@ModelAttribute @Valid StudyActivity studyActivityForm, RedirectAttributes redirectAttributes, BindingResult bindingResult)
+    public String create(@ModelAttribute @Valid StudyActivity studyActivityForm, RedirectAttributes redirectAttributes, BindingResult bindingResult, HttpSession session)
     {
         if (bindingResult.hasErrors()) {
             // 유효성 검사 실패 시, 다시 폼으로 돌아감
             return "domain/studyActivity/studyActivity-form";
         }
 
-        //임시. 나중에 로그인한 사용자로 바꿔야 함
-        studyActivityForm.setCreatedMemberId(1);
+        //세션 member 저장
+        Member loginMember = (Member)session.getAttribute(LOGIN_MEMBER);
+        studyActivityForm.setCreatedMemberId(loginMember.getMemberId().intValue());
 
         String msg = "등록";
         if(studyActivityForm.getStudyActivityId() > 0) {

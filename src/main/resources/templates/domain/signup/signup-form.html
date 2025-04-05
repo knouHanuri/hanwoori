@@ -15,13 +15,13 @@
     <form action="/signups/new" th:action th:object="${signupFormRequestDTO}" method="post">
         <input type="hidden" id="memberId" th:field="*{memberId}"/>
         <div>
-            <label for="grade">과목</label>
-            <select id="grade" th:field="*{subjectId}" class="form-select" th:errorclass="field-error">
-                <option value="">==과목 선택==</option>
-                <option th:each="s : ${subjects}" th:value="${s.subjectId}"
-                        th:text="${s.subjectName}"></option>
-            </select>
-            <div class="field-error" th:errors="*{subjectId}"></div>
+            <div>과목</div>
+            <div th:each="s : ${subjects}" class="form-check form-check-inline">
+                <input type="checkbox" th:field="*{subjectIds}" th:errorclass="field-error" th:value="${s.subjectId}" class="form-check-input">
+                <label th:for="${#ids.prev('subjectIds')}"
+                       th:text="${s.subjectName}" class="form-check-label">서울</label>
+            </div>
+            <div class="field-error" th:errors="*{subjectIds}"></div>
         </div>
         <div>
             <label for="year">년도</label>

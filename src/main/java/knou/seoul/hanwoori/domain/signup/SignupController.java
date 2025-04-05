@@ -50,6 +50,10 @@ public class SignupController {
             return "domain/signup/signup-form";
         }
 
+        for(Long subjectId : signupFormRequestDTO.getSubjectIds()){
+
+        }
+
         signupService.save(signupFormRequestDTO);
         Long signupId = signupFormRequestDTO.getSignupId();
 
@@ -87,9 +91,6 @@ public class SignupController {
         signupService.modify(signupFormRequestDTO);
         return "redirect:/signups/" + id;
     }
-
-
-
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
