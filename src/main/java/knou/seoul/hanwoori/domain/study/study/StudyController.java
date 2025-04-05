@@ -6,6 +6,8 @@ import knou.seoul.hanwoori.domain.member.dto.Member;
 import knou.seoul.hanwoori.domain.study.study.dto.Study;
 import knou.seoul.hanwoori.domain.study.studyActivity.StudyActivityService;
 import knou.seoul.hanwoori.domain.study.studyActivity.dto.StudyActivity;
+import knou.seoul.hanwoori.domain.study.studyParticipant.StudyParticipantService;
+import knou.seoul.hanwoori.domain.study.studyParticipant.dto.StudyParticipant;
 import knou.seoul.hanwoori.domain.subject.SubjectService;
 import knou.seoul.hanwoori.domain.subject.dto.Subject;
 import lombok.RequiredArgsConstructor;
@@ -17,12 +19,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import static knou.seoul.hanwoori.common.SessionConst.LOGIN_MEMBER;
-import static knou.seoul.hanwoori.domain.file.dto.File.SourceKind.study;
 
 @Controller
 @RequiredArgsConstructor
@@ -31,6 +31,7 @@ public class StudyController {
     private final StudyService studyService;
     private final SubjectService subjectService;
     private final StudyActivityService studyActivityService;
+    private final StudyParticipantService studyParticipantService;
 
     @GetMapping("/list")
     public String studyList(Model model, HttpSession session){
@@ -108,11 +109,21 @@ public class StudyController {
             Member loginMember = (Member)session.getAttribute(LOGIN_MEMBER);
             if(loginMember != null) {
                 model.addAttribute("memberId", loginMember.getMemberId());
+
+                Optional<StudyParticipant> optionalStudyParticipant = studyParticipantService.findStudyParticipantByIds(
+                    studyParticipantService.createStudyParticipantParam(studyId, loginMember.getMemberId())
+                );
+
+                model.addAttribute("isParticipantStudy", optionalStudyParticipant.isPresent());
             }
 
             //studyActivity 추가
             List<StudyActivity> studyActivityList = studyActivityService.findByStudyId(studyId);
             model.addAttribute("studyActivity", studyActivityList);
+
+            //studyParticipant 추가
+            List<StudyParticipant> studyParticipantList = studyParticipantService.findStudyParticipantByStudyId(studyId);
+            model.addAttribute("studyParticipant", studyParticipantList);
 
             return "domain/study/study-view"; // Thymeleaf 템플릿 반환
         } else {

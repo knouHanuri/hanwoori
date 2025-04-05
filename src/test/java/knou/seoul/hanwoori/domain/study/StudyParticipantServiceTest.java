@@ -110,7 +110,7 @@ public class StudyParticipantServiceTest {
         public void delete_success() {
             System.out.println(_studyParticipantId);
 
-            StudyParticipantParam param = studyParticipantService.createStudyParticipantParam(_studyParticipantId, studyParticipant.getStudyId(), studyParticipant.getMemberId());
+            StudyParticipantParam param = studyParticipantService.createStudyParticipantParam(studyParticipant.getStudyId(), studyParticipant.getMemberId());
 
             if(studyParticipantService.delete(param) > 0){
                 System.out.println("삭제 성공");

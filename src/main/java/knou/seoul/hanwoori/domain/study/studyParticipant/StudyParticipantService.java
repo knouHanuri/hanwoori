@@ -12,6 +12,7 @@ public interface StudyParticipantService {
     Optional<StudyParticipant> findStudyParticipantByIds(StudyParticipantParam studyParticipantParam);
     List<StudyParticipant> studyParticipantListAll();
     List<StudyParticipant> studyParticipantListLimited(int limit);
+    List<StudyParticipant> findStudyParticipantByStudyId(long studyId);
     int delete(StudyParticipantParam studyParticipantParam);
-    StudyParticipantParam createStudyParticipantParam(long studyParticipantId, long studyId, long memberId);
+    StudyParticipantParam createStudyParticipantParam(long studyId, long memberId);
 }

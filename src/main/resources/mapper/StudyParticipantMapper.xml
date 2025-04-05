@@ -13,7 +13,14 @@
     </select>
     <!--데이터 조회(Id)-->
     <select id="findStudyParticipantByIds" parameterType="knou.seoul.hanwoori.domain.study.studyParticipant.dto.StudyParticipantParam" resultType="knou.seoul.hanwoori.domain.study.studyParticipant.dto.StudyParticipant">
-        select * from study_participant where study_participant_id = #{studyParticipantId} and study_id = #{studyId} and member_id = #{memberId}
+        select * from study_participant where study_id = #{studyId} and member_id = #{memberId}
+    </select>
+    <!--데이터 조회(스터디 Id)-->
+    <select id="findStudyParticipantByStudyId" parameterType="long" resultType="knou.seoul.hanwoori.domain.study.studyParticipant.dto.StudyParticipant">
+        select p.study_participant_id, p.study_id, p.member_id, p.created_date, m.name
+               from study_participant p left join member m on p.member_id = m.member_id
+                 where p.study_id = #{studyId}
+        order by m.name
     </select>
     <!--데이터 입력-->
     <insert id="save" parameterType="knou.seoul.hanwoori.domain.study.studyParticipant.dto.StudyParticipant" useGeneratedKeys="true" keyProperty="studyParticipantId">
@@ -24,6 +31,6 @@
     <!--데이터 삭제-->
     <delete id="delete" parameterType="knou.seoul.hanwoori.domain.study.studyParticipant.dto.StudyParticipantParam">
         delete from study_participant
-               WHERE study_participant_id = #{studyParticipantId} and study_id = #{studyId} and member_id = #{memberId}
+               WHERE study_id = #{studyId} and member_id = #{memberId}
     </delete>
 </mapper>
