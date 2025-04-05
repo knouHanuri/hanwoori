@@ -2,6 +2,7 @@ package knou.seoul.hanwoori.domain.subject;
 
 import knou.seoul.hanwoori.domain.post.dto.Post;
 import knou.seoul.hanwoori.domain.subject.dto.Subject;
+import org.apache.ibatis.session.SqlSession;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,6 +24,9 @@ public class SubjectServiceTest {
 
     @Autowired
     SubjectService subjectService;
+
+    @Autowired
+    SqlSession sqlSession;
 
     Subject subject;
 
@@ -56,6 +60,9 @@ public class SubjectServiceTest {
     public void findAll() {
 
         //Given
+        int count = subjectService.findAll().size();
+        sqlSession.clearCache();
+
         subjectService.save(subject);
         subjectService.save(subject);
 
@@ -63,7 +70,7 @@ public class SubjectServiceTest {
         List<Subject> subjects = subjectService.findAll();
 
         //Then
-        assertThat(subjects).hasSize(2);
+        assertThat(subjects).hasSize(count + 2);
     }
 
     @Test

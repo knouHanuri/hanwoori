@@ -1,5 +1,6 @@
 package knou.seoul.hanwoori.domain.login;
 
+import knou.seoul.hanwoori.domain.member.dao.MemberDAO;
 import knou.seoul.hanwoori.domain.member.dto.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,15 +12,13 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class LoginServiceImpl implements LoginService {
 
-    private final LoginDAO loginDAO;
+    private final MemberDAO memberDAO;
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public LoginRequestDTO login(LoginRequestDTO loginRequestDTO) {
-       Optional<Member> member = loginDAO.findByLoginId(loginRequestDTO);
-       member.ifPresent(m-> {
-           passwordEncoder.matches(loginRequestDTO.getPassword(), m.getPassword());
-       });
-        return null;
+    public Member login(LoginRequestDTO loginRequestDTO) {
+        return memberDAO.findByLoginId(loginRequestDTO.getLoginId())
+                .filter(m -> passwordEncoder.matches(loginRequestDTO.getPassword(),m.getPassword()))
+                .orElse(null);
     }
 }

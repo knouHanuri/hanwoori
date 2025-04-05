@@ -5,6 +5,7 @@ import knou.seoul.hanwoori.domain.member.dto.Member;
 import knou.seoul.hanwoori.domain.post.comment.PostCommentService;
 import knou.seoul.hanwoori.domain.post.comment.dto.PostComment;
 import knou.seoul.hanwoori.domain.post.dto.Post;
+import org.apache.ibatis.session.SqlSession;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -34,6 +35,9 @@ public class PostCommentServiceTest {
 
     @Autowired
     PostCommentService postCommentService;
+
+    @Autowired
+    SqlSession sqlSession;
 
 
     Post post;
@@ -84,6 +88,9 @@ public class PostCommentServiceTest {
     public void findAll() {
 
         //Given
+        int count = postCommentService.findAll().size();
+        sqlSession.clearCache();
+
         postCommentService.save(postComment);
         postCommentService.save(postComment);
 
@@ -91,7 +98,7 @@ public class PostCommentServiceTest {
         List<PostComment> postComments = postCommentService.findAll();
 
         //Then
-        assertThat(postComments).hasSize(2);
+        assertThat(postComments).hasSize(count + 2);
     }
 
     @Test

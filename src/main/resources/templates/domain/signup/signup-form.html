@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/css/common.css}"
+          href="../css/common.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <div class="py-5 text-center">
+        <h2>수강신청 </h2>
+    </div>
+    <form action="/signups/new" th:action th:object="${signupFormRequestDTO}" method="post">
+        <input type="hidden" id="memberId" th:field="*{memberId}"/>
+        <div>
+            <label for="grade">과목</label>
+            <select id="grade" th:field="*{subjectId}" class="form-select" th:errorclass="field-error">
+                <option value="">==과목 선택==</option>
+                <option th:each="s : ${subjects}" th:value="${s.subjectId}"
+                        th:text="${s.subjectName}"></option>
+            </select>
+            <div class="field-error" th:errors="*{subjectId}"></div>
+        </div>
+        <div>
+            <label for="year">년도</label>
+            <input type="number" id="year" min="1900" max="2100" step="1"
+                   th:field="*{year}" th:errorclass="field-error" class="form-control">
+            <div class="field-error" th:errors="*{year}"></div>
+        </div>
+        <hr class="my-4">
+        <div class="row">
+            <div class="col">
+                <button class="w-100 btn btn-primary btn-lg" type="submit">수강 신청</button>
+            </div>
+            <div class="col">
+                <button class="w-100 btn btn-secondary btn-lg"
+                        type="button"
+                        th:onclick="'history.back();'">취소</button>
+            </div>
+        </div>
+    </form>
+</div> <!-- /container -->
+</body>
+</html>

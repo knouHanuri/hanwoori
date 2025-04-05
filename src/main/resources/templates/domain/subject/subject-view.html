@@ -4,25 +4,64 @@
     <meta charset="utf-8">
     <link th:href="@{/css/bootstrap.min.css}"
           href="../css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .container {
-            max-width: 560px;
-        }
-    </style>
+    <link th:href="@{/css/common.css}"
+          href="../css/common.css" rel="stylesheet">
 </head>
 <body>
 <div class="container">
     <div class="py-5 text-center">
-        <h2>과목 뷰</h2>
+        <h2>과목 상세</h2>
     </div>
-    <ul>
-        <li th:text="'과목명 : ' + *{subject.subjectName}"></li>
-        <li th:text="'학년 : ' + *{subject.grade}"></li>
-        <li th:text="'학기 : ' + *{subject.semester}"></li>
-        <li th:text="'교수님 : ' + *{subject.professor}"></li>
-        <li th:text="'비고 : ' + *{subject.remark}"></li>
-    </ul>
-    <a th:href="@{/}">홈으로</a>
+    <div>
+        <label for="subjectName">과목명</label>
+        <input type="text" id="subjectName" name="subjectName" class="form-control" value="과목A"
+               th:value="${subject.subjectName}" readonly>
+    </div>
+    <div>
+        <label for="grade">학년</label>
+        <select id="grade" th:field="*{subject.grade}" class="form-select" disabled>
+            <option value="">==학년 선택==</option>
+            <option th:each="grade : ${grades}" th:value="${grade.value}"
+                    th:text="${grade.key}"></option>
+        </select>
+    </div>
+    <div>
+        <label for="semester">학기</label>
+        <select id="semester" th:field="*{subject.semester}" class="form-select" disabled>
+            <option value="">==학기 선택==</option>
+            <option th:each="semester : ${semesters}" th:value="${semester.value}"
+                    th:text="${semester.key}"></option>
+        </select>
+    </div>
+    <div>
+        <label for="professor">교수님</label>
+        <input type="text" id="professor" name="professor" class="form-control" value="정재화"
+               th:value="${subject.professor}" readonly>
+    </div>
+    <div>
+        <label for="remark">비고</label>
+        <input type="text" id="remark" name="remark" class="form-control" value="비고" th:value="${subject.remark}"
+               readonly>
+    </div>
+
+    <hr class="my-4">
+
+    <div class="row">
+        <div class="col">
+            <button class="w-100 btn btn-primary btn-lg"
+                    onclick="location.href='subject-edit-form.html'"
+                    th:onclick="|location.href='@{/subjects/{subjectId}/edit(subjectId=${subject.subjectId})}'|"
+                    type="button">과목 수정
+            </button>
+        </div>
+        <div class="col">
+            <button class="w-100 btn btn-secondary btn-lg"
+                    onclick="location.href='subject-list.html'"
+                    th:onclick="|location.href='@{/subjects}'|"
+                    type="button">목록으로
+            </button>
+        </div>
+    </div>
 </div> <!-- /container -->
 </body>
 </html>
