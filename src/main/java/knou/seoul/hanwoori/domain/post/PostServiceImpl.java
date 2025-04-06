@@ -35,7 +35,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void delete(Long id) {
-        postDAO.delete(id);
+    public int delete(Long id) {
+        return postDAO.delete(id);
     }
 }

@@ -1,42 +1,45 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html th:replace="~{common/layout :: layout(~{::title}, ~{::section},~{::link}, '수강신청 상세보기', '수강신청 상세보기')}"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8">
-    <link th:href="@{/css/bootstrap.min.css}"
-          href="../css/bootstrap.min.css" rel="stylesheet">
-    <link th:href="@{/css/common.css}"
-          href="../css/common.css" rel="stylesheet">
+    <title>수강신청 상세보기</title>
 </head>
 <body>
-<div class="container">
-    <div class="py-5 text-center">
-        <h2>수강신청 상세</h2>
-    </div>
-    <div>
-        <div>과목</div>
-        <div th:each="s : ${subjects}" class="form-check form-check-inline">
-            <input type="checkbox" th:field="*{signupFormRequestDTO.subjectIds}" th:value="${s.subjectId}" class="form-check-input" disabled>
-            <label th:for="${#ids.prev('subjectIds')}"
-                   th:text="${s.subjectName}" class="form-check-label"></label>
+<!-- 추가 link 없을 경우, link fragment 필요 -->
+<th:block th:fragment="link"></th:block>
+<section>
+    <div class="container">
+        <div>
+            <div>과목</div>
+            <div th:each="s : ${subjects}" class="form-check form-check-inline">
+                <input type="checkbox" th:field="*{signupFormRequestDTO.subjectIds}" th:value="${s.subjectId}"
+                       class="form-check-input" disabled>
+                <label th:for="${#ids.prev('subjectIds')}"
+                       th:text="${s.subjectName}" class="form-check-label"></label>
+            </div>
         </div>
-    </div>
-    <div>
-        <label for="year">년도</label>
-        <input type="number" id="year" min="1900" max="2100" step="1"
-               th:value="*{signupFormRequestDTO.year}" class="form-control" readonly>
-    </div>
-
-    <hr class="my-4">
-
-    <div class="row">
-        <div class="col">
-            <button class="w-100 btn btn-secondary btn-lg"
-                    onclick="location.href='subject-list.html'"
-                    th:onclick="|location.href='@{/signups/members}'|"
-                    type="button">목록으로
-            </button>
+        <div>
+            <label for="year">년도</label>
+            <input type="number" id="year" min="1900" max="2100" step="1"
+                   th:value="*{signupFormRequestDTO.year}" class="form-control" readonly>
         </div>
-    </div>
-</div> <!-- /container -->
-</body>
-</html>
+        <hr class="my-4">
+        <div class="row">
+            <div class="col">
+                <button class="w-100 btn btn-primary btn-lg"
+                        onclick="location.href='member-edit-form.html'"
+                        th:onclick="|location.href='@{/signups/{year}/members/{memberId}/edit(year=${signupFormRequestDTO.year},memberId=${signupFormRequestDTO.memberId})}'|"
+                        type="button">수강신청수정
+                </button>
+            </div>
+            <div class="col">
+                <button class="w-100 btn btn-secondary btn-lg"
+                        onclick="location.href='subject-list.html'"
+                        th:onclick="|location.href='@{/signups/members}'|"
+                        type="button">목록으로
+                </button>
+            </div>
+        </div>
+    </div> <!-- /container -->
+</section>
+

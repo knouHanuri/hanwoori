@@ -1,46 +1,44 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html th:replace="~{common/layout :: layout(~{::title}, ~{::section},~{::link}, '수강신청', '수강신청')}"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8">
-    <link th:href="@{/css/bootstrap.min.css}"
-          href="../css/bootstrap.min.css" rel="stylesheet">
-    <link th:href="@{/css/common.css}"
-          href="../css/common.css" rel="stylesheet">
+    <title>수강신청</title>
 </head>
 <body>
-<div class="container">
-    <div class="py-5 text-center">
-        <h2>수강신청 </h2>
-    </div>
-    <form action="/signups/new" th:action th:object="${signupFormRequestDTO}" method="post">
-        <input type="hidden" id="memberId" th:field="*{memberId}"/>
-        <div>
-            <div>과목</div>
-            <div th:each="s : ${subjects}" class="form-check form-check-inline">
-                <input type="checkbox" th:field="*{subjectIds}" th:errorclass="field-error" th:value="${s.subjectId}" class="form-check-input">
-                <label th:for="${#ids.prev('subjectIds')}"
-                       th:text="${s.subjectName}" class="form-check-label">서울</label>
+<!-- 추가 link 없을 경우, link fragment 필요 -->
+<th:block th:fragment="link"></th:block>
+<section>
+    <div class="container">
+        <form action="/signups/new" th:action th:object="${signupFormRequestDTO}" method="post">
+            <input type="hidden" id="memberId" th:field="*{memberId}"/>
+            <div>
+                <div>과목</div>
+                <div th:each="s : ${subjects}" class="form-check form-check-inline">
+                    <input type="checkbox" th:field="*{subjectIds}" th:errorclass="field-error"
+                           th:value="${s.subjectId}" class="form-check-input">
+                    <label th:for="${#ids.prev('subjectIds')}"
+                           th:text="${s.subjectName}" class="form-check-label"></label>
+                </div>
+                <div class="field-error" th:errors="*{subjectIds}"></div>
             </div>
-            <div class="field-error" th:errors="*{subjectIds}"></div>
-        </div>
-        <div>
-            <label for="year">년도</label>
-            <input type="number" id="year" min="1900" max="2100" step="1"
-                   th:field="*{year}" th:errorclass="field-error" class="form-control">
-            <div class="field-error" th:errors="*{year}"></div>
-        </div>
-        <hr class="my-4">
-        <div class="row">
-            <div class="col">
-                <button class="w-100 btn btn-primary btn-lg" type="submit">수강 신청</button>
+            <div>
+                <label for="year">년도</label>
+                <input type="number" id="year" min="1900" max="2100" step="1"
+                       th:field="*{year}" th:errorclass="field-error" class="form-control">
+                <div class="field-error" th:errors="*{year}"></div>
             </div>
-            <div class="col">
-                <button class="w-100 btn btn-secondary btn-lg"
-                        type="button"
-                        th:onclick="'history.back();'">취소</button>
+            <hr class="my-4">
+            <div class="row">
+                <div class="col">
+                    <button class="w-100 btn btn-primary btn-lg" type="submit">수강 신청</button>
+                </div>
+                <div class="col">
+                    <button class="w-100 btn btn-secondary btn-lg"
+                            type="button"
+                            th:onclick="'history.back();'">취소
+                    </button>
+                </div>
             </div>
-        </div>
-    </form>
-</div> <!-- /container -->
-</body>
-</html>
+        </form>
+    </div> <!-- /container -->
+</section>

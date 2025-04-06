@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
-<html th:replace="~{common/layout :: layout(~{::title}, ~{::section}, ~{::link},'과목 리스트', '과목 리스트')}"
+<html th:replace="~{common/layout :: layout(~{::title}, ~{::section}, ~{::link},'게시글 조회', '게시글 조회')}"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>과목 리스트</title>
+    <title>게시글 조회</title>
 </head>
 <body>
 <!-- 추가 link 없을 경우, link fragment 필요 -->
@@ -12,9 +12,8 @@
         <div class="row">
             <div class="col">
                 <button class="btn btn-primary float-end"
-                        onclick="location.href='subject-form.html'"
-                        th:onclick="|location.href='@{/subjects/new}'|"
-                        type="button">과목 등록
+                        th:onclick="|location.href='@{/posts/new}'|"
+                        type="button">게시글 등록
                 </button>
             </div>
         </div>
@@ -23,24 +22,22 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th>과목명</th>
-                    <th>학년</th>
-                    <th>학기</th>
-                    <th>교수님</th>
-                    <th>비고</th>
+                    <th>분류</th>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>작성일</th>
                     <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="s : ${subjects}">
-                    <td><a href="subject-view.html" th:href="@{|/subjects/${s.subjectId}|}" th:text="${s.subjectName}">과목명</a>
-                    </td>
-                    <td th:text="${s.grade}"></td>
-                    <td th:text="${s.semester}"></td>
-                    <td th:text="${s.professor}"></td>
-                    <td th:text="${s.remark}"></td>
+                <tr th:each="p : ${posts}">
+                    <td th:text="${p.category.displayName}"></td>
+                    <td><a href="post-view.html" th:href="@{|/posts/${p.postId}|}"
+                           th:text="${p.title}">과목명</a></td>
+                    <td th:text="${p.member.name}"></td>
+                    <td th:text="${p.createdDate}"></td>
                     <td>
-                        <button class="btn btn-danger btn-sm" th:onclick="'del(' + ${s.subjectId} + ')'">삭제</button>
+                        <button class="btn btn-danger btn-sm" th:onclick="'del(' + ${p.postId} + ')'">삭제</button>
                     </td>
                 </tr>
                 </tbody>
@@ -57,14 +54,14 @@
     </div><!-- /container -->
     <script>
         function del(id) {
-            if (confirm('과목을 삭제하시겠습니까?')) {
+            if (confirm('게시글을 삭제하시겠습니까?')) {
                 let msg = "다시 시도해주세요.";
-                let url = "/subjects/" + id;
+                let url = "/posts/" + id;
                 fetch(url, {
                     method: 'DELETE',
                 })
                     .then(response => {
-                        if (response.ok) msg = "과목이 삭제되었습니다.";
+                        if (response.ok) msg = "게시글이 삭제되었습니다.";
                     })
                     .catch(error => {
                         console.error("삭제 중 오류 발생:", error);

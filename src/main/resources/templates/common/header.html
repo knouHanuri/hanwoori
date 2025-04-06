@@ -1,9 +1,20 @@
 <header th:fragment="fragHeader" class="header">
     <div class="header-inner">
         <div class="logo"><a href="/"><img class="logo-image" src="/images/logo.png" alt="한우리 로고 사진"></a></div>
-        <div class="menu"><a href="/admin">관리자</a></div>
+
         <div class="menu"><a href="/about/findus">오시는길</a></div>
         <div class="menu"><a href="/about/contact">문의하기</a></div>
         <div class="menu"><a href="/study/list">스터디</a></div>
+        <div class="menu"><a href="/posts">게시판</a></div>
+        <div class="menu" th:if="${isAdmin}">
+            <a href="/admin">관리자</a>
+        </div>
+        <div class="menu"><a href="/admin">관리자</a></div>
+        <div class="menu">
+            <button th:if="${session.loginMember == null}" class="btn btn-primary btn-sm"
+                    th:onclick="|location.href='@{/login}'|">로그인</button>
+            <button th:if="${session.loginMember != null}" class="btn btn-primary btn-sm"
+                    th:onclick="|location.href='@{/logout}'|">로그아웃</button>
+        </div>
     </div>
 </header>
