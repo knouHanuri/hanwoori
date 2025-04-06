@@ -1,18 +1,14 @@
-<!--<!DOCTYPE html>-->
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/main">
+<!DOCTYPE html>
+<html th:replace="~{common/layout :: layout(~{::title}, ~{::section}, ~{::link},'오시는 길','우리의 모임 일정과 장소를 확인하세요!')}"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
     <title>오시는 길</title>
-    <link rel="stylesheet"  th:href="@{/css/about.css}">
+    <link th:href="@{/css/about.css}" rel="stylesheet">
 </head>
-<section layout:fragment="content">
-    <!-- 헤더 -->
-    <article class="intro-section">
-        <h2>오시는길</h2>
-        <p>우리의 모임 일정과 장소를 확인하세요!</p>
-    </article>
-
-    <!-- 메인 콘텐츠 -->
+<body>
+<!-- 추가 link 없을 경우, link fragment 필요 -->
+<th:block th:fragment="link"></th:block>
+<section>
     <article class="findus-article">
         <div id="map" style="width:100%;height:400px;"></div>
         <div class="findus-content">
@@ -22,14 +18,19 @@
             <ul>
                 <li><span>장소</span>한우리 스터디 룸</li>
                 <li><span>주소</span>서울특별시 영등포구 도림로 282 3층(뉴타운갈비탕건물)</li>
-                <li><span>지하철</span><p><em>7</em>신풍역 4번 출구에서 도보 8분</p></li>
-                <li><span>버스</span><p><em class="green">지선</em>6633, 5618 6516 6713</p><p><em class="green">마을</em>영등포01 영등포07 영등포04 영등포13</p><p><em class="purple">간선</em>507</p><p><em class="blue">일반</em>5</p></li>
-                <li><span>비고</span>자세한 내용이나 문의 사항은 <a href="/contact">문의 페이지</a>를 통해 연락하실 수 있습니다.</li>
+                <li><span>지하철</span>
+                    <p><em>7</em>신풍역 4번 출구에서 도보 8분</p></li>
+                <li><span>버스</span>
+                    <p><em class="green">지선</em>6633, 5618 6516 6713</p>
+                    <p><em class="green">마을</em>영등포01 영등포07 영등포04 영등포13</p>
+                    <p><em class="purple">간선</em>507</p>
+                    <p><em class="blue">일반</em>5</p></li>
+                <li><span>비고</span>자세한 내용이나 문의 사항은 <a href="/about/contact">문의 페이지</a>를 통해 연락하실 수 있습니다.</li>
             </ul>
         </div>
         <div class="findus-content">
             <div class="main-title">
-                <h3>OT</h3>
+                <h3>스터디 시간표</h3>
             </div>
             <ul>
                 <li><span>일자</span>2025년 2월 21일</li>
@@ -40,7 +41,8 @@
         </div>
     </article>
 
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e329318ea424d674ffdf93ab824bc5ba"></script>
+    <script type="text/javascript"
+            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c95d06bbb6aaeb77ce88a9d004336ce3"></script>
     <script>
         // 지도 생성
         var container = document.getElementById('map');
@@ -82,22 +84,21 @@
 	* 한 페이지 내에 약도를 2개 이상 넣을 경우에는
 	* 약도의 수 만큼 소스를 새로 생성, 삽입해야 합니다.
 -->
-<!--    &lt;!&ndash; 1. 약도 노드 &ndash;&gt;-->
-<!--    <div id="daumRoughmapContainer1736834395034" class="root_daum_roughmap root_daum_roughmap_landing"></div>-->
+    <!--    &lt;!&ndash; 1. 약도 노드 &ndash;&gt;-->
+    <!--    <div id="daumRoughmapContainer1736834395034" class="root_daum_roughmap root_daum_roughmap_landing"></div>-->
 
-<!--    &lt;!&ndash; 2. 설치 스크립트 &ndash;&gt;-->
-<!--    <script charset="UTF-8" class="daum_roughmap_loader_script" src="https://ssl.daumcdn.net/dmaps/map_js_init/roughmapLoader.js"></script>-->
+    <!--    &lt;!&ndash; 2. 설치 스크립트 &ndash;&gt;-->
+    <!--    <script charset="UTF-8" class="daum_roughmap_loader_script" src="https://ssl.daumcdn.net/dmaps/map_js_init/roughmapLoader.js"></script>-->
 
-<!--    &lt;!&ndash; 3. 실행 스크립트 &ndash;&gt;-->
-<!--    <script charset="UTF-8">-->
-<!--        new daum.roughmap.Lander({-->
-<!--            "timestamp" : "1736834395034",-->
-<!--            "key" : "2mrui",-->
-<!--            "mapWidth" : "800",-->
-<!--            "mapHeight" : "360"-->
-<!--        }).render();-->
-<!--    </script>-->
-
-
+    <!--    &lt;!&ndash; 3. 실행 스크립트 &ndash;&gt;-->
+    <!--    <script charset="UTF-8">-->
+    <!--        new daum.roughmap.Lander({-->
+    <!--            "timestamp" : "1736834395034",-->
+    <!--            "key" : "2mrui",-->
+    <!--            "mapWidth" : "800",-->
+    <!--            "mapHeight" : "360"-->
+    <!--        }).render();-->
+    <!--    </script>-->
 </section>
+</body>
 </html>

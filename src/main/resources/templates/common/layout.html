@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-<html th:fragment="layout (title, content, pageTitle, pageDescription)" xmlns:th="http://www.thymeleaf.org">
+<html th:fragment="layout (title, content, links, pageTitle, pageDescription)" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title th:replace="${title}">레이아웃 타이틀</title>
     <meta charset="utf-8">
+    <th:block th:if="${title != null}" th:replace="${title}">타이틀</th:block>
+
+    <!--공통 -->
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
     <link th:href="@{/css/common.css}" rel="stylesheet">
+    <link th:href="@{/css/reset.css}" rel="stylesheet">
+
+    <!-- 추가 -->
+    <th:block th:if="${links != null}" th:replace="${links}"></th:block>
 </head>
 <body>
 
