@@ -1,0 +1,162 @@
+.main-section {
+    width: min(1200px, 100% - 5rem);
+    margin: 0 auto;
+    padding-top: 70px;
+    display: flex;
+    gap: 100px;
+}
+.main-title{
+    width: 14.17%;
+}
+.main-section h3{
+    font-size: 30px;
+    font-family: "Ubuntu", serif;
+    font-weight: 600;
+    line-height: 1;
+    position: relative;
+    display: inline-block;
+}
+.main-section h3:after{
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 10px;
+    background: #ff6600;
+    content: '';
+    top: 0;
+    right: -15px;
+}
+.main-textbox{
+    display: flex;
+    gap: 15px;
+    flex-direction: column;
+    flex: 1;
+}
+.main-textbox em{
+    font-size: 20px;
+    line-height: 1.4;
+    font-weight: 700;
+
+}
+.main-textbox ul{
+    display: grid;
+    gap: 8px;
+    grid-template-columns: repeat(2, 1fr);
+}
+.main-textbox ul li span{
+    display: inline-flex;
+    margin-right: 5px;
+    font-weight: 600;
+}
+.main-textbox .main-imagebox {
+    width: 100%;
+    background: url(../images/activity5.jpg) center center no-repeat;
+    background-size: cover;
+    height: 200px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+.main-textbox .main-imagebox2{
+    background: url(../images/activity2.jpg) center center no-repeat;
+    background-size: cover;
+}
+
+.study-article{
+    width: min(1200px, 100% - 5rem);
+    margin: 0 auto;
+    padding-top: 70px;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+.study-content{
+    /*display: flex;*/
+    /*flex-wrap: wrap;*/
+    gap: 100px;
+    /*flex: 1;*/
+    display: flex;
+    justify-content: flex-start;  /* 기본적으로 좌측부터 배치 */
+    align-items: flex-start;
+}
+.study-content h3{
+    font-size: 30px;
+    font-family: "Ubuntu", serif;
+    font-weight: 600;
+    line-height: 1;
+    position: relative;
+    display: inline-block;
+}
+.study-content h3:after{
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 10px;
+    background: #ff6600;
+    content: '';
+    top: 0;
+    right: -15px;
+}
+.study-content ul{
+    /*flex: 1;*/
+    /*flex: 0 0 100%;*/
+    /*margin-bottom: 10px;*/
+    /*width: 100%;*/
+
+    /*flex-grow: 1;  !* 여유 공간을 채우도록 설정 *!*/
+    /*flex-shrink: 0;  !* 줄어들지 않도록 설정 *!*/
+    /*flex-basis: 100%;  !* 기본 너비를 100%로 설정 *!*/
+    /*margin-bottom: 10px;  !* 요소 간 간격을 줍니다 *!*/
+
+    flex: 0 0 auto;  /* 각 ul이 고정 크기만큼 공간을 차지하도록 */
+    margin-bottom: 10px;  /* 각 ul 사이 간격 */
+}
+.study-content ul li{
+    border-bottom: 1px solid #ddd;
+    padding-block: 20px;
+    display: flex;
+    align-items: center;
+}
+.study-content .content {
+    /* 우측 콘텐츠가 세로로 나열되도록 설정 */
+    display: flex;
+    flex-direction: column;  /* 세로로 쌓이도록 */
+    flex: 1;  /* 남은 공간을 차지하도록 */
+}
+.study-content ul li:first-child{
+    padding-top: 0;
+}
+.study-content ul li span{
+    font-weight: 600;
+    width: 160px;
+    display: inline-flex;
+}
+.study-content ul li p {
+    margin-right: 10px;
+}
+.study-content ul li p em{
+    display: inline-flex;
+    background: #717617;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    margin-right: 5px;
+    font-size: 12px;
+}
+.study-content ul li p em.blue{
+    background: #00AEAB;
+    width: 30px;
+    border-radius: 5px;
+}
+.study-content ul li p em.purple{
+    background: #7182F5;
+    width: 30px;
+    border-radius: 5px;
+}
+.study-content ul li p em.green{
+    background: #5FB73C;
+    width: 30px;
+    border-radius: 5px;
+}

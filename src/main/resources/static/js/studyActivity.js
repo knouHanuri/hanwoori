@@ -2,12 +2,11 @@
 // function edit(studyId){
 //     window.location.href = `/study/form?studyId=${studyId}`;
 // }
-//
-// function view(studyId){
-//     window.location.href = `/study/view?studyId=${studyId}`;
-// }
-//
-function del(studyActivityId) {
+function view_study(studyId){
+     window.location.href = `/study/view?studyId=${studyId}`;
+ }
+
+function del_activity(studyActivityId) {
     if (confirm('스터디 활동내역을 삭제하시겠습니까?')) {
         let msg = "다시 시도해주세요.";
         fetch(`/studyActivity/delete/${studyActivityId}`, {
