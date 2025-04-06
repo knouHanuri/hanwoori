@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface SignupService {
-    void save(SignupFormRequestDTO signupFormRequestDTO);
+    void save(Signup signup);
     List<Signup> findAll();
     Optional<Signup> findById(Long id);
-    void modify(SignupFormRequestDTO signupFormRequestDTO);
     int delete(Long id);
-    List<Signup> findByMemberIdAndYear(Signup signup);
-    int deleteByMemberIdAndYear(Signup signup);
+    List<Signup> findByMemberIdGroupBy(Long memberId);
+    int deleteByMemberIdAndYear(Long memberId, Integer year);
+    List<Signup> findByMemberIdAndYear(Long memberId, Integer year);
 }

@@ -15,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,29 +36,31 @@ public class SignupController {
 
     @GetMapping("/new")
     public String newForm(Model model, HttpSession session) {
-
         SignupFormRequestDTO signupFormRequestDTO = new SignupFormRequestDTO();
-        Member loginMember = (Member)session.getAttribute(LOGIN_MEMBER);
-        signupFormRequestDTO.setMemberId(loginMember.getMemberId());
+        Optional<Member> loginMember = Optional.ofNullable((Member) session.getAttribute(LOGIN_MEMBER));
+        signupFormRequestDTO.setMemberId(loginMember.orElseGet(Member::new).getMemberId());
         model.addAttribute("signupFormRequestDTO",signupFormRequestDTO);
         return "domain/signup/signup-form";
     }
 
     @PostMapping("/new")
-    public String create(@Validated @ModelAttribute SignupFormRequestDTO signupFormRequestDTO, BindingResult bindingResult) {
+    public String create(@Validated @ModelAttribute SignupFormRequestDTO signupFormRequestDTO, BindingResult bindingResult,HttpSession session) {
 
         if(bindingResult.hasErrors()) {
             return "domain/signup/signup-form";
         }
 
+        Optional<Member> loginMember = Optional.ofNullable((Member) session.getAttribute(LOGIN_MEMBER));
+
         for(Long subjectId : signupFormRequestDTO.getSubjectIds()){
-
+            Subject subject = subjectService.findById(subjectId).orElseGet(Subject::new);
+            Signup signup = new Signup();
+            signup.setMember(loginMember.orElseGet(Member::new));
+            signup.setSubject(subject);
+            signup.setYear(signupFormRequestDTO.getYear());
+            signupService.save(signup);
         }
-
-        signupService.save(signupFormRequestDTO);
-        Long signupId = signupFormRequestDTO.getSignupId();
-
-        return "redirect:/signups/" + signupId;
+        return "redirect:/signups/members";
     }
 
     @GetMapping
@@ -73,25 +76,6 @@ public class SignupController {
         return "domain/signup/signup-view";
     }
 
-    @GetMapping("/{id}/edit")
-    public String editForm(@PathVariable Long id, Model model) {
-        Optional<Signup> signup = signupService.findById(id);
-        SignupFormRequestDTO signupFormRequestDTO = Signup.form(signup.orElse(new Signup()));
-        model.addAttribute("signupFormRequestDTO", signupFormRequestDTO);
-        return "domain/signup/signup-edit-form";
-    }
-
-    @PostMapping("/{id}/edit")
-    public String modify(@PathVariable Long id, @Validated @ModelAttribute SignupFormRequestDTO signupFormRequestDTO,BindingResult bindingResult) {
-
-        if(bindingResult.hasErrors()) {
-            return "domain/signup/signup-edit-form";
-        }
-
-        signupService.modify(signupFormRequestDTO);
-        return "redirect:/signups/" + id;
-    }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         int count = signupService.delete(id);
@@ -102,4 +86,39 @@ public class SignupController {
         }
     }
 
+    //회원 수강신청 기능
+    @GetMapping("/members")
+    public String signups(Model model, HttpSession session) {
+        Optional<Member> loginMember = Optional.ofNullable((Member) session.getAttribute(LOGIN_MEMBER));
+        List<Signup> signups = signupService.findByMemberIdGroupBy(loginMember.orElseGet(Member::new).getMemberId());
+        model.addAttribute("signups", signups);
+        return "domain/signup/member-signup-list";
+    }
+
+    //회원 수강신청 삭제
+    @DeleteMapping("{year}/members/{memberId}")
+    public ResponseEntity<Void> deleteMemberSignups(@PathVariable Integer year,@PathVariable Long memberId) {
+        int count = signupService.deleteByMemberIdAndYear(memberId,year);
+        if (count > 0) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
+    }
+
+    @GetMapping("/{year}/members/{memberId}")
+    public String viewByMemberIdAndYear(@PathVariable Integer year, @PathVariable Long memberId, Model model) {
+        List<Signup> signup = signupService.findByMemberIdAndYear(memberId,year);
+        model.addAttribute("signup", signup);
+        SignupFormRequestDTO signupFormRequestDTO = new SignupFormRequestDTO();
+        List<Long> subjectIds = new ArrayList<Long>();
+        for(Signup s : signup){
+            subjectIds.add(s.getSubject().getSubjectId());
+        }
+        signupFormRequestDTO.setMemberId(memberId);
+        signupFormRequestDTO.setYear(year);
+        signupFormRequestDTO.setSubjectIds(subjectIds);
+        model.addAttribute("signupFormRequestDTO", signupFormRequestDTO);
+        return "domain/signup/signup-view";
+    }
 }

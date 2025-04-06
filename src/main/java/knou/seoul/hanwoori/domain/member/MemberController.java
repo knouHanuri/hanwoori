@@ -1,8 +1,12 @@
 package knou.seoul.hanwoori.domain.member;
 
+import jakarta.servlet.http.HttpSession;
 import knou.seoul.hanwoori.domain.member.dto.Member;
 import knou.seoul.hanwoori.domain.member.dto.MemberFormRequestDTO;
 import knou.seoul.hanwoori.domain.member.dto.MemberPasswordModifyRequestDTO;
+import knou.seoul.hanwoori.domain.signup.SignupService;
+import knou.seoul.hanwoori.domain.signup.dto.Signup;
+import knou.seoul.hanwoori.domain.signup.dto.SignupFormRequestDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,8 +17,12 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
+import static knou.seoul.hanwoori.common.SessionConst.LOGIN_MEMBER;
 
 @Controller
 @RequestMapping("/members")
@@ -22,6 +30,7 @@ import java.util.Optional;
 public class MemberController {
 
     private final MemberService memberService;
+    private final SignupService signupService;
 
     @ModelAttribute("genders")
     public Member.Gender[] genders() {
@@ -130,5 +139,4 @@ public class MemberController {
 
         return "redirect:/members/" + id;
     }
-
 }
