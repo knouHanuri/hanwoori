@@ -31,12 +31,23 @@
                 <li th:text="'제목 : ' + ${studyActivity.title}"></li>
                 <li th:text="'내용 : ' + ${studyActivity.content}"></li>
                 <!-- 수정 버튼 -->
-                <a th:href="@{/studyActivity/form(studyId=${studyActivity.studyId}, studyActivityId=${studyActivity.studyActivityId})}" class="btn btn-warning btn-sm">수정</a>
+                <a th:if="${studyActivity.createdMemberId == memberId}" th:href="@{/studyActivity/form(studyId=${studyActivity.studyId}, studyActivityId=${studyActivity.studyActivityId})}" class="btn btn-warning btn-sm">수정</a>
                 <!-- 삭제 버튼 -->
-                <a th:onclick="|del(${studyActivity.studyActivityId})|" class="btn btn-danger btn-sm" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</a>
+                <a th:if="${studyActivity.createdMemberId == memberId}" th:onclick="|del(${studyActivity.studyActivityId})|" class="btn btn-danger btn-sm" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</a>
             </ul>
 
-            <a th:href="@{/study/list}">목록으로</a>
+            참여자
+            <ul th:each="studyParticipant, iterStat : ${studyParticipant}">
+                <li th:text="${iterStat.index + 1}"></li>
+                <li th:text="'이름 : ' + ${studyParticipant.name}"></li>
+                <li th:text="'신청일 : ' + ${#temporals.format(studyParticipant.createdDate, 'yyyy-MM-dd')}"></li>
+            </ul>
+
+            <div>
+                <a th:href="@{/study/list}" class="btn btn-secondary btn-sm">목록으로</a>
+                <a th:if="${memberId != null && !isParticipantStudy}" th:onclick="|save(${study.studyId})|"  class="btn btn-primary btn-sm">참여</a>
+                <a th:if="${memberId != null && isParticipantStudy}" th:onclick="|del(${study.studyId})|" class="btn btn-danger btn-sm">참여 삭제</a>
+            </div>
         </div> <!-- /container -->
         <script th:inline="javascript">
             window.onload = function() {
@@ -48,5 +59,6 @@
             }
         </script>
         <script type="application/javascript" src="/js/studyActivity.js"></script>
+        <script type="application/javascript" src="/js/studyParticipant.js"></script>
     </body>
 </html>

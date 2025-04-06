@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html th:replace="~{common/layout :: layout(~{::title}, ~{::section}, ~{::link})}"
+<html th:replace="~{common/layout :: layout(~{::title}, ~{::section}, ~{::link},'오시는 길','우리의 모임 일정과 장소를 확인하세요!')}"
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>오시는 길</title>
@@ -9,13 +9,6 @@
 <!-- 추가 link 없을 경우, link fragment 필요 -->
 <th:block th:fragment="link"></th:block>
 <section>
-    <!-- 헤더 -->
-    <article class="intro-section">
-        <h2>오시는길</h2>
-        <p>우리의 모임 일정과 장소를 확인하세요!</p>
-    </article>
-
-    <!-- 메인 콘텐츠 -->
     <article class="findus-article">
         <div id="map" style="width:100%;height:400px;"></div>
         <div class="findus-content">
@@ -37,7 +30,7 @@
         </div>
         <div class="findus-content">
             <div class="main-title">
-                <h3>OT</h3>
+                <h3>스터디 시간표</h3>
             </div>
             <ul>
                 <li><span>일자</span>2025년 2월 21일</li>

@@ -1,18 +1,12 @@
 <!DOCTYPE HTML>
-<html th:replace="~{common/layout :: layout(~{::title}, ~{::section}, ~{::link})}"
+<html th:replace="~{common/layout :: layout(~{::title}, ~{::section}, ~{::link},'한우리 소개', '한국방송통신대학교 공식 스터디에 오신 것을 환영합니다!')}"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>한우리메인</title>
+    <title>한우리 소개</title>
     <link th:href="@{/css/about.css}" rel="stylesheet">
 </head>
 <body>
-<!-- 추가 link 없을 경우, link fragment 필요 -->
-<th:block th:fragment="link"></th:block>
 <section>
-    <article class="intro-section">
-        <h2>한우리 소개</h2>
-        <p>한국방송통신대학교 공식 스터디에 오신것을 환영합니다!</p>
-    </article>
     <article class="main-section">
         <div class="main-title">
             <h3>Greeting</h3>

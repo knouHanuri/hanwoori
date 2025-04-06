@@ -27,7 +27,6 @@ public class StudyParticipantServiceImpl implements StudyParticipantService {
         Optional<Study> study = studyDAO.findById(studyParticipant.getStudyId());
         if(study.isPresent()) {
             StudyParticipantParam param = createStudyParticipantParam(
-                studyParticipant.getStudyParticipantId(),
                 studyParticipant.getStudyId(),
                 studyParticipant.getMemberId()
             );
@@ -53,6 +52,11 @@ public class StudyParticipantServiceImpl implements StudyParticipantService {
     }
 
     @Override
+    public List<StudyParticipant> findStudyParticipantByStudyId(long studyId) {
+        return studyParticipantDAO.findStudyParticipantByStudyId(studyId);
+    }
+
+    @Override
     public List<StudyParticipant> studyParticipantListAll() {
         return studyParticipantDAO.studyParticipantListAll();
     }
@@ -63,15 +67,19 @@ public class StudyParticipantServiceImpl implements StudyParticipantService {
     }
 
     @Override
+    public int deleteByStudyId(long studyId) {
+        return studyParticipantDAO.deleteByStudyId(studyId);
+    }
+
+    @Override
     public int delete(StudyParticipantParam studyParticipantParam) {
         return studyParticipantDAO.delete(studyParticipantParam);
     }
 
     @Override
-    public StudyParticipantParam createStudyParticipantParam(long studyParticipantId, long studyId, long memberId) {
+    public StudyParticipantParam createStudyParticipantParam(long studyId, long memberId) {
         // 파라미터 객체 생성
         StudyParticipantParam param = new StudyParticipantParam();
-        param.setStudyParticipantId(studyParticipantId);
         param.setStudyId(studyId);
         param.setMemberId(memberId);
 

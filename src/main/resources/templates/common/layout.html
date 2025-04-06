@@ -1,6 +1,5 @@
-<!DOCTYPE HTML>
-<html th:fragment="layout (title, content, links)"
-      xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html th:fragment="layout (title, content, links, pageTitle, pageDescription)" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <th:block th:if="${title != null}" th:replace="${title}">타이틀</th:block>
@@ -16,6 +15,11 @@
 <body>
 
 <div th:replace="~{common/header :: fragHeader}"></div>
+
+<article class="intro-section">
+    <h2 th:text="${pageTitle} ?: '기본 제목'">기본 제목</h2>
+    <p th:text="${pageDescription} ?: '기본 설명'">기본 설명</p>
+</article>
 
 <div th:replace="${content}">
     <p>레이아웃 컨텐츠</p>

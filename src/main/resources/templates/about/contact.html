@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html th:replace="~{common/layout :: layout(~{::title}, ~{::section}, ~{::link})}"
+<html th:replace="~{common/layout :: layout(~{::title}, ~{::section}, ~{::link},'문의하기','자세한 사항이나 문의 사항이 있으시면 아래 정보를 통해 연락하실 수 있습니다.')}"
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>문의하기</title>
@@ -9,11 +9,6 @@
 <!-- 추가 link 없을 경우, link fragment 필요 -->
 <th:block th:fragment="link"></th:block>
 <section>
-    <article class="intro-section">
-        <h2>문의하기</h2>
-        <p>자세한 사항이나 문의 사항이 있으시면 아래 정보를 통해 연락하실 수 있습니다.</p>
-    </article>
-    <!-- 연락처 정보 -->
     <div class="contact-info">
         <em>진주영</em>
         <ul>

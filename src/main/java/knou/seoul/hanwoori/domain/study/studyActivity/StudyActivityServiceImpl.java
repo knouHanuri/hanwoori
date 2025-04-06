@@ -93,6 +93,11 @@ public class StudyActivityServiceImpl implements StudyActivityService {
     }
 
     @Override
+    public int deleteByStudyId(long studyId) {
+        return studyActivityDAO.deleteByStudyId(studyId);
+    }
+
+    @Override
     public int delete(long studyActivityId) {
         return studyActivityDAO.delete(studyActivityId);
     }

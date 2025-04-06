@@ -12,7 +12,7 @@ function view(studyId){
 }
 
 function del(studyId) {
-    if (confirm('스터디를 삭제하시겠습니까?')) {
+    if (confirm('스터디 활동내역, 참여자까지 모두 삭제됩니다.\n스터디를 삭제하시겠습니까?')) {
         let msg = "다시 시도해주세요.";
         fetch(`/study/delete/${studyId}`, {
             method: 'DELETE',

@@ -35,6 +35,10 @@
             updated_date = CURRENT_TIMESTAMP
         WHERE study_activity_id = #{studyActivityId}
     </update>
+    <!--데이터 삭제(해당 스터디 활동이력 모두 삭제)-->
+    <delete id="deleteByStudyId" parameterType="long">
+        delete from study_activity WHERE study_id = #{studyId}
+    </delete>
     <!--데이터 삭제-->
     <delete id="delete" parameterType="long">
         delete from study_activity WHERE study_activity_id = #{studyActivityId}
