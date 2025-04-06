@@ -16,8 +16,8 @@ public class SignupServiceImpl implements SignupService {
     private final SignupDAO signupDAO;
 
     @Override
-    public void save(SignupFormRequestDTO signupFormRequestDTO) {
-        signupDAO.save(signupFormRequestDTO);
+    public void save(Signup signup) {
+        signupDAO.save(signup);
     }
 
     @Override
@@ -31,22 +31,22 @@ public class SignupServiceImpl implements SignupService {
     }
 
     @Override
-    public void modify(SignupFormRequestDTO signupFormRequestDTO) {
-        signupDAO.modify(signupFormRequestDTO);
-    }
-
-    @Override
     public int delete(Long id) {
         return signupDAO.delete(id);
     }
 
     @Override
-    public List<Signup> findByMemberIdAndYear(Signup signup) {
-        return signupDAO.findByMemberIdAndYear(signup);
+    public List<Signup> findByMemberIdGroupBy(Long memberId) {
+        return signupDAO.findByMemberIdGroupBy(memberId);
     }
 
     @Override
-    public int deleteByMemberIdAndYear(Signup signup) {
-        return signupDAO.deleteByMemberIdAndYear(signup);
+    public int deleteByMemberIdAndYear(Long memberId, Integer year) {
+        return signupDAO.deleteByMemberIdAndYear(memberId,year);
+    }
+
+    @Override
+    public List<Signup> findByMemberIdAndYear(Long memberId, Integer year) {
+        return signupDAO.findByMemberIdAndYear(memberId,year);
     }
 }

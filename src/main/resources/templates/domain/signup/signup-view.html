@@ -12,37 +12,27 @@
     <div class="py-5 text-center">
         <h2>수강신청 상세</h2>
     </div>
-
     <div>
-        <label for="memberName">과목</label>
-        <input type="text" id="memberName" name="memberName" class="form-control" value="회원A"
-               th:value="${signup.member.name}" readonly>
-    </div>
-    <div>
-        <label for="subjectName">과목</label>
-        <input type="text" id="subjectName" name="subjectName" class="form-control" value="과목A"
-               th:value="${signup.subject.subjectName}" readonly>
+        <div>과목</div>
+        <div th:each="s : ${subjects}" class="form-check form-check-inline">
+            <input type="checkbox" th:field="*{signupFormRequestDTO.subjectIds}" th:value="${s.subjectId}" class="form-check-input" disabled>
+            <label th:for="${#ids.prev('subjectIds')}"
+                   th:text="${s.subjectName}" class="form-check-label"></label>
+        </div>
     </div>
     <div>
         <label for="year">년도</label>
         <input type="number" id="year" min="1900" max="2100" step="1"
-               th:value="*{signup.year}" class="form-control" readonly>
+               th:value="*{signupFormRequestDTO.year}" class="form-control" readonly>
     </div>
 
     <hr class="my-4">
 
     <div class="row">
         <div class="col">
-            <button class="w-100 btn btn-primary btn-lg"
-                    onclick="location.href='signup-edit-form.html'"
-                    th:onclick="|location.href='@{/signups/{signupId}/edit(signupId=${signup.signupId})}'|"
-                    type="button">수강신청 수정
-            </button>
-        </div>
-        <div class="col">
             <button class="w-100 btn btn-secondary btn-lg"
                     onclick="location.href='subject-list.html'"
-                    th:onclick="|location.href='@{/signups}'|"
+                    th:onclick="|location.href='@{/signups/members}'|"
                     type="button">목록으로
             </button>
         </div>

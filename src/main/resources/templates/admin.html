@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html th:replace="~{common/layout :: layout(~{::title}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>관리자</title>
+</head>
+<body>
+<section>
+    <!-- 인트로 -->
+    <article class="intro-section">
+        <h2>관리자 임시화면</h2>
+        <p>한국방송통신대학교 공식 스터디에 오신것을 환영합니다!</p>
+    </article>
+    <ul>
+        <li>도메인
+            <ul>
+                <li><a href="/members">회원</a></li>
+                <li><a href="/subjects">과목</a></li>
+                <li th:if="${session.loginMember == null}"><a href="/login">로그인</a></li>
+                <li th:if="${session.loginMember != null}"><a href="/logout">로그아웃</a></li>
+                <li><a href="/signups/members">수강신청(회원)</a></li>
+                <li><a href="/signups">수강신청(관리자)</a></li>
+                <li><a href="/posts">게시판</a></li>
+            </ul>
+        </li>
+        <li>스터디
+            <ul>
+                <li><a href="/study/form">스터디저장</a></li>
+                <li><a href="/study/list">스터디조회</a></li>
+            </ul>
+        </li>
+    </ul>
+    <div class="row">
+        <div class="col">
+            <button class="btn btn-primary"
+                    type="button"
+                    th:onclick="'history.back();'">홈으로
+            </button>
+        </div>
+    </div>
+</section>
+</body>
+</html>
