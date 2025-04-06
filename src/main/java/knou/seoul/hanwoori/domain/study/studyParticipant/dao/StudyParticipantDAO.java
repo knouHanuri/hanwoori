@@ -12,6 +12,8 @@ public interface StudyParticipantDAO {
     void save(StudyParticipant studyParticipant);
     Optional<StudyParticipant> findStudyParticipantByIds(StudyParticipantParam param);
     List<StudyParticipant> studyParticipantListAll();
+    List<StudyParticipant> findStudyParticipantByStudyId(long studyId);
     List<StudyParticipant> studyParticipantListLimited(int limit);
+    int deleteByStudyId(long studyId);
     int delete(StudyParticipantParam param);
 }

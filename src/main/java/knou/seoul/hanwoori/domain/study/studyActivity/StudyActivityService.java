@@ -13,5 +13,6 @@ public interface StudyActivityService {
     Optional<StudyActivity> findById(long studyActivityId);
     List<StudyActivity> studyActivityListAll();
     List<StudyActivity> studyActivityListLimited(int limit);
+    int deleteByStudyId(long studyId);
     int delete(long studyActivityId);
 }
