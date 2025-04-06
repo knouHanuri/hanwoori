@@ -12,6 +12,7 @@
     <div class="py-5 text-center">
         <h2>수강신청 리스트</h2>
     </div>
+
     <div class="row">
         <div class="col">
             <button class="btn btn-primary float-end"
@@ -20,13 +21,13 @@
                     type="button">수강 신청</button>
         </div>
     </div>
+
     <hr class="my-4">
     <div class="row">
         <table class="table">
             <thead>
             <tr>
                 <th>이름</th>
-                <th>과목</th>
                 <th>년도</th>
                 <th>등록일</th>
                 <th></th>
@@ -34,11 +35,9 @@
             </thead>
             <tbody>
             <tr th:each="s : ${signups}">
-                <td th:text="${s.member.name}"></td>
-                <td th:text="${s.subject.subjectName}"></td>
+                <td><a href="signup-view.html" th:href="@{|/signups/${s.year}/members/${s.member.memberId}|}" th:text="${s.member.name}">이름</a></td>
                 <td th:text="${s.year}"></td>
-                <td th:text="${s.createdDate}"></td>
-                <td><button class="btn btn-danger btn-sm" th:onclick="'del(' + ${s.signupId} + ')'">삭제</button></td>
+                <td><button class="btn btn-danger btn-sm" th:onclick="'del(' + ${s.member.memberId} + ',' + ${s.year} + ')'">삭제</button></td>
             </tr>
             </tbody>
         </table>
@@ -53,15 +52,15 @@
     </div>
 </div><!-- /container -->
 <script>
-    function del(id){
-        if (confirm('수강신청을 삭제하시겠습니까?')) {
+    function del(memberId,year){
+        if (confirm('수강신청을 일괄 삭제하시겠습니까?')) {
             let msg = "다시 시도해주세요.";
-            let url = "/signups/" + id;
+            let url = "/signups/" + year + "/members/" + memberId;
             fetch(url, {
                 method: 'DELETE',
             })
                 .then(response => {
-                    if (response.ok) msg = "수강신청이 삭제되었습니다.";
+                    if (response.ok) msg = "수강신청이 일괄 삭제되었습니다.";
                 })
                 .catch(error => {
                     console.error("삭제 중 오류 발생:", error);

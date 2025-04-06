@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html th:fragment="layout (title, content)" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:replace="${title}">레이아웃 타이틀</title>
+    <meta charset="utf-8">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/common.css}" rel="stylesheet">
+</head>
+<body>
+
+<div th:replace="~{common/header :: fragHeader}"></div>
+
+<div th:replace="${content}">
+    <p>레이아웃 컨텐츠</p>
+</div>
+
+<div th:replace="~{common/footer :: fragFooter}"></div>
+
+</body>
+</html>

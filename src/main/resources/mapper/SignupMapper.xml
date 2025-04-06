@@ -18,7 +18,7 @@
         </association>
     </resultMap>
     <!--수강신청 저장-->
-    <insert id="save" parameterType="knou.seoul.hanwoori.domain.signup.dto.SignupFormRequestDTO" useGeneratedKeys="true" keyProperty="signupId">
+    <insert id="save" parameterType="knou.seoul.hanwoori.domain.signup.dto.Signup" useGeneratedKeys="true" keyProperty="signupId">
         insert into signup_history
         (
             member_id,
@@ -27,8 +27,8 @@
         )
         values
             (
-                #{memberId},
-                #{subjectId},
+                #{member.memberId},
+                #{subject.subjectId},
                 #{year}
             )
     </insert>
@@ -59,28 +59,41 @@
         join subject        as s on s.subject_id = h.subject_id
         where signup_id = #{signupId}
     </select>
-    <!--수강신청 수정-->
-    <update id="modify" parameterType="knou.seoul.hanwoori.domain.signup.dto.SignupFormRequestDTO">
-        update signup_history
-        set member_id = #{memberId},
-            subject_id = #{subjectId},
-            year = #{year},
-            updated_date = CURRENT_TIMESTAMP
-        where signup_id = #{signupId}
-    </update>
     <!--수강신청 삭제-->
     <delete id="delete" parameterType="knou.seoul.hanwoori.domain.signup.dto.Signup">
         delete from signup_history where signup_id = #{signupId}
     </delete>
-    <!--조회(memberId,Year)-->
-    <select id="findByMemberIdAndYear" parameterType="knou.seoul.hanwoori.domain.signup.dto.Signup" resultType="knou.seoul.hanwoori.domain.signup.dto.Signup">
-        select *
-        from signup_history
-        where member_id = #{member.memberId}
-          and year = #{year}
+    <!--조회(memberId)-->
+    <select id="findByMemberIdGroupBy" parameterType="Long"  resultMap="signupMemberSubject">
+        select h.member_id,
+               h.year,
+               m.name
+        from signup_history as h
+        join member         as m on m.member_id  = h.member_id
+        where h.member_id = #{memberId}
+        group by h.member_id,h.year,m.name
     </select>
     <!--수강신청 삭제(memberId,year)-->
-    <delete id="deleteByMemberIdAndYear" parameterType="knou.seoul.hanwoori.domain.signup.dto.Signup">
-        delete from signup_history where member_id = #{member.memberId} and year = #{year}
+    <delete id="deleteByMemberIdAndYear">
+        delete from signup_history where member_id = #{memberId} and year = #{year}
     </delete>
+    <!--조회(Memberid,Year)-->
+    <select id="findByMemberIdAndYear" resultMap="signupMemberSubject">
+        select h.signup_id,
+               h.year,
+               h.created_date,
+               m.member_id,
+               m.name,
+               h.subject_id,
+               s.subject_name
+        from signup_history as h
+                 join member         as m on m.member_id  = h.member_id
+                 join subject        as s on s.subject_id = h.subject_id
+        where h.member_id = #{memberId}
+          and h.year = ${year}
+    </select>
+
+
+
+
 </mapper>
