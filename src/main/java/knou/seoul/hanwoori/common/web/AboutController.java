@@ -13,16 +13,9 @@ public class AboutController {
         return "about/findus";
     }
 
-    @GetMapping("/activities")
-    public String activities(){
-        return "about/activities";
-    }
-
     @GetMapping("/contact")
     public String contact(){
         return "about/contact";
     }
-
-
 
 }

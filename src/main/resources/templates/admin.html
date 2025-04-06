@@ -1,10 +1,12 @@
 <!DOCTYPE HTML>
-<html th:replace="~{common/layout :: layout(~{::title}, ~{::section})}"
+<html th:replace="~{common/layout :: layout(~{::title}, ~{::section}, ~{::link})}"
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>관리자</title>
 </head>
 <body>
+<!-- 추가 link 없을 경우, link fragment 필요 -->
+<th:block th:fragment="link"></th:block>
 <section>
     <!-- 인트로 -->
     <article class="intro-section">

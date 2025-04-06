@@ -63,7 +63,7 @@ public class StudyActivityServiceTest {
 
         studyActivity = new StudyActivity();
         studyActivity.setStudyId(_studyId);
-        studyActivity.setStudyDate(LocalDateTime.of(2024,5,11,12,30));
+        //studyActivity.setStudyDate(LocalDateTime.of(2024,5,11,12,30));
         studyActivity.setTitle("test");
         studyActivity.setContent("상세한 활동 내역");
         studyActivity.setCreatedMemberId(1) ;
