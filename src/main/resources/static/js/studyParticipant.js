@@ -1,4 +1,4 @@
-function save(studyId){
+function save_participant(studyId){
     if (confirm('해당 스터디에 참여하시겠습니까?')) {
         let msg = "다시 시도해주세요.";
         fetch(`/studyParticipant/save/${studyId}`, {
@@ -18,7 +18,7 @@ function save(studyId){
     }
 }
 
-function del(studyId){
+function del_participant(studyId){
     if (confirm('해당 스터디를 참여 삭제 하시겠습니까?')) {
         let msg = "다시 시도해주세요.";
         fetch(`/studyParticipant/delete/${studyId}`, {
