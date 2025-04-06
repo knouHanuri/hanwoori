@@ -1,7 +1,9 @@
 package knou.seoul.hanwoori.domain.signup;
 
 import jakarta.servlet.http.HttpSession;
+import knou.seoul.hanwoori.domain.member.MemberService;
 import knou.seoul.hanwoori.domain.member.dto.Member;
+import knou.seoul.hanwoori.domain.post.dto.Post;
 import knou.seoul.hanwoori.domain.signup.dto.Signup;
 import knou.seoul.hanwoori.domain.signup.dto.SignupFormRequestDTO;
 import knou.seoul.hanwoori.domain.subject.SubjectService;
@@ -28,6 +30,7 @@ public class SignupController {
 
     private final SignupService signupService;
     private final SubjectService subjectService;
+    private final MemberService memberService;
 
     @ModelAttribute("subjects")
     public List<Subject> subjects() {
@@ -72,7 +75,7 @@ public class SignupController {
     @GetMapping("/{id}")
     public String view(@PathVariable Long id, Model model) {
         Optional<Signup> signup = signupService.findById(id);
-        model.addAttribute("signup", signup.orElse(null));
+        model.addAttribute("signup", signup.orElseGet(Signup::new));
         return "domain/signup/signup-view";
     }
 
@@ -108,11 +111,10 @@ public class SignupController {
 
     @GetMapping("/{year}/members/{memberId}")
     public String viewByMemberIdAndYear(@PathVariable Integer year, @PathVariable Long memberId, Model model) {
-        List<Signup> signup = signupService.findByMemberIdAndYear(memberId,year);
-        model.addAttribute("signup", signup);
+        List<Signup> signups = signupService.findByMemberIdAndYear(memberId,year);
         SignupFormRequestDTO signupFormRequestDTO = new SignupFormRequestDTO();
-        List<Long> subjectIds = new ArrayList<Long>();
-        for(Signup s : signup){
+        List<Long> subjectIds = new ArrayList<>();
+        for(Signup s : signups){
             subjectIds.add(s.getSubject().getSubjectId());
         }
         signupFormRequestDTO.setMemberId(memberId);
@@ -120,5 +122,47 @@ public class SignupController {
         signupFormRequestDTO.setSubjectIds(subjectIds);
         model.addAttribute("signupFormRequestDTO", signupFormRequestDTO);
         return "domain/signup/signup-view";
+    }
+
+    @GetMapping("/{year}/members/{memberId}/edit")
+    public String editForm(@PathVariable Integer year,@PathVariable Long memberId, Model model) {
+        List<Signup> signups = signupService.findByMemberIdAndYear(memberId,year);
+        SignupFormRequestDTO signupFormRequestDTO = new SignupFormRequestDTO();
+        List<Long> subjectIds = new ArrayList<>();
+        for(Signup s : signups){
+            subjectIds.add(s.getSubject().getSubjectId());
+        }
+        signupFormRequestDTO.setMemberId(memberId);
+        signupFormRequestDTO.setYear(year);
+        signupFormRequestDTO.setSubjectIds(subjectIds);
+        model.addAttribute("signupFormRequestDTO", signupFormRequestDTO);
+
+        return "domain/signup/signup-edit-form";
+    }
+
+
+    @PostMapping("/{year}/members/{memberId}/edit")
+    public String modify(@PathVariable Integer year,@PathVariable Long memberId,
+                         @Validated @ModelAttribute SignupFormRequestDTO signupFormRequestDTO, BindingResult bindingResult,HttpSession session) {
+
+        if(bindingResult.hasErrors()) {
+            return "domain/signup/signup-edit-form";
+        }
+
+        //트랜잭션 관리 등 문제점이 잇을듯
+        int count = signupService.deleteByMemberIdAndYear(memberId,year);
+        if (count > 0) {
+            Optional<Member> member = memberService.findById(signupFormRequestDTO.getMemberId());
+            for(Long subjectId : signupFormRequestDTO.getSubjectIds()){
+                Subject subject = subjectService.findById(subjectId).orElseGet(Subject::new);
+                Signup signup = new Signup();
+                signup.setMember(member.orElseGet(Member::new));
+                signup.setSubject(subject);
+                signup.setYear(signupFormRequestDTO.getYear());
+                signupService.save(signup);
+            }
+
+        }
+        return "redirect:/signups/" + year + "/members/" + memberId;
     }
 }

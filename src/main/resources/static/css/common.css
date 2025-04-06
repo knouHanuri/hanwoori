@@ -5,6 +5,11 @@
     border-color: red;
     color: red;
 }
+.btn-navy {
+    background-color : navy;
+    color : white;
+    font-weight: bold;
+}
 
 /* 컨텐츠 영역 start */
 section {
@@ -41,6 +46,7 @@ section {
     justify-content: center;
     gap: 25px;
     flex-direction: column;
+    margin-bottom: 15px;
 }
 .intro-section h2{
     font-size: 35px;

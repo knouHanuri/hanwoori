@@ -53,8 +53,8 @@ public class StudyController {
         if(studyId != null) optionalStudy = studyService.findById(studyId);
         List<Subject> subjects = subjectService.findAll();
 
-        Member loginMember = (Member)session.getAttribute(LOGIN_MEMBER);
-        model.addAttribute("memberId", loginMember.getMemberId());
+        Optional<Member> loginMember = Optional.ofNullable((Member) session.getAttribute(LOGIN_MEMBER));
+        model.addAttribute("memberId", loginMember.orElseGet(Member::new).getMemberId());
 
         model.addAttribute("subjects", subjects);
         model.addAttribute("status", Study.Status.values());
@@ -71,8 +71,8 @@ public class StudyController {
         }
 
         //세션 member 저장
-        Member loginMember = (Member)session.getAttribute(LOGIN_MEMBER);
-        studyForm.setMemberId(loginMember.getMemberId());
+        Optional<Member> loginMember = Optional.ofNullable((Member) session.getAttribute(LOGIN_MEMBER));
+        studyForm.setMemberId(loginMember.orElseGet(Member::new).getMemberId());
 
         String msg = "등록";
         if(studyForm.getStudyId() > 0) {

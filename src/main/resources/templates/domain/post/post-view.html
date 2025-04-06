@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html th:replace="~{common/layout :: layout(~{::title}, ~{::section}, ~{::link},'게시글 상세보기', '게시글 상세보기')}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>게시글 상세보기</title>
+</head>
+<body>
+<!-- 추가 link 없을 경우, link fragment 필요 -->
+<th:block th:fragment="link"></th:block>
+<section>
+    <div class="container">
+        <div>
+            <label for="category">분류</label>
+            <select id="category" th:field="*{post.category}" class="form-select" disabled>
+                <option value="">==분류 선택==</option>
+                <option th:each="category : ${categorys}" th:value="${category.name()}"
+                        th:text="${category.displayName}"></option>
+            </select>
+        </div>
+        <div>
+            <label for="title">제목</label>
+            <input type="text" id="title" name="title" class="form-control"
+                   th:value="${post.title}" readonly>
+        </div>
+        <div>
+            <label for="content">내용</label>
+            <textarea id="content" name="content" class="form-control" th:text="${post.content}"
+                      readonly></textarea>
+        </div>
+
+        <hr class="my-4">
+
+        <div class="row">
+            <div class="col">
+                <button class="w-100 btn btn-primary btn-lg"
+                        onclick="location.href='subject-edit-form.html'"
+                        th:onclick="|location.href='@{/posts/{postId}/edit(postId=${post.postId})}'|"
+                        type="button">게시글 수정
+                </button>
+            </div>
+            <div class="col">
+                <button class="w-100 btn btn-secondary btn-lg"
+                        onclick="location.href='subject-list.html'"
+                        th:onclick="|location.href='@{/posts}'|"
+                        type="button">목록으로
+                </button>
+            </div>
+        </div>
+    </div> <!-- /container -->
+</section>

@@ -76,7 +76,7 @@ public class SubjectController {
     @GetMapping("/{id}/edit")
     public String editForm(@PathVariable Long id, Model model) {
         Optional<Subject> subject = subjectService.findById(id);
-        model.addAttribute("subject", subject.orElse(null));
+        model.addAttribute("subject", subject.orElseGet(Subject::new));
         return "domain/subject/subject-edit-form";
     }
 

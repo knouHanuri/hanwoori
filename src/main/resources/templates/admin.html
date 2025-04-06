@@ -15,8 +15,7 @@
                 <li><a href="/subjects">과목</a></li>
                 <li th:if="${session.loginMember == null}"><a href="/login">로그인</a></li>
                 <li th:if="${session.loginMember != null}"><a href="/logout">로그아웃</a></li>
-                <li><a href="/signups/members">수강신청(회원)</a></li>
-                <li><a href="/signups">수강신청(관리자)</a></li>
+                <li><a href="/signups/members">수강신청</a></li>
                 <li><a href="/posts">게시판</a></li>
             </ul>
         </li>
