@@ -82,8 +82,8 @@ public class StudyController {
         else studyService.save(studyForm);
 
         redirectAttributes.addFlashAttribute("message", String.format("스터디가 %s되었습니다.", msg));
-        //return "redirect:/study/list";
-        return "redirect:/";
+        return "redirect:/study/list";
+        //return "domain/study/study-list";
     }
 
     @DeleteMapping("/delete/{studyId}")

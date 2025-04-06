@@ -1,64 +1,89 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html th:replace="~{common/layout :: layout(~{::title}, ~{::section}, ~{::link}, '한우리', '한국방송통신대학교 공식 스터디에 오신 것을 환영합니다!')}"
+      xmlns:th="http://www.thymeleaf.org">
     <head>
-        <meta charset="utf-8">
-        <link th:href="@{/css/bootstrap.min.css}"
-              href="../css/bootstrap.min.css" rel="stylesheet">
-        <style>
-            .container {
-                max-width: 560px;
-            }
-        </style>
+        <title>스터디 보기</title>
+        <link th:href="@{/css/study.css}" rel="stylesheet">
     </head>
     <body>
-        <div class="container">
-            <div class="py-5 text-center">
-                <h2>스터디 뷰</h2>
-            </div>
-            <ul>
-                <li th:text="'과목명 : ' + (${subjectName})"></li>
-                <li th:text="'스터디명 : ' + *{study.title}"></li>
-                <li th:text="'상태 : ' + *{study.status.getDisplayName()}"></li>
-                <li th:text="'요일 및 시간 : ' + *{study.schedule}"></li>
-                <li th:text="'시작일 : ' + *{study.startDate}"></li>
-                <li th:text="'종료일 : ' + *{study.endDate}"></li>
-                <li th:text="'스터디 목표 : ' + *{study.goal}"></li>
-            </ul>
+        <section>
+            <article class="study-article">
+                <div class="study-content">
+                    <div class="main-title">
+                        <h3>스터디 정보</h3>
+                    </div>
+                    <div class="content">
+                        <ul>
+                            <li th:utext="'<span>과목명</span>' + *{subjectName}"></li>
+                            <li th:utext="'<span>스터디명</span>' + *{study.title}"></li>
+                            <li th:utext="'<span>상태</span>' + *{study.status.getDisplayName()}"></li>
+                            <li th:utext="'<span>요일 및 시간</span>' + *{study.schedule}"></li>
+                            <li th:utext="'<span>시작일 ~ 종료일 </span>' + *{study.startDate} + ' ~ ' + *{study.endDate}"></li>
+                            <li th:utext="'<span>스터디 목표</span>' + *{study.goal}"></li>
+                        </ul>
+                    </div>
+                </div>
 
-            활동내역 <a th:href="@{/studyActivity/form(studyId=${study.studyId})}" class="btn btn-primary btn-sm">입력</a>
-            <ul th:each="studyActivity : ${studyActivity}">
-                <li th:text="'스터디 날짜 : ' + ${studyActivity.studyDate}"></li>
-                <li th:text="'제목 : ' + ${studyActivity.title}"></li>
-                <li th:text="'내용 : ' + ${studyActivity.content}"></li>
-                <!-- 수정 버튼 -->
-                <a th:if="${studyActivity.createdMemberId == memberId}" th:href="@{/studyActivity/form(studyId=${studyActivity.studyId}, studyActivityId=${studyActivity.studyActivityId})}" class="btn btn-warning btn-sm">수정</a>
-                <!-- 삭제 버튼 -->
-                <a th:if="${studyActivity.createdMemberId == memberId}" th:onclick="|del(${studyActivity.studyActivityId})|" class="btn btn-danger btn-sm" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</a>
-            </ul>
+                <div class="study-content">
+                    <div class="main-title">
+                        <h3>활동내역</h3>
+                        <a th:href="@{/studyActivity/form(studyId=${study.studyId})}" class="w-100 btn btn-primary btn-md mt-2">입력</a>
+                    </div>
+                    <div class="content">
+                        <ul th:if="${#lists.isEmpty(studyActivity)}">
+                            <li>등록된 활동내역이 없습니다.</li>
+                        </ul>
 
-            참여자
-            <ul th:each="studyParticipant, iterStat : ${studyParticipant}">
-                <li th:text="${iterStat.index + 1}"></li>
-                <li th:text="'이름 : ' + ${studyParticipant.name}"></li>
-                <li th:text="'신청일 : ' + ${#temporals.format(studyParticipant.createdDate, 'yyyy-MM-dd')}"></li>
-            </ul>
+                        <ul th:each="studyActivity : ${studyActivity}">
+                            <li th:utext="'<span>스터디 날짜</span>' + *{studyActivity.studyDate}">
+                            </li>
+                            <li th:utext="'<span>제목</span>' + *{studyActivity.title}"></li>
+                            <li th:utext="'<span>내용</span>' + *{studyActivity.content}"></li>
+                            <li th:if="${studyActivity.createdMemberId == memberId}">
+                                <!-- 수정 버튼 -->
+                                <a th:href="@{/studyActivity/form(studyId=${studyActivity.studyId}, studyActivityId=${studyActivity.studyActivityId})}" class="btn btn-warning btn-sm mx-1">수정</a>
+                                <!-- 삭제 버튼 -->
+                                <a th:onclick="|del_activity(${studyActivity.studyActivityId})|" class="btn btn-danger btn-sm" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
 
-            <div>
-                <a th:href="@{/study/list}" class="btn btn-secondary btn-sm">목록으로</a>
-                <a th:if="${memberId != null && !isParticipantStudy}" th:onclick="|save(${study.studyId})|"  class="btn btn-primary btn-sm">참여</a>
-                <a th:if="${memberId != null && isParticipantStudy}" th:onclick="|del(${study.studyId})|" class="btn btn-danger btn-sm">참여 삭제</a>
-            </div>
-        </div> <!-- /container -->
-        <script th:inline="javascript">
-            window.onload = function() {
-                const message = /*[[${message}]]*/ ''; // Thymeleaf를 사용하여 message 가져오기
-                console.log(message);
-                if (message) {
-                    alert(message); // 메시지가 존재하면 alert 띄우기
+                <div class="study-content">
+                    <div class="main-title">
+                        <h3>참여자</h3>
+                        <a th:if="${memberId != null && !isParticipantStudy}" th:onclick="|save_participant(${study.studyId})|" class="w-100 btn btn-primary btn-md mt-2">참여</a>
+                        <a th:if="${memberId != null && isParticipantStudy}" th:onclick="|del_participant(${study.studyId})|" class="w-100 btn btn-danger btn-md mt-2">참여 삭제</a>
+                    </div>
+                    <div class="content">
+                        <ul th:if="${#lists.isEmpty(studyParticipant)}">
+                            <li>등록된 참여자가 없습니다.</li>
+                        </ul>
+                        <ul th:each="studyParticipant, iterStat : ${studyParticipant}">
+                            <li th:utext="'<span>' + ${iterStat.index + 1} + '</span>' + ${studyParticipant.name} + ' / ' + ${#temporals.format(studyParticipant.createdDate, 'yyyy-MM-dd')}"></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col text-center">
+                        <a th:href="@{/study/list}" class="w-100 btn btn-secondary btn-lg">목록으로</a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- /container -->
+            <script th:inline="javascript">
+                window.onload = function() {
+                    const message = /*[[${message}]]*/ ''; // Thymeleaf를 사용하여 message 가져오기
+                    console.log(message);
+                    if (message) {
+                        alert(message); // 메시지가 존재하면 alert 띄우기
+                    }
                 }
-            }
-        </script>
-        <script type="application/javascript" src="/js/studyActivity.js"></script>
-        <script type="application/javascript" src="/js/studyParticipant.js"></script>
+            </script>
+            <script type="application/javascript" src="/js/studyActivity.js"></script>
+            <script type="application/javascript" src="/js/studyParticipant.js"></script>
+        </section>
     </body>
 </html>

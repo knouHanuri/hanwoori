@@ -1,11 +1,9 @@
 <!DOCTYPE HTML>
-<html th:replace="~{common/layout :: layout(~{::title}, ~{::section}, '한우리 메인', '한국방송통신대학교 공식 스터디에 오신 것을 환영합니다!')}"
+<html th:replace="~{common/layout :: layout(~{::title}, ~{::section}, ~{::link}, '한우리', '한국방송통신대학교 공식 스터디에 오신 것을 환영합니다!')}"
       xmlns:th="http://www.thymeleaf.org">
     <head>
         <title>스터디 등록</title>
-        <style>
-            input[type="date"] { width:105px; }
-        </style>
+        <link th:href="@{/css/study.css}" rel="stylesheet">
     </head>
     <body>
         <section>
@@ -18,75 +16,72 @@
                     <div class="field-error" th:if="${#fields.hasGlobalErrors()}" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></div>
                     <div>
                         <label for="subjectId">과목명</label>
-                        <select id="subjectId" name="subjectId">
+                        <select id="subjectId" name="subjectId" class="form-control">
                             <option value=0>선택</option>
                             <option th:each="val : ${subjects}" th:value="${val?.subjectId}"
                                     th:text="${val?.subjectName}"
-                                    th:selected="${val?.subjectId == study.subjectId}"
+                                    th:selected="${val?.subjectId == study.subjectId}">
+                            </option>
+                        </select>
+                        <button onclick="goSubjectNew();return false;" class="w-100 btn btn-primary btn-md">과목 등록</button>
+                    </div>
+                    <div>
+                        <label for="title">* 스터디명</label>
+                        <input type="text" id="title" name="title" th:field="*{title}" th:errorclass="field-error" class="form-control" placeholder="스터디명을 입력하세요"/>
+                        <div class="field-error" th:errors="*{title}"></div>
+                    </div>
+                    <div>
+                        <label for="status">* 상태</label>
+                        <select id="status" name="status" th:field="*{status}" class="form-control">
+                            <option value="">선택</option>
+                            <option th:each="status : ${status}"
+                                    th:value="${status}"
+                                    th:text="${status.displayName}"
                                     th:errorclass="field-error">
                             </option>
                         </select>
-                        <button onclick="goSubjectNew();return false;" class="btn btn-primary btn-sm">과목 등록</button>
-                        <div class="field-error" th:errors="*{subjectId}"></div>
+                        <div class="field-error" th:errors="*{status}"></div>
                     </div>
-
-
-
-                    <div class="form-group">
-                        <table>
-                            <tr>
-                                <td></td>
-                                <td>
-
-
-                                    <!--                        <input type="text" id="subjectCode" name="subjectCode" placeholder="과목코드명을 입력하세요"/>-->
-
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label for="title">* 스터디명</label></td>
-                                <td><input type="text" id="title" name="title" th:field="*{title}" placeholder="스터디명을 입력하세요"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label for="status">* 상태</label></td>
-                                <td>
-                                    <select id="status" name="status" th:field="*{status}">
-                                        <option value="">선택</option>
-                                        <option th:each="status : ${status}"
-                                                th:value="${status}"
-                                                th:text="${status.displayName}">
-                                        </option>
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label for="schedule">* 요일 및 시간</label></td>
-                                <td><input type="text" id="schedule" name="schedule" th:field="*{schedule}"
-                                           placeholder="ex) 매주 수, 오후 7시"></td>
-                            </tr>
-                            <tr>
-                                <td><label for="startDate">* 시작일</label></td>
-                                <td><input type="date" id="startDate" name="startDate" th:field="*{startDate}"></td>
-                            </tr>
-                            <tr>
-                                <td><label for="endDate">* 종료일</label></td>
-                                <td><input type="date" id="endDate" name="endDate" th:field="*{endDate}"></td>
-                            </tr>
-                            <tr>
-                                <td><label for="goal">스터디 목표</label></td>
-                                <td><textarea id="goal" name="goal" rows="5" maxlength="70" th:field="*{goal}"></textarea>
-                            </tr>
-                            <tr>
-                                <td><label for="file">파일</label></td>
-                                <td><input id="file" type="file" name="file" /></td>
-                            </tr>
-                        </table>
+                    <div>
+                        <label for="schedule">* 요일 및 시간</label>
+                        <input type="text" id="schedule" name="schedule" th:field="*{schedule}"
+                               placeholder="ex) 매주 수, 오후 7시" th:errorclass="field-error" class="form-control">
+                        <div class="field-error" th:errors="*{schedule}"></div>
+                    </div>
+                    <div>
+                        <label for="startDate">* 시작일</label>
+                        <input type="date" id="startDate" name="startDate" th:field="*{startDate}" th:errorclass="field-error" class="form-control">
+                        <div class="field-error" th:errors="*{startDate}"></div>
+                    </div>
+                    <div>
+                        <label for="endDate">* 종료일</label>
+                        <input type="date" id="endDate" name="endDate" th:field="*{endDate}" th:errorclass="field-error" class="form-control">
+                        <div class="field-error" th:errors="*{endDate}"></div>
+                    </div>
+                    <div>
+                        <label for="goal">스터디 목표</label>
+                        <textarea id="goal" name="goal" rows="5" maxlength="70" th:field="*{goal}" th:errorclass="field-error" class="form-control"></textarea>
+                        <div class="field-error" th:errors="*{goal}"></div>
+                    </div>
+                    <div>
+                        <label for="file">파일</label>
+                        <input id="file" type="file" name="file" class="form-control" />
                     </div>
                 </form>
-                <button id="submitBtn" type="button" th:text="${study.studyId > 0 ? '수정' : '등록'}"></button>
-                <button th:if="${study.studyId > 0}" th:onclick="'del(' + ${study.studyId} + ')'">삭제</button>
-                <button onclick="window.history.back()">닫기</button>
+
+                <hr class="my-4">
+
+                <div class="row">
+                    <div class="col">
+                        <button id="submitBtn" type="button" class="w-100 btn btn-lg" th:classappend="${study.studyId > 0} ? 'btn-warning' : 'btn-primary'" th:text="${study.studyId > 0 ? '수정' : '등록'}"></button>
+                    </div>
+                    <div class="col" th:if="${study.studyId > 0}">
+                        <button th:onclick="'del(' + ${study.studyId} + ')'" class="w-100 btn btn-danger btn-lg">삭제</button>
+                    </div>
+                    <div class="col">
+                        <button class="w-100 btn btn-secondary btn-lg" onclick="window.history.back()">닫기</button>
+                    </div>
+                </div>
             </div>
             <script type="application/javascript" src="/js/study.js"></script>
         </section>
