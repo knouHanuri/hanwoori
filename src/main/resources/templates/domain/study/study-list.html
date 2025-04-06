@@ -1,55 +1,64 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/main">
-<head>
-    <title>스터디 목록</title>
-</head>
-<body>
-<section layout:fragment="content">
+<!DOCTYPE HTML>
+<html th:replace="~{common/layout :: layout(~{::title}, ~{::section}, '한우리 스터디', '한국방송통신대학교 공식 스터디에 오신 것을 환영합니다!')}"
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>스터디 목록</title>
+    </head>
+    <body>
+    <section>
+            <div class="container" style="max-width: 780px">
+                <div class="py-5 text-center">
+                    <h2>스터디 목록</h2>
+                </div>
 
-    <!-- 인트로 -->
-    <article class="intro-section">
-        <h2>한우리 스터디</h2>
-        <p>한국방송통신대학교 공식 스터디에 오신것을 환영합니다!</p>
-    </article>
+                <div class="row">
+                    <div class="col">
+                        <button class="btn btn-primary float-end"
+                                onclick="location.href='/study/form'"
+                                type="button">스터디 생성</button>
+                    </div>3
+                </div>
+                <hr class="my-4">
+                <div class="row">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>번호</th>
+                                <th>제목</th>
+                                <th>상태</th>
+                                <th>시작일</th>
+                                <th>종료일</th>
+                                <th>버튼</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="studyList, iterStat : ${studyList}">
+                                <td th:text="${iterStat.index + 1}"></td>
+                                <td th:text="${studyList.title}"></td>
+                                <td th:text="${studyList.status.displayName}"></td>
+                                <td th:text="${studyList.startDate}"></td>
+                                <td th:text="${studyList.endDate}"></td>
+                                <td>
+                                    <button th:onclick="'view(' + ${studyList.studyId} + ')'" class="btn btn-secondary btn-sm">보기</button>
+                                    <button th:if="${studyList.memberId == memberId}" th:onclick="|edit(${studyList.studyId})|" class="btn btn-warning btn-sm">수정</button>
+                                    <button th:if="${studyList.memberId == memberId}" th:onclick="|del(${studyList.studyId})|" class="btn btn-danger btn-sm">삭제</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
-    <button onclick="location.href='/study/form'">스터디 생성</button>
-    <table>
-        <thead>
-        <tr>
-            <th>번호</th>
-            <th>제목</th>
-            <th>상태</th>
-            <th>시작일</th>
-            <th>종료일</th>
-            <th>버튼</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="studyList, iterStat : ${studyList}">
-            <td th:text="${iterStat.index + 1}"></td>
-            <td th:text="${studyList.title}"></td>
-            <td th:text="${studyList.status.displayName}"></td>
-            <td th:text="${studyList.startDate}"></td>
-            <td th:text="${studyList.endDate}"></td>
-            <td>
-                <button th:onclick="'view(' + ${studyList.studyId} + ')'">보기</button>
-                <button th:if="${studyList.memberId == memberId}" th:onclick="|edit(${studyList.studyId})|">수정</button>
-                <button th:if="${studyList.memberId == memberId}" th:onclick="|del(${studyList.studyId})|">삭제</button>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-
-    <script th:inline="javascript">
-        window.onload = function() {
-            const message = /*[[${message}]]*/ ''; // Thymeleaf를 사용하여 message 가져오기
-            console.log(message);
-            if (message) {
-                alert(message); // 메시지가 존재하면 alert 띄우기
-            }
-        }
-    </script>
-    <script type="application/javascript" src="/js/study.js"></script>
-</section>
-</body>
+            <script th:inline="javascript">
+                window.onload = function() {
+                    const message = /*[[${message}]]*/ ''; // Thymeleaf를 사용하여 message 가져오기
+                    console.log(message);
+                    if (message) {
+                        alert(message); // 메시지가 존재하면 alert 띄우기
+                    }
+                }
+            </script>
+            <script type="application/javascript" src="/js/study.js"></script>
+        </section>
+    </body>
 </html>
