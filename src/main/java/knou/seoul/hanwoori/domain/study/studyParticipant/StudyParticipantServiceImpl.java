@@ -67,6 +67,11 @@ public class StudyParticipantServiceImpl implements StudyParticipantService {
     }
 
     @Override
+    public int deleteByStudyId(long studyId) {
+        return studyParticipantDAO.deleteByStudyId(studyId);
+    }
+
+    @Override
     public int delete(StudyParticipantParam studyParticipantParam) {
         return studyParticipantDAO.delete(studyParticipantParam);
     }

@@ -28,6 +28,11 @@
               study_id, member_id)
         values(#{studyId}, #{memberId})
     </insert>
+    <!--데이터 삭제(해당 studyId에 있는 모든 참여자 삭제)-->
+    <delete id="deleteByStudyId" parameterType="long">
+        delete from study_participant
+        WHERE study_id = #{studyId}
+    </delete>
     <!--데이터 삭제-->
     <delete id="delete" parameterType="knou.seoul.hanwoori.domain.study.studyParticipant.dto.StudyParticipantParam">
         delete from study_participant

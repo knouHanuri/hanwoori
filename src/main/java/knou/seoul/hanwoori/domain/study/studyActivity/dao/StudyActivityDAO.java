@@ -14,5 +14,6 @@ public interface StudyActivityDAO {
     List<StudyActivity> findByStudyId(long studyId);
     List<StudyActivity> studyActivityListAll();
     List<StudyActivity> studyActivityListLimited(int limit);
+    int deleteByStudyId(long studyId);
     int delete(long studyActivityId);
 }

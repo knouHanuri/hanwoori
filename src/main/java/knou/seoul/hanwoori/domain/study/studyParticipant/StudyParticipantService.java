@@ -13,6 +13,7 @@ public interface StudyParticipantService {
     List<StudyParticipant> studyParticipantListAll();
     List<StudyParticipant> studyParticipantListLimited(int limit);
     List<StudyParticipant> findStudyParticipantByStudyId(long studyId);
+    int deleteByStudyId(long studyId);
     int delete(StudyParticipantParam studyParticipantParam);
     StudyParticipantParam createStudyParticipantParam(long studyId, long memberId);
 }

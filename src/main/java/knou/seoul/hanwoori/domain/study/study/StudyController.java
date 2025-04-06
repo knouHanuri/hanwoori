@@ -88,6 +88,9 @@ public class StudyController {
 
     @DeleteMapping("/delete/{studyId}")
     public ResponseEntity<Void> deleteItem(@PathVariable Long studyId) {
+        studyParticipantService.deleteByStudyId(studyId);
+        studyActivityService.deleteByStudyId(studyId);
+
         int deleteCount = studyService.delete(studyId);
         if(deleteCount == 1) return ResponseEntity.noContent().build();
         else return ResponseEntity.status(HttpStatus.CONFLICT).build();
