@@ -10,23 +10,37 @@
     <body>
         <section>
             <div class="container">
+                <div class="py-5 text-center">
+                    <h2>스터디 등록</h2>
+                </div>
                 <form id="studyForm" th:object="${study}" enctype="multipart/form-data">
                     <input type="hidden" id="studyId" th:field="*{studyId}"/> <!-- 수정할 경우 ID를 숨긴 필드로 보냄 -->
+                    <div class="field-error" th:if="${#fields.hasGlobalErrors()}" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></div>
+                    <div>
+                        <label for="subjectId">과목명</label>
+                        <select id="subjectId" name="subjectId">
+                            <option value=0>선택</option>
+                            <option th:each="val : ${subjects}" th:value="${val?.subjectId}"
+                                    th:text="${val?.subjectName}"
+                                    th:selected="${val?.subjectId == study.subjectId}"
+                                    th:errorclass="field-error">
+                            </option>
+                        </select>
+                        <button onclick="goSubjectNew();return false;" class="btn btn-primary btn-sm">과목 등록</button>
+                        <div class="field-error" th:errors="*{subjectId}"></div>
+                    </div>
+
+
+
                     <div class="form-group">
                         <table>
                             <tr>
-                                <td><label for="subjectId">과목명</label></td>
+                                <td></td>
                                 <td>
-                                    <select id="subjectId" name="subjectId">
-                                        <option value=0>선택</option>
-                                        <option th:each="val : ${subjects}" th:value="${val?.subjectId}"
-                                                th:text="${val?.subjectName}"
-                                                th:selected="${val?.subjectId == study.subjectId}">
-                                        </option>
-                                    </select>
+
 
                                     <!--                        <input type="text" id="subjectCode" name="subjectCode" placeholder="과목코드명을 입력하세요"/>-->
-                                    <button onclick="goSubjectNew();return false;">과목 등록</button>
+
                                 </td>
                             </tr>
                             <tr>
