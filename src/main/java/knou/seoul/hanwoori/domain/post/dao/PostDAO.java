@@ -12,4 +12,5 @@ public interface PostDAO {
     Optional<Post> findById(Long id);
     void modify(Post post);
     int delete(Long id);
+    List<Post> findByCategory(Post.Category category);
 }

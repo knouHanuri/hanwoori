@@ -60,10 +60,10 @@ create table if not exists file(
     source_id int not null,
     file_path varchar(200) not null,
     original_file_name varchar(200) not null,
-    store_file_name varchar(200) not null
+    store_file_name varchar(200) not null,
+    file_size int not null,
+    created_date timestamp not null default current_timestamp
 );
-
-
 
 -- 스터디
 create table if not exists study (

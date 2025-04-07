@@ -11,7 +11,8 @@
             source_id,
             file_path,
             original_file_name,
-            store_file_name
+            store_file_name,
+            file_size
         )
         values
             (
@@ -19,7 +20,8 @@
                 #{sourceId},
                 #{filePath},
                 #{originalFileName},
-                #{storeFileName}
+                #{storeFileName},
+                #{fileSize}
             )
     </insert>
     <!--전체 조회-->
@@ -37,4 +39,13 @@
     <delete id="delete" parameterType="knou.seoul.hanwoori.domain.file.dto.File">
         delete from file where file_id = #{fileId}
     </delete>
+    <!--조회(sourceKind,sourceId)-->
+    <select id="findBySourceKindAndId" resultType="knou.seoul.hanwoori.domain.file.dto.File">
+        select *
+        from file
+        where source_kind = #{sourceKind}
+        and source_id = #{sourceId}
+    </select>
+
+
 </mapper>

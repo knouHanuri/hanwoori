@@ -2,6 +2,8 @@ package knou.seoul.hanwoori.domain.post.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import knou.seoul.hanwoori.domain.file.dto.File;
+import knou.seoul.hanwoori.domain.file.dto.FileSource;
 import knou.seoul.hanwoori.domain.member.dto.Member;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,7 +12,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class Post {
+public class Post implements FileSource {
     private Long postId;
     @NotBlank(message = "제목을 입력해주세요.")
     private String title;
@@ -20,6 +22,16 @@ public class Post {
     private String content;
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
+
+    @Override
+    public Long getSourceId() {
+        return postId;
+    }
+
+    @Override
+    public File.SourceKind getSourceKind() {
+        return File.SourceKind.post;
+    }
 
     @Getter
     public enum Category {

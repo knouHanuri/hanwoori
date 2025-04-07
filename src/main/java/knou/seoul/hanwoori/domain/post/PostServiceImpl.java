@@ -38,4 +38,11 @@ public class PostServiceImpl implements PostService {
     public int delete(Long id) {
         return postDAO.delete(id);
     }
+
+    @Override
+    public List<Post> findByCategory(Post.Category category) {
+        return postDAO.findByCategory(category);
+    }
+
+
 }

@@ -6,10 +6,9 @@
         <div class="menu"><a href="/about/contact">문의하기</a></div>
         <div class="menu"><a href="/study/list">스터디</a></div>
         <div class="menu"><a href="/posts">게시판</a></div>
-        <div class="menu" th:if="${isAdmin}">
-            <a href="/admin">관리자</a>
+        <div th:if="${session.loginMember != null and session.loginMember.grade.name() == 'admin'}">
+            <a href="/admin">관리자 메뉴</a>
         </div>
-        <div class="menu"><a href="/admin">관리자</a></div>
         <div class="menu">
             <button th:if="${session.loginMember == null}" class="btn btn-primary btn-sm"
                     th:onclick="|location.href='@{/login}'|">로그인</button>

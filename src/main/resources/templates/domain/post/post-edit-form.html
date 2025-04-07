@@ -3,14 +3,21 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>게시글 수정</title>
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>
+    <link th:href="@{/css/post.css}" rel="stylesheet">
 </head>
 <body>
-<!-- 추가 link 없을 경우, link fragment 필요 -->
-<th:block th:fragment="link"></th:block>
+
 <section>
     <div class="container">
         <form th:action="@{/posts/{id}/edit(id=${post.postId})}" th:object="${post}" method="post">
             <input type="hidden" id="postId" th:field="*{postId}"/>
+            <input type="hidden" id="content" th:field="*{content}"/>
+            <div>
+                <label for="title">제목</label>
+                <input type="text" id="title" th:field="*{title}" th:errorclass="field-error" class="form-control" placeholder="제목">
+                <div class="field-error" th:errors="*{title}"></div>
+            </div>
             <div>
                 <label for="category">분류</label>
                 <select id="category" th:field="*{category}" class="form-select" th:errorclass="field-error">
@@ -21,14 +28,34 @@
                 <div class="field-error" th:errors="*{category}"></div>
             </div>
             <div>
-                <label for="title">제목</label>
-                <input type="text" id="title" th:field="*{title}" th:errorclass="field-error" class="form-control" placeholder="제목">
-                <div class="field-error" th:errors="*{title}"></div>
+                <label for="files">파일</label>
+                <input type="file" id="files" name="files" multiple="multiple" class="form-control" />
+            </div>
+            <div th:if="${files != null}">
+                <div>첨부된 파일</div>
+                <div th:each="file : ${files}" class="mb-2">
+                    <div>
+                        <span th:text="${file.originalFileName}">파일명.txt</span>
+                        <small class="text-muted"
+                               th:text="'(' + ${#numbers.formatInteger(file.fileSize / 1024, 1, 'COMMA')} + ' KB)'">
+                            (12 KB)
+                        </small>
+                        <a href="javascript:void(0);"
+                           th:attr="data-id=${file.fileId}, data-name=${file.originalFileName}"
+                           onclick="downloadFile(this)">
+                            ⬇️
+                        </a>
+                        <a href="javascript:void(0);"
+                           th:attr="data-id=${file.fileId}, data-name=${file.originalFileName}"
+                           onclick="deleteFile(this)">
+                            ❌
+                        </a>
+                    </div>
+                </div>
             </div>
             <div>
-                <label for="content">내용</label>
-                <textarea id="content" th:field="*{content}" th:errorclass="field-error" class="form-control" placeholder="내용을 입력해주세요."></textarea>
-                <div class="field-error" th:errors="*{content}"></div>
+                <div>내용</div>
+                <div id="editor" class="toastui-editor-contents"></div>
             </div>
             <hr class="my-4">
             <div class="row">
@@ -44,4 +71,20 @@
             </div>
         </form>
     </div> <!-- /container -->
+    <script src="https://uicdn.toast.com/editor/3.0.2/toastui-editor-all.min.js"></script>
+    <script th:src="@{/js/file.js}"></script>
+    <script>
+        const contents = document.querySelector("#content").value;
+        const editor = new toastui.Editor({
+            el: document.querySelector("#editor"),
+            height: "auto",
+            hideModeSwitch: true,
+            initialEditType: "wysiwyg",  // wysiwyg 또는 markdown
+            previewStyle: "vertical",
+            initialValue: contents
+        });
+        document.querySelector("form").addEventListener("submit", function () {
+            document.querySelector("#content").value = editor.getMarkdown();  // 마크다운 형태로 저장
+        });
+    </script>
 </section>
