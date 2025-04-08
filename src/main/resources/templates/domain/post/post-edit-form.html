@@ -10,7 +10,7 @@
 
 <section>
     <div class="container">
-        <form th:action="@{/posts/{id}/edit(id=${post.postId})}" th:object="${post}" method="post">
+        <form th:action="@{/posts/{id}/edit(id=${post.postId})}" th:object="${post}" method="post" enctype="multipart/form-data">
             <input type="hidden" id="postId" th:field="*{postId}"/>
             <input type="hidden" id="content" th:field="*{content}"/>
             <div>
@@ -34,7 +34,7 @@
             <div th:if="${files != null}">
                 <div>첨부된 파일</div>
                 <div th:each="file : ${files}" class="mb-2">
-                    <div>
+                    <div th:attr="id='file-' + ${file.fileId}">
                         <span th:text="${file.originalFileName}">파일명.txt</span>
                         <small class="text-muted"
                                th:text="'(' + ${#numbers.formatInteger(file.fileSize / 1024, 1, 'COMMA')} + ' KB)'">
