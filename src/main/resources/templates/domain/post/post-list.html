@@ -62,21 +62,24 @@
     <script>
         function del(id) {
             if (confirm('게시글을 삭제하시겠습니까?')) {
-                let msg = "다시 시도해주세요.";
                 let url = "/posts/" + id;
                 fetch(url, {
                     method: 'DELETE',
                 })
                     .then(response => {
-                        if (response.ok) msg = "게시글이 삭제되었습니다.";
+                        if (!response.ok) {
+                            // 서버 응답이 성공적이지 않을 경우
+                            throw new Error(`서버 오류: ${response.status} ${response.statusText}`);
+                        }
+                        return response.json(); // 또는 response.text() 등으로 응답 본문 처리
+                    })
+                    .then(data => {
+                        alert("게시글이 삭제되었습니다.");
+                        location.reload();
                     })
                     .catch(error => {
                         console.error("삭제 중 오류 발생:", error);
-                        alert(msg);
-                    })
-                    .finally(() => {
-                        alert(msg);
-                        location.reload();
+                        alert("삭제 중 오류가 발생했습니다. 다시 시도해주세요.");
                     });
             }
         }
