@@ -1,5 +1,7 @@
 package knou.seoul.hanwoori.domain.study.study;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import knou.seoul.hanwoori.domain.study.study.dao.StudyDAO;
 import knou.seoul.hanwoori.domain.study.study.dto.Study;
 import knou.seoul.hanwoori.domain.study.exception.StudyExceptionHandler;
@@ -7,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import jakarta.validation.Valid;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalDate;
@@ -50,8 +53,10 @@ public class StudyServiceImpl implements StudyService {
 //
     /* 전체 조회 */
     @Override
-    public List<Study> studyListAll() {
-        return StudyDAO.studyListAll();
+    public PageInfo<Study> studyListAll(int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Study> studyList = StudyDAO.studyListAll();
+        return new PageInfo<>(studyList);
     }
 
     /* 일정 수 조회 */

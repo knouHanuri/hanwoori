@@ -16,6 +16,7 @@
                     <div class="col">
                         <button class="btn btn-primary float-end"
                                 onclick="location.href='/study/form'"
+                                th:if="${memberId != null}"
                                 type="button">스터디 생성</button>
                     </div>
                 </div>
@@ -33,7 +34,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="studyList, iterStat : ${studyList}">
+                            <tr th:each="studyList, iterStat : ${pageInfo.list}">
                                 <td th:text="${iterStat.index + 1}"></td>
                                 <td th:text="${studyList.title}"></td>
                                 <td th:text="${studyList.status.displayName}"></td>
@@ -49,6 +50,21 @@
                     </table>
                 </div>
             </div>
+
+            <div class="pagination">
+                <ul class="pagination">
+                    <li class="page-item" th:classappend="${pageInfo.pageNum == 1} ? 'disabled'">
+                        <a class="page-link" th:href="@{/study/list(pageNum=${pageInfo.pageNum - 1}, pageSize=${pageInfo.pageSize})}">&laquo;</a>
+                    </li>
+                    <li th:each="i : ${#numbers.sequence(1, pageInfo.pages)}" th:classappend="${i == pageInfo.pageNum} ? 'active'">
+                        <a class="page-link" th:href="@{/study/list(pageNum=${i}, pageSize=${pageInfo.pageSize})}" th:text="${i}"></a>
+                    </li>
+                    <li class="page-item" th:classappend="${pageInfo.pageNum == pageInfo.pages} ? 'disabled'">
+                        <a class="page-link" th:href="@{/study/list(pageNum=${pageInfo.pageNum + 1}, pageSize=${pageInfo.pageSize})}">&raquo;</a>
+                    </li>
+                </ul>
+            </div>
+
 
             <script th:inline="javascript">
                 window.onload = function() {

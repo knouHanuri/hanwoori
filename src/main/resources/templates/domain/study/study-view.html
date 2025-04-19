@@ -27,7 +27,7 @@
                 <div class="study-content">
                     <div class="main-title">
                         <h3>활동내역</h3>
-                        <a th:href="@{/studyActivity/form(studyId=${study.studyId})}" class="w-100 btn btn-primary btn-md mt-2">입력</a>
+                        <a th:if="${memberId != null}" th:href="@{/studyActivity/form(studyId=${study.studyId})}" class="w-100 btn btn-primary btn-md mt-2">입력</a>
                     </div>
                     <div class="content">
                         <ul th:if="${#lists.isEmpty(studyActivity)}">
