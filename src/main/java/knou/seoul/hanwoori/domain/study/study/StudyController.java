@@ -1,5 +1,7 @@
 package knou.seoul.hanwoori.domain.study.study;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import knou.seoul.hanwoori.domain.member.dto.Member;
@@ -34,16 +36,20 @@ public class StudyController {
     private final StudyParticipantService studyParticipantService;
 
     @GetMapping("/list")
-    public String studyList(Model model, HttpSession session){
-        List<Study> studyList = studyService.studyListAll();
+    public String studyList(@RequestParam(defaultValue = "1") int pageNum,
+                            @RequestParam(defaultValue = "10") int pageSize,
+                            Model model, HttpSession session){
+
+        PageInfo<Study> pageInfo = studyService.studyListAll(pageNum, pageSize);
+        model.addAttribute("pageInfo", pageInfo);
 
         Member loginMember = (Member)session.getAttribute(LOGIN_MEMBER);
         if(loginMember != null) {
             model.addAttribute("memberId", loginMember.getMemberId());
         }
 
-        model.addAttribute("status", Study.Status.values());
-        model.addAttribute("studyList",studyList);
+        //model.addAttribute("status", Study.Status.values());
+        //model.addAttribute("studyList",studyList);
         return "domain/study/study-list";
     }
 
