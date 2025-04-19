@@ -1,6 +1,5 @@
 package knou.seoul.hanwoori.domain.study.study;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -61,6 +60,8 @@ public class StudyController {
 
         Optional<Member> loginMember = Optional.ofNullable((Member) session.getAttribute(LOGIN_MEMBER));
         model.addAttribute("memberId", loginMember.orElseGet(Member::new).getMemberId());
+
+        if(model.getAttribute("memberId") == null) return "redirect:/study/list";
 
         model.addAttribute("subjects", subjects);
         model.addAttribute("status", Study.Status.values());
