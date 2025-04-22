@@ -35,6 +35,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	/*bean-validation 추가*/
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	/*페이징 추가*/
+	implementation 'com.github.pagehelper:pagehelper-spring-boot-starter:1.4.6'
 
 }
 
