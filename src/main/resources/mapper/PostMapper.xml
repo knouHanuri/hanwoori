@@ -70,4 +70,18 @@
         from post
         where post_id = #{postId}
     </delete>
+    <!--조회(Category)-->
+    <select id="findByCategory"  parameterType="knou.seoul.hanwoori.domain.post.dto.Post$Category" resultMap="postMember">
+        select p.post_id,
+               p.title,
+               p.category,
+               p.content,
+               p.created_date,
+               p.updated_date,
+               p.member_id,
+               m.name
+        from post as p
+        join member as m on p.member_id = m.member_id
+        where p.category = #{category}
+    </select>
 </mapper>

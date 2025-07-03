@@ -3,6 +3,8 @@ package knou.seoul.hanwoori.domain.file.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 public class File {
@@ -12,6 +14,8 @@ public class File {
     private String filePath;
     private String originalFileName;
     private String storeFileName;
+    private Long fileSize;
+    private LocalDateTime createdDate;
 
     @Getter
     public enum SourceKind{

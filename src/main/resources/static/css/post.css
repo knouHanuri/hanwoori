@@ -1,0 +1,129 @@
+/* 전체 영역 */
+#viewer {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 1.5rem;
+    background-color: #fff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+.toastui-editor-contents {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 16px;
+    line-height: 1.75;
+    color: #333;
+    word-break: break-word;
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+/* 헤더 스타일 */
+.toastui-editor-contents h1 {
+    font-size: 2rem;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 0.3rem;
+    margin-top: 1.5rem;
+}
+.toastui-editor-contents h2 {
+    font-size: 1.6rem;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 0.2rem;
+    margin-top: 1.2rem;
+}
+.toastui-editor-contents h3 {
+    font-size: 1.3rem;
+    margin-top: 1rem;
+}
+.toastui-editor-contents h4,
+.toastui-editor-contents h5,
+.toastui-editor-contents h6 {
+    font-size: 1.1rem;
+    margin-top: 0.8rem;
+    font-weight: bold;
+}
+
+/* 인용문 스타일 */
+.toastui-editor-contents blockquote {
+    border-left: 4px solid #bbb;
+    background-color: #f9f9f9;
+    padding: 0.75rem 1rem;
+    color: #555;
+    margin: 1rem 0;
+}
+
+/* 코드 블럭 */
+.toastui-editor-contents pre {
+    background-color: #2d2d2d;
+    color: #f8f8f2;
+    padding: 1rem;
+    border-radius: 5px;
+    overflow-x: auto;
+    font-size: 14px;
+    margin: 1rem 0;
+}
+.toastui-editor-contents code {
+    background-color: #eee;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 90%;
+}
+
+/* 리스트 스타일 */
+.toastui-editor-contents ul,
+.toastui-editor-contents ol {
+    padding-left: 2rem;
+    margin-bottom: 1rem;
+}
+.toastui-editor-contents ul li,
+.toastui-editor-contents ol li {
+    margin-bottom: 0.5rem;
+}
+
+/* 테이블 스타일 */
+.toastui-editor-contents table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+}
+.toastui-editor-contents th,
+.toastui-editor-contents td {
+    border: 1px solid #ddd;
+    padding: 0.75rem;
+    text-align: left;
+}
+.toastui-editor-contents th {
+    background-color: #f2f2f2;
+}
+
+/* 링크 스타일 */
+.toastui-editor-contents a {
+    color: #0066cc;
+    text-decoration: underline;
+}
+.toastui-editor-contents a:hover {
+    text-decoration: none;
+}
+
+/* 이미지 스타일 */
+.toastui-editor-contents img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
+    margin: 1rem 0;
+}
+
+/* 강조 */
+.toastui-editor-contents strong {
+    font-weight: bold;
+}
+.toastui-editor-contents em {
+    font-style: italic;
+}
+
+/* 수평선 */
+.toastui-editor-contents hr {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 2rem 0;
+}

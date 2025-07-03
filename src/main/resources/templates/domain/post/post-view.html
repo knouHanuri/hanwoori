@@ -3,12 +3,17 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>게시글 상세보기</title>
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>
+    <link th:href="@{/css/post.css}" rel="stylesheet">
 </head>
 <body>
-<!-- 추가 link 없을 경우, link fragment 필요 -->
-<th:block th:fragment="link"></th:block>
 <section>
     <div class="container">
+        <div>
+            <label for="title">제목</label>
+            <input type="text" id="title" name="title" class="form-control"
+                   th:value="${post.title}" readonly>
+        </div>
         <div>
             <label for="category">분류</label>
             <select id="category" th:field="*{post.category}" class="form-select" disabled>
@@ -18,14 +23,25 @@
             </select>
         </div>
         <div>
-            <label for="title">제목</label>
-            <input type="text" id="title" name="title" class="form-control"
-                   th:value="${post.title}" readonly>
+            <div>파일</div>
+            <div th:each="file : ${files}" class="mb-2">
+                <div>
+                    <span th:text="${file.originalFileName}">파일명.txt</span>
+                    <small class="text-muted"
+                           th:text="'(' + ${#numbers.formatInteger(file.fileSize / 1024, 1, 'COMMA')} + ' KB)'">
+                        (12 KB)
+                    </small>
+                    <a href="javascript:void(0);"
+                       th:attr="data-id=${file.fileId}, data-name=${file.originalFileName}"
+                       onclick="downloadFile(this)">
+                        ⬇️
+                    </a>
+                </div>
+            </div>
         </div>
         <div>
-            <label for="content">내용</label>
-            <textarea id="content" name="content" class="form-control" th:text="${post.content}"
-                      readonly></textarea>
+            <div>내용</div>
+            <div id="viewer" class="toastui-editor-contents" th:data-content="${post.content}"></div>
         </div>
 
         <hr class="my-4">
@@ -47,4 +63,16 @@
             </div>
         </div>
     </div> <!-- /container -->
+    <script src="https://uicdn.toast.com/editor/2.5.2/toastui-editor-all.min.js"></script>
+    <script th:src="@{/js/file.js}"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const contents = document.getElementById('viewer').dataset.content;
+            const viewer = new toastui.Editor.factory({
+                el: document.querySelector('#viewer'),
+                viewer: true,
+                initialValue: contents
+            });
+        });
+    </script>
 </section>

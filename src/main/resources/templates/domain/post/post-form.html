@@ -3,13 +3,21 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>게시글 작성</title>
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>
+    <link th:href="@{/css/post.css}" rel="stylesheet">
 </head>
 <body>
-<!-- 추가 link 없을 경우, link fragment 필요 -->
-<th:block th:fragment="link"></th:block>
 <section>
     <div class="container">
-        <form action="/post/new" th:action th:object="${post}" method="post">
+        <form action="/post/new" th:action th:object="${post}" method="post" enctype="multipart/form-data">
+            <input type="hidden" id="content" th:field="*{content}"/>
+
+            <div>
+                <label for="title">제목</label>
+                <input type="text" id="title" th:field="*{title}" th:errorclass="field-error" class="form-control"
+                       placeholder="제목">
+                <div class="field-error" th:errors="*{title}"></div>
+            </div>
             <div>
                 <label for="category">분류</label>
                 <select id="category" th:field="*{category}" class="form-select" th:errorclass="field-error">
@@ -20,15 +28,14 @@
                 <div class="field-error" th:errors="*{category}"></div>
             </div>
             <div>
-                <label for="title">제목</label>
-                <input type="text" id="title" th:field="*{title}" th:errorclass="field-error" class="form-control" placeholder="제목">
-                <div class="field-error" th:errors="*{title}"></div>
+                <label for="files">파일</label>
+                <input type="file" id="files" name="files" multiple="multiple" class="form-control" />
             </div>
             <div>
                 <label for="content">내용</label>
-                <textarea id="content" th:field="*{content}" th:errorclass="field-error" class="form-control" placeholder="내용을 입력해주세요."></textarea>
-                <div class="field-error" th:errors="*{content}"></div>
+                <div id="editor" class="toastui-editor-contents"></div>
             </div>
+
             <hr class="my-4">
             <div class="row">
                 <div class="col">
@@ -43,4 +50,18 @@
             </div>
         </form>
     </div> <!-- /container -->
+    <script src="https://uicdn.toast.com/editor/3.0.2/toastui-editor-all.min.js"></script>
+    <script>
+        const editor = new toastui.Editor({
+            el: document.querySelector("#editor"),
+            height: "auto",
+            hideModeSwitch: true,
+            initialEditType: "wysiwyg",  // wysiwyg 또는 markdown
+            previewStyle: "vertical"
+        });
+        document.querySelector("form").addEventListener("submit", function () {
+            document.querySelector("#content").value = editor.getMarkdown();  // 마크다운 형태로 저장
+        });
+
+    </script>
 </section>
