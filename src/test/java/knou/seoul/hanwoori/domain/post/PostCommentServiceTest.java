@@ -57,14 +57,14 @@ public class PostCommentServiceTest {
 
         post = new Post();
         post.setTitle("게시글제목");
-        post.setMemberId(member.getMemberId());
+        //post.setMemberId(member.getMemberId());
         post.setCategory(Post.Category.free);
         post.setContent("##내용");
         postService.save(post);
 
         postComment = new PostComment();
         postComment.setPostId(post.getPostId());
-        postComment.setMemberId(post.getMemberId());
+        //postComment.setMemberId(post.getMemberId());
         postComment.setComment("댓글내용!!");
 
     }
