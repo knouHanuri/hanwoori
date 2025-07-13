@@ -7,6 +7,7 @@
 <body>
 <!-- 추가 link 없을 경우, link fragment 필요 -->
 <th:block th:fragment="link"></th:block>
+<link rel="stylesheet" th:href="@{/css/login.css}">
 <section>
     <div class="container">
         <form action="/login" th:action th:object="${loginRequestDTO}" method="post">
@@ -38,6 +39,12 @@
                             th:onclick="'history.back();'">취소
                     </button>
                 </div>
+            </div>
+            <hr class="my-4">
+            <div class="signup-link">
+                <a th:href="@{/members/new}">회원가입</a>
+                <span class="divider">|</span>
+                <a th:href="@{/members/reset-password}">비밀번호 초기화</a>
             </div>
         </form>
     </div> <!-- /container -->

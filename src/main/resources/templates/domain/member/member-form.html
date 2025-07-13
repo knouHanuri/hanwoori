@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html th:replace="~{common/layout :: layout(~{::title}, ~{::section},~{::link}, '회원가입', '회원가입')}"
+<html th:replace="~{common/layout :: layout(~{::title}, ~{::section},~{::link}, '한우리 스터디 회원가입', '한우리 스터디 회원가입 신청페이지')}"
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>회원가입</title>
@@ -7,8 +7,29 @@
 <body>
 <!-- 추가 link 없을 경우, link fragment 필요 -->
 <th:block th:fragment="link"></th:block>
+<th:block th:fragment="link">
+    <link rel="stylesheet" th:href="@{/css/member.css}">
+</th:block>
 <section>
     <div class="container">
+        <div class="rules-box">
+            <h2>한우리 스터디 가입 신청</h2>
+            <p><strong>한우리는</strong> 학우들과 함께 공부하는 것을 목적으로 하는 한국방송통신대학교 동아리 모임이며, 비영리 단체로서 회비와 후원금으로 운영됨을 알려드립니다.</p>
+
+            <p>회비는 한우리 회원을 위한 최소한의 <strong class="highlight">운영기금</strong>입니다.<br>
+                <span class="highlight">한우리의 가입 시</span> 다음과 같은 준수 사항이 있음을 알려드립니다.</p>
+
+            <h5 class="rule-title">- 운영회칙 -</h5>
+            <ol>
+                <li>가입비와 연회비 납부를 통해 한우리에서 진행하는 오프라인 수업을 들을 수 있으며, 다양한 행사의 참가 자격이 주어집니다.</li>
+                <li>연회비 용도는 <strong>스터디룸 임대료, 공과금(인터넷/전기/수도 등)</strong>에 사용됩니다.</li>
+                <li>가입비는 <strong>10,000원</strong>입니다. (최초 1회 납부)</li>
+                <li>연회비는 <strong>20만원</strong>이며, 중간 가입자는 <strong>월 단위 계산</strong>으로 합니다.</li>
+                <li>2025년 2학기의 납부기간은 <strong>8월 말까지</strong>로 합니다.</li>
+                <li><strong>가입 목적 외 사용 금지</strong>: 회비는 학습 및 커뮤니티 활동 외의 용도로 사용하지 않습니다.</li>
+            </ol>
+        </div>
+        <hr class="my-4">
         <form action="/member/new" th:action th:object="${memberFormRequestDTO}" method="post">
             <div class="field-error" th:if="${#fields.hasGlobalErrors()}" th:each="err : ${#fields.globalErrors()}"
                  th:text="${err}"></div>
