@@ -13,6 +13,7 @@ public class SignupListDTO {
     String SubjectName;
     Long subjectId;
     Integer year;
+    Integer semester;
     private LocalDateTime createdDate;
 
 }

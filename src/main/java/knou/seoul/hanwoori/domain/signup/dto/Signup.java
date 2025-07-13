@@ -16,6 +16,7 @@ public class Signup {
     Member member;
     Subject subject;
     Integer year;
+    Integer semester;
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
 
@@ -25,6 +26,7 @@ public class Signup {
                 .memberId(signup.getMember().getMemberId())
                 //.subjectIds(signup.getSubject().getSubjectId())
                 .year(signup.getYear())
+                .semester(signup.getSemester())
                 .createdDate(signup.getCreatedDate())
                 .updatedDate(signup.getUpdatedDate())
                 .build();

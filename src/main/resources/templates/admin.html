@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html th:replace="~{common/layout :: layout(~{::title}, ~{::section},~{::link}, '관리자 임시화면', '한국방송통신대학교 공식 스터디에 오신 것을 환영합니다!')}"
+<html th:replace="~{common/layout :: layout(~{::title}, ~{::section},~{::link}, '관리자화면', '한국방송통신대학교 공식 스터디에 오신 것을 환영합니다!')}"
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>관리자</title>
@@ -7,6 +7,9 @@
 <body>
 <!-- 추가 link 없을 경우, link fragment 필요 -->
 <th:block th:fragment="link"></th:block>
+<th:block th:fragment="link">
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</th:block>
 <section>
     <ul>
         <li>도메인

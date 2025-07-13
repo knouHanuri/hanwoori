@@ -5,40 +5,85 @@
     <title>수강신청</title>
 </head>
 <body>
-<!-- 추가 link 없을 경우, link fragment 필요 -->
 <th:block th:fragment="link"></th:block>
 <section>
     <div class="container">
-        <form action="/signups/new" th:action th:object="${signupFormRequestDTO}" method="post">
-            <input type="hidden" id="memberId" th:field="*{memberId}"/>
-            <div>
-                <div>과목</div>
-                <div th:each="s : ${subjects}" class="form-check form-check-inline">
-                    <input type="checkbox" th:field="*{subjectIds}" th:errorclass="field-error"
-                           th:value="${s.subjectId}" class="form-check-input">
-                    <label th:for="${#ids.prev('subjectIds')}"
-                           th:text="${s.subjectName}" class="form-check-label"></label>
+        <form th:action="@{/signups/new}" th:object="${signupFormRequestDTO}" method="post">
+            <input type="hidden" th:field="*{memberId}"/>
+            <!-- ✅ 상단: 년도 + 학기 -->
+            <div class="row align-items-end mb-3">
+                <div class="col-md-6">
+                    <label for="year" class="form-label fw-bold">년도</label>
+                    <input type="number" id="year" min="1900" max="2100" step="1"
+                           th:field="*{year}"
+                           th:errorclass="field-error"
+                           class="form-control form-control-sm">
+                    <div class="field-error" th:errors="*{year}"></div>
                 </div>
-                <div class="field-error" th:errors="*{subjectIds}"></div>
+                <div class="col-md-6">
+                    <label for="semester" class="form-label fw-bold">학기</label>
+                    <select id="semester" th:field="*{semester}"
+                            th:errorclass="field-error"
+                            class="form-control form-control-sm">
+                        <option value="">--선택--</option>
+                        <option value="1">1학기</option>
+                        <option value="2">2학기</option>
+                    </select>
+                    <div class="field-error" th:errors="*{semester}"></div>
+                </div>
             </div>
-            <div>
-                <label for="year">년도</label>
-                <input type="number" id="year" min="1900" max="2100" step="1"
-                       th:field="*{year}" th:errorclass="field-error" class="form-control">
-                <div class="field-error" th:errors="*{year}"></div>
+
+            <!-- ✅ 하단: 과목 학년 + 과목 학기 필터 -->
+            <div class="row align-items-end mb-4">
+                <div class="col-md-6">
+                    <label for="filterYear" class="form-label">과목 학년</label>
+                    <select id="filterYear" class="form-control">
+                        <option value="">--선택--</option>
+                        <option value="1">1학년</option>
+                        <option value="2">2학년</option>
+                        <option value="3">3학년</option>
+                        <option value="4">4학년</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="filterSemester" class="form-label">과목 학기</label>
+                    <select id="filterSemester" class="form-control">
+                        <option value="">--선택--</option>
+                        <option value="1">1학기</option>
+                        <option value="2">2학기</option>
+                    </select>
+                </div>
             </div>
+
+            <!-- 과목 목록 -->
+            <div class="mb-4">
+                <h5>과목 목록</h5>
+                <div id="subjectList" class="row g-3">
+                    <div class="col-12 text-muted text-center">학년과 학기를 선택해주세요.</div>
+                </div>
+            </div>            <!-- 선택된 과목 -->
+            <div id="selectedSubjectPreview" class="p-4 border rounded"
+                 style="min-height: 200px; background-color: #f9f9f9;">
+                <h5 class="mb-3">선택된 과목</h5>
+                <ul id="selectedSubjectList" class="list-group">
+                    <li class="list-group-item text-muted">선택된 과목이 없습니다.</li>
+                </ul>
+            </div>
+
             <hr class="my-4">
             <div class="row">
                 <div class="col">
                     <button class="w-100 btn btn-primary btn-lg" type="submit">수강 신청</button>
                 </div>
                 <div class="col">
-                    <button class="w-100 btn btn-secondary btn-lg"
-                            type="button"
-                            th:onclick="'history.back();'">취소
+                    <button class="w-100 btn btn-secondary btn-lg" type="button"
+                            onclick="history.back()">취소
                     </button>
                 </div>
             </div>
         </form>
-    </div> <!-- /container -->
+    </div>
+    <script type="application/javascript" src="/js/signup.js"></script>
 </section>
+</body>
+</html>

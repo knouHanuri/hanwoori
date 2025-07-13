@@ -23,13 +23,15 @@
         (
             member_id,
             subject_id,
-            year
+            year,
+            semester
         )
         values
             (
                 #{member.memberId},
                 #{subject.subjectId},
-                #{year}
+                #{year},
+                #{semester}
             )
     </insert>
     <!--전체 조회-->
@@ -40,7 +42,8 @@
                m.member_id,
                m.name,
                h.subject_id,
-               s.subject_name
+               s.subject_name,
+               h.semester
         from signup_history as h
         join member         as m on m.member_id  = h.member_id
         join subject        as s on s.subject_id = h.subject_id
@@ -53,7 +56,8 @@
                m.member_id,
                m.name,
                h.subject_id,
-               s.subject_name
+               s.subject_name,
+               h.semester
         from signup_history as h
         join member         as m on m.member_id  = h.member_id
         join subject        as s on s.subject_id = h.subject_id
@@ -67,11 +71,12 @@
     <select id="findByMemberIdGroupBy" parameterType="Long"  resultMap="signupMemberSubject">
         select h.member_id,
                h.year,
-               m.name
+               m.name,
+               h.semester
         from signup_history as h
         join member         as m on m.member_id  = h.member_id
         where h.member_id = #{memberId}
-        group by h.member_id,h.year,m.name
+        group by h.member_id,h.year,m.name,h.semester
     </select>
     <!--수강신청 삭제(memberId,year)-->
     <delete id="deleteByMemberIdAndYear">
@@ -85,15 +90,12 @@
                m.member_id,
                m.name,
                h.subject_id,
-               s.subject_name
+               s.subject_name,
+               h.semester
         from signup_history as h
                  join member         as m on m.member_id  = h.member_id
                  join subject        as s on s.subject_id = h.subject_id
         where h.member_id = #{memberId}
           and h.year = ${year}
     </select>
-
-
-
-
 </mapper>

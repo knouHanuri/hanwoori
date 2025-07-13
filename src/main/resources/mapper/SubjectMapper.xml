@@ -47,4 +47,29 @@
     <delete id="delete" parameterType="knou.seoul.hanwoori.domain.subject.dto.Subject">
         delete from subject where subject_id = #{subjectId}
     </delete>
+    <!--조회(id)-->
+    <select id="findByGradeAndSemester" parameterType="map" resultType="knou.seoul.hanwoori.domain.subject.dto.Subject">
+        select *
+        from subject
+        where grade = #{grade}
+          and semester = #{semester}
+    </select>
+    <!--조회(id)-->
+    <select id="findByGrade" parameterType="map" resultType="knou.seoul.hanwoori.domain.subject.dto.Subject">
+        select *
+        from subject
+        where grade = #{grade}
+
+    </select>
+    <!--조회(id)-->
+    <select id="findBySemester" parameterType="map" resultType="knou.seoul.hanwoori.domain.subject.dto.Subject">
+        select *
+        from subject
+        where semester = #{semester}
+    </select>
+
+
+
+
+
 </mapper>

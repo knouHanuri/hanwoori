@@ -61,9 +61,10 @@ public class SignupController {
             signup.setMember(loginMember.orElseGet(Member::new));
             signup.setSubject(subject);
             signup.setYear(signupFormRequestDTO.getYear());
+            signup.setSemester(signupFormRequestDTO.getSemester());
             signupService.save(signup);
         }
-        return "redirect:/signups/members";
+        return "redirect:/";
     }
 
     @GetMapping

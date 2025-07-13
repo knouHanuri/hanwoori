@@ -125,6 +125,7 @@ create table if not exists signup_history (
     signup_id int primary key auto_increment,
     member_id int not null,
     year    int not null,
+    semester int not null,
     subject_id int not null,
     created_date timestamp not null default current_timestamp,
     updated_date timestamp not null default current_timestamp,
@@ -134,6 +135,71 @@ create table if not exists signup_history (
     on delete cascade
 );
 
+-- 과목 insert
+insert into subject(subject_name,grade,semester) values("컴퓨터 이해",1,1);
+insert into subject(subject_name,grade,semester) values("세계의정치와경제",1,1);
+insert into subject(subject_name,grade,semester) values("원격대학교육의이해",1,1);
+insert into subject(subject_name,grade,semester) values("사진의이해",1,1);
+insert into subject(subject_name,grade,semester) values("유비쿼터스컴퓨팅개론",1,1);
+insert into subject(subject_name,grade,semester) values("파이썬프로그래밍기초",1,1);
+insert into subject(subject_name,grade,semester) values("데이터정보처리입문",1,1);
+
+insert into subject(subject_name,grade,semester) values("한국사의이해",2,1);
+insert into subject(subject_name,grade,semester) values("생명과환경",2,1);
+insert into subject(subject_name,grade,semester) values("원격대학교육의이해",2,1);
+insert into subject(subject_name,grade,semester) values("이산수학",2,1);
+insert into subject(subject_name,grade,semester) values("Java프로그래밍",2,1);
+insert into subject(subject_name,grade,semester) values("HTML5웹프로그래밍",2,1);
+insert into subject(subject_name,grade,semester) values("세상읽기와논술",2,1);
+
+insert into subject(subject_name,grade,semester) values("원격대학교육의이해",3,1);
+insert into subject(subject_name,grade,semester) values("그래픽커뮤니케이션",3,1);
+insert into subject(subject_name,grade,semester) values("데이터베이스시스템",3,1);
+insert into subject(subject_name,grade,semester) values("디지털논리회로",3,1);
+insert into subject(subject_name,grade,semester) values("운영체제",3,1);
+insert into subject(subject_name,grade,semester) values("인공지능",3,1);
+insert into subject(subject_name,grade,semester) values("알고리즘",3,1);
+
+insert into subject(subject_name,grade,semester) values("원격대학교육의이해",4,1);
+insert into subject(subject_name,grade,semester) values("컴퓨터그래픽스",4,1);
+insert into subject(subject_name,grade,semester) values("모바일앱프로그래밍",4,1);
+insert into subject(subject_name,grade,semester) values("컴퓨터보안",4,1);
+insert into subject(subject_name,grade,semester) values("소프트웨어공학",4,1);
+insert into subject(subject_name,grade,semester) values("정보통신망",4,1);
+insert into subject(subject_name,grade,semester) values("생활과건강",4,1);
+
+
+insert into subject(subject_name,grade,semester) values("대학영어",1,2);
+insert into subject(subject_name,grade,semester) values("심리학에게묻다",1,2);
+insert into subject(subject_name,grade,semester) values("원격대학교육의이해",1,2);
+insert into subject(subject_name,grade,semester) values("대중영화의이해",1,2);
+insert into subject(subject_name,grade,semester) values("컴퓨터과학개론",1,2);
+insert into subject(subject_name,grade,semester) values("멀티미디어시스템",1,2);
+insert into subject(subject_name,grade,semester) values("C프로그래밍",1,2);
+
+insert into subject(subject_name,grade,semester) values("대학수학의이해",2,2);
+insert into subject(subject_name,grade,semester) values("원격대학교육의이해",2,2);
+insert into subject(subject_name,grade,semester) values("오픈소스기반데이터분석",2,2);
+insert into subject(subject_name,grade,semester) values("자료구조",2,2);
+insert into subject(subject_name,grade,semester) values("선형대수",2,2);
+insert into subject(subject_name,grade,semester) values("프로그래밍언어론",2,2);
+insert into subject(subject_name,grade,semester) values("경제학의이해",2,2);
+
+insert into subject(subject_name,grade,semester) values("원격대학교육의이해",3,2);
+insert into subject(subject_name,grade,semester) values("생활법률",3,2);
+insert into subject(subject_name,grade,semester) values("컴퓨터구조",3,2);
+insert into subject(subject_name,grade,semester) values("JSP프로그래밍",3,2);
+insert into subject(subject_name,grade,semester) values("UNIX시스템",3,2);
+insert into subject(subject_name,grade,semester) values("시뮬레이션",3,2);
+insert into subject(subject_name,grade,semester) values("머신러닝",3,2);
+
+insert into subject(subject_name,grade,semester) values("원격대학교육의이해",4,2);
+insert into subject(subject_name,grade,semester) values("경영전략론",4,2);
+insert into subject(subject_name,grade,semester) values("클라우드컴퓨팅",4,2);
+insert into subject(subject_name,grade,semester) values("컴파일러구성",4,2);
+insert into subject(subject_name,grade,semester) values("딥러닝",4,2);
+insert into subject(subject_name,grade,semester) values("빅데이터이해와활용",4,2);
+insert into subject(subject_name,grade,semester) values("성,사랑,사회",4,2);
 
 
 

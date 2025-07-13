@@ -1,4 +1,95 @@
 <header th:fragment="fragHeader" class="header">
+    <style>
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 2rem;
+            background-color: #fff;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .logo {
+            margin-right: 2rem;
+        }
+
+        .logo-image {
+            height: 40px;
+        }
+
+        .menu {
+            margin-right: 1.5rem;
+            font-weight: 500;
+        }
+
+        .menu a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        .user-menu {
+            position: relative;
+            margin-left: auto;
+        }
+
+        .profile-button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            background-color: white;
+        }
+
+        .profile-button img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .dropdown {
+            position: absolute;
+            right: 0;
+            top: 50px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            display: none;
+            min-width: 160px;
+            z-index: 1000;
+        }
+
+        .dropdown a {
+            display: block;
+            padding: 10px 15px;
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .dropdown a:hover {
+            background-color: #f5f5f5;
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background-color: #e0e0e0;
+            margin: 5px 0;
+        }
+
+        /* Show dropdown on .show class */
+        .dropdown.show {
+            display: block;
+        }
+    </style>
     <div class="header-inner">
         <div class="logo"><a href="/"><img class="logo-image" src="/images/logo.png" alt="한우리 로고 사진"></a></div>
 
@@ -6,15 +97,57 @@
         <div class="menu"><a href="/about/contact">문의하기</a></div>
         <div class="menu"><a href="/study/list">스터디</a></div>
         <div class="menu"><a href="/posts">게시판</a></div>
+        <!--        <div class="menu">-->
+        <!--            <button th:if="${session.loginMember == null}" class="btn btn-primary btn-sm"-->
+        <!--                    th:onclick="|location.href='@{/login}'|">로그인</button>-->
+        <!--            <button th:if="${session.loginMember != null}" class="btn btn-primary btn-sm"-->
+        <!--                    th:onclick="|location.href='@{/logout}'|">로그아웃</button>-->
+        <!--            <button th:if="${session.loginMember != null}" class="btn btn-warning btn-sm"-->
+        <!--                    th:onclick="|location.href='@{/members/{id}(id=${session.loginMember.memberId})}'|">회원정보</button>-->
+        <!--            <button th:if="${session.loginMember != null}" class="btn btn-dark btn-sm"-->
+        <!--                    th:onclick="|location.href='@{/signups/new}'|">수강신청</button>-->
+        <!--            <button th:if="${session.loginMember != null and session.loginMember.grade.name() == 'admin'}" class="btn btn-danger btn-sm"-->
+        <!--                    th:onclick="|location.href='@{/admin}'|">관리자 메뉴</button>-->
+        <!--        </div>-->
         <div class="menu">
-            <button th:if="${session.loginMember == null}" class="btn btn-primary btn-sm"
-                    th:onclick="|location.href='@{/login}'|">로그인</button>
-            <button th:if="${session.loginMember != null}" class="btn btn-primary btn-sm"
-                    th:onclick="|location.href='@{/logout}'|">로그아웃</button>
-            <button th:if="${session.loginMember != null}" class="btn btn-warning btn-sm"
-                    th:onclick="|location.href='@{/signups/new}'|">수강신청</button>
-            <button th:if="${session.loginMember != null and session.loginMember.grade.name() == 'admin'}" class="btn btn-danger btn-sm"
-                    th:onclick="|location.href='@{/admin}'|">관리자 메뉴</button>
+            <div class="user-menu">
+                <!-- 로그인 안 한 경우 -->
+                <button th:if="${session.loginMember == null}" class="btn btn-navy btn-sm"
+                        style="padding: 6px 12px; font-size: 14px;"
+                        th:onclick="|location.href='@{/login}'|">로그인
+                </button>
+
+                <!-- 로그인한 경우 -->
+                <div th:if="${session.loginMember != null}">
+                    <div class="profile-button" onclick="toggleDropdown()">
+                        <img src="/images/profile.png" alt="프로필">
+                    </div>
+
+                    <div id="dropdownMenu" class="dropdown">
+                        <a th:href="@{/members/{id}(id=${session.loginMember.memberId})}">회원정보</a>
+                        <a th:href="@{/signups/new}">수강신청</a>
+                        <a th:if="${session.loginMember.grade.name() == 'admin'}"
+                           th:href="@{/admin}" style="color: #d9534f;">관리자 메뉴</a>
+                        <div class="dropdown-divider"></div>
+                        <a th:href="@{/logout}">로그아웃</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+    <script>
+        function toggleDropdown() {
+            const dropdown = document.getElementById('dropdownMenu');
+            dropdown.classList.toggle('show');
+        }
+
+        // 드롭다운 외부 클릭 시 닫기
+        window.addEventListener('click', function (e) {
+            const dropdown = document.getElementById('dropdownMenu');
+            const button = document.querySelector('.profile-button');
+            if (!dropdown.contains(e.target) && !button.contains(e.target)) {
+                dropdown.classList.remove('show');
+            }
+        });
+    </script>
 </header>

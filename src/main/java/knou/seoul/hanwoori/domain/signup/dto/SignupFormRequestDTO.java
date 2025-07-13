@@ -18,8 +18,10 @@ public class SignupFormRequestDTO {
     Long memberId;
     @Size(min = 1,message = "한 과목이상 선택해주세요")
     List<Long> subjectIds;
-    @NotNull
+    @NotNull(message = "수강신청하는 연도를 선택해주세요")
     Integer year;
+    @NotNull(message = "수강신청하는 학기를 선택해주세요")
+    Integer semester;
     private LocalDateTime createdDate;
     private LocalDateTime updatedDate;
 

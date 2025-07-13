@@ -38,4 +38,21 @@ public class SubjectServiceImpl implements SubjectService {
     public int delete(Long id) {
         return subjectDAO.delete(id);
     }
+
+    @Override
+    public List<Subject> findByGradeAndSemester(Integer year, Integer semester) {
+        return subjectDAO.findByGradeAndSemester(year, semester);
+    }
+
+    @Override
+    public List<Subject> findByGrade(Integer grade) {
+        return subjectDAO.findByGrade(grade);
+    }
+
+    @Override
+    public List<Subject> findBySemester(Integer semester) {
+        return subjectDAO.findBySemester(semester);
+    }
+
+
 }

@@ -79,7 +79,8 @@
                 <div>회원등급</div>
                 <div th:each="grade : ${grades}" class="form-check form-check-inline">
                     <input type="radio" th:field="*{grade}" th:value="${grade.name()}"
-                           class="form-check-input">
+                           class="form-check-input"
+                           th:disabled="${session.loginMember.grade.name() != 'admin'}">
                     <label th:for="${#ids.prev('grade')}" th:text="${grade.displayName}" class="form-check-label">
                     </label>
                 </div>
@@ -100,4 +101,7 @@
             </div>
         </form>
     </div> <!-- /container -->
+    <script>
+
+    </script>
 </section>

@@ -11,5 +11,8 @@ public interface SubjectService {
     Optional<Subject> findById(Long id);
     void modify(Subject subject);
     int delete(Long id);
+    List<Subject> findByGradeAndSemester(Integer grade, Integer semester);
+    List<Subject> findByGrade(Integer grade);
+    List<Subject> findBySemester(Integer semester);
 
 }
