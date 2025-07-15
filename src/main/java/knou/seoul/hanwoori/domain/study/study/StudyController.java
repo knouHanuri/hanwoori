@@ -40,6 +40,7 @@ public class StudyController {
                             Model model, HttpSession session){
 
         PageInfo<Study> pageInfo = studyService.studyListAll(pageNum, pageSize);
+        pageInfo.setPages(Math.max(pageInfo.getPages(), 1));
         model.addAttribute("pageInfo", pageInfo);
 
         Member loginMember = (Member)session.getAttribute(LOGIN_MEMBER);

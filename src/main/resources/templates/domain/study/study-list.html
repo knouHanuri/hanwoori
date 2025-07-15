@@ -53,13 +53,13 @@
 
             <div class="pagination">
                 <ul class="pagination">
-                    <li class="page-item" th:classappend="${pageInfo.pageNum == 1} ? 'disabled'">
+                    <li class="page-item" th:classappend="${pageInfo.pageNum == 1} ? ' disabled'">
                         <a class="page-link" th:href="@{/study/list(pageNum=${pageInfo.pageNum - 1}, pageSize=${pageInfo.pageSize})}">&laquo;</a>
                     </li>
-                    <li th:each="i : ${#numbers.sequence(1, pageInfo.pages)}" th:classappend="${i == pageInfo.pageNum} ? 'active'">
+                    <li class="page-item" th:each="i : ${#numbers.sequence(1, pageInfo.pages)}" th:classappend="${i == pageInfo.pageNum} ? ' active'">
                         <a class="page-link" th:href="@{/study/list(pageNum=${i}, pageSize=${pageInfo.pageSize})}" th:text="${i}"></a>
                     </li>
-                    <li class="page-item" th:classappend="${pageInfo.pageNum == pageInfo.pages} ? 'disabled'">
+                    <li class="page-item" th:classappend="${pageInfo.pageNum == pageInfo.pages} ? ' disabled'">
                         <a class="page-link" th:href="@{/study/list(pageNum=${pageInfo.pageNum + 1}, pageSize=${pageInfo.pageSize})}">&raquo;</a>
                     </li>
                 </ul>
