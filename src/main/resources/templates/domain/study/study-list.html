@@ -12,7 +12,7 @@
                     <h2>스터디 목록</h2>
                 </div>
 
-                <div class="row">
+                <div class="row mb-3">
                     <div class="col">
                         <button class="btn btn-primary float-end"
                                 onclick="location.href='/study/form'"
@@ -20,7 +20,6 @@
                                 type="button">스터디 생성</button>
                     </div>
                 </div>
-                <hr class="my-4">
                 <div class="row">
                     <table class="table">
                         <thead>
@@ -45,6 +44,11 @@
                                     <button th:if="${studyList.memberId == memberId}" th:onclick="|edit(${studyList.studyId})|" class="btn btn-warning btn-sm">수정</button>
                                     <button th:if="${studyList.memberId == memberId}" th:onclick="|del(${studyList.studyId})|" class="btn btn-danger btn-sm">삭제</button>
                                 </td>
+                            </tr>
+
+                            <!-- 리스트가 비어있는 경우 -->
+                            <tr th:if="${#lists.isEmpty(pageInfo.list)}">
+                                <td colspan="6" class="text-center">등록된 스터디가 없습니다.</td>
                             </tr>
                         </tbody>
                     </table>

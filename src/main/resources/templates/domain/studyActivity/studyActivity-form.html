@@ -20,22 +20,22 @@
 
                 <div class="field-error" th:if="${#fields.hasGlobalErrors()}" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></div>
 
-                <div>
+                <div class="mb-3">
                     <label for="studyDate">* 스터디 날짜</label>
                     <input type="date" id="studyDate" name="studyDate" th:field="*{studyDate}" th:errorclass="field-error" class="form-control">
                     <div class="field-error" th:errors="*{studyDate}"></div>
                 </div>
-                <div>
+                <div class="mb-3">
                     <label for="title">* 제목</label>
                     <input type="text" id="title" name="title" th:field="*{title}" th:errorclass="field-error" class="form-control" placeholder="제목을 입력하세요"/>
                     <div class="field-error" th:errors="*{title}"></div>
                 </div>
-                <div>
+                <div class="mb-3">
                     <label for="content">* 내용</label>
                     <textarea id="content" name="content" rows="5" maxlength="70" th:field="*{content}" th:errorclass="field-error" class="form-control"></textarea>
                     <div class="field-error" th:errors="*{content}"></div>
                 </div>
-                <div>
+                <div class="mb-3">
                     <label for="file">파일</label>
                     <input id="file" type="file" name="file" class="form-control" />
                 </div>
