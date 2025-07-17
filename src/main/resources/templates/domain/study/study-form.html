@@ -14,23 +14,25 @@
                 <form id="studyForm" th:object="${study}" enctype="multipart/form-data">
                     <input type="hidden" id="studyId" th:field="*{studyId}"/> <!-- 수정할 경우 ID를 숨긴 필드로 보냄 -->
                     <div class="field-error" th:if="${#fields.hasGlobalErrors()}" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></div>
-                    <div>
+                    <div class="mb-3">
                         <label for="subjectId">과목명</label>
                         <select id="subjectId" name="subjectId" class="form-control">
                             <option value=0>선택</option>
                             <option th:each="val : ${subjects}" th:value="${val?.subjectId}"
-                                    th:text="${val?.subjectName}"
+                                    th:text="'[' + ${val?.grade} + '-' + ${val?.semester} + '] ' + ${val?.subjectName}"
                                     th:selected="${val?.subjectId == study.subjectId}">
                             </option>
                         </select>
-                        <button onclick="goSubjectNew();return false;" class="w-100 btn btn-primary btn-md">과목 등록</button>
+                        <div class="mt-1">
+                            - 원하는 과목이 없다면 <button onclick="goSubjectNew();return false;" class="w-20 btn btn-primary btn-md">과목 등록</button>을 해주세요.
+                        </div>
                     </div>
-                    <div>
+                    <div class="mb-3">
                         <label for="title">* 스터디명</label>
                         <input type="text" id="title" name="title" th:field="*{title}" th:errorclass="field-error" class="form-control" placeholder="스터디명을 입력하세요"/>
                         <div class="field-error" th:errors="*{title}"></div>
                     </div>
-                    <div>
+                    <div class="mb-3">
                         <label for="status">* 상태</label>
                         <select id="status" name="status" th:field="*{status}" class="form-control">
                             <option value="">선택</option>
@@ -42,28 +44,28 @@
                         </select>
                         <div class="field-error" th:errors="*{status}"></div>
                     </div>
-                    <div>
+                    <div class="mb-3">
                         <label for="schedule">* 요일 및 시간</label>
                         <input type="text" id="schedule" name="schedule" th:field="*{schedule}"
                                placeholder="ex) 매주 수, 오후 7시" th:errorclass="field-error" class="form-control">
                         <div class="field-error" th:errors="*{schedule}"></div>
                     </div>
-                    <div>
+                    <div class="mb-3">
                         <label for="startDate">* 시작일</label>
                         <input type="date" id="startDate" name="startDate" th:field="*{startDate}" th:errorclass="field-error" class="form-control">
                         <div class="field-error" th:errors="*{startDate}"></div>
                     </div>
-                    <div>
+                    <div class="mb-3">
                         <label for="endDate">* 종료일</label>
                         <input type="date" id="endDate" name="endDate" th:field="*{endDate}" th:errorclass="field-error" class="form-control">
                         <div class="field-error" th:errors="*{endDate}"></div>
                     </div>
-                    <div>
+                    <div class="mb-3">
                         <label for="goal">스터디 목표</label>
                         <textarea id="goal" name="goal" rows="5" maxlength="70" th:field="*{goal}" th:errorclass="field-error" class="form-control"></textarea>
                         <div class="field-error" th:errors="*{goal}"></div>
                     </div>
-                    <div>
+                    <div class="mb-3">
                         <label for="file">파일</label>
                         <input id="file" type="file" name="file" class="form-control" />
                     </div>

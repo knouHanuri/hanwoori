@@ -20,6 +20,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,6 +41,7 @@ public class StudyController {
                             Model model, HttpSession session){
 
         PageInfo<Study> pageInfo = studyService.studyListAll(pageNum, pageSize);
+        pageInfo.setPages(Math.max(pageInfo.getPages(), 1));
         model.addAttribute("pageInfo", pageInfo);
 
         Member loginMember = (Member)session.getAttribute(LOGIN_MEMBER);
@@ -57,6 +59,11 @@ public class StudyController {
         Optional<Study> optionalStudy = Optional.empty();
         if(studyId != null) optionalStudy = studyService.findById(studyId);
         List<Subject> subjects = subjectService.findAll();
+
+        subjects.sort(Comparator
+                .comparing(Subject::getGrade)
+                .thenComparing(Subject::getSemester)
+                .thenComparing(Subject::getSubjectName));
 
         Optional<Member> loginMember = Optional.ofNullable((Member) session.getAttribute(LOGIN_MEMBER));
         model.addAttribute("memberId", loginMember.orElseGet(Member::new).getMemberId());
