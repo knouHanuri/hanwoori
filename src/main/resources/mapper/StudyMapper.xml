@@ -7,6 +7,23 @@
     <select id="studyListAll" resultType="knou.seoul.hanwoori.domain.study.study.dto.Study">
         select * from study order by study_id desc
     </select>
+    <!--데이터 조건 조회-->
+    <select id="studyListSearch" resultType="knou.seoul.hanwoori.domain.study.study.dto.Study"
+            parameterType="knou.seoul.hanwoori.domain.study.study.dto.StudySearchRequestDTO">
+        select * from study
+        <where>
+            <if test="subjectId != null">
+                and subject_id = #{subjectId}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="title != null and title != ''">
+                and title LIKE CONCAT('%', #{title}, '%')
+            </if>
+        </where>
+         order by study_id desc
+    </select>
     <!--데이터 일정 수 조회-->
     <select id="studyListLimited" parameterType="int" resultType="knou.seoul.hanwoori.domain.study.study.dto.Study">
         select * from study order by study_id desc LIMIT #{limit}

@@ -4,12 +4,12 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import knou.seoul.hanwoori.domain.study.study.dao.StudyDAO;
 import knou.seoul.hanwoori.domain.study.study.dto.Study;
-import knou.seoul.hanwoori.domain.study.exception.StudyExceptionHandler;
+import knou.seoul.hanwoori.domain.study.study.dto.StudySearchRequestDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import jakarta.validation.Valid;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalDate;
@@ -54,8 +54,16 @@ public class StudyServiceImpl implements StudyService {
     /* 전체 조회 */
     @Override
     public PageInfo<Study> studyListAll(int pageNum, int pageSize) {
+        return studyListAll(pageNum, pageSize, null);
+    }
+
+    /* 검색 조회 */
+    @Override
+    public PageInfo<Study> studyListAll(int pageNum, int pageSize, @Nullable StudySearchRequestDTO searchRequest) {
         PageHelper.startPage(pageNum, pageSize);
-        List<Study> studyList = StudyDAO.studyListAll();
+        List<Study> studyList = (searchRequest != null)
+                ? StudyDAO.studyListSearch(searchRequest)
+                : StudyDAO.studyListAll();
         return new PageInfo<>(studyList);
     }
 

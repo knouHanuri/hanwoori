@@ -1,10 +1,13 @@
 package knou.seoul.hanwoori.domain.study.study;
 
 import com.github.pagehelper.PageInfo;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import knou.seoul.hanwoori.domain.member.dto.Member;
 import knou.seoul.hanwoori.domain.study.study.dto.Study;
+import knou.seoul.hanwoori.domain.study.study.dto.StudySearchFormDTO;
+import knou.seoul.hanwoori.domain.study.study.dto.StudySearchRequestDTO;
 import knou.seoul.hanwoori.domain.study.studyActivity.StudyActivityService;
 import knou.seoul.hanwoori.domain.study.studyActivity.dto.StudyActivity;
 import knou.seoul.hanwoori.domain.study.studyParticipant.StudyParticipantService;
@@ -22,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static knou.seoul.hanwoori.common.SessionConst.LOGIN_MEMBER;
@@ -36,14 +40,47 @@ public class StudyController {
     private final StudyParticipantService studyParticipantService;
 
     @GetMapping("/list")
-    public String studyList(@RequestParam(defaultValue = "1") int pageNum,
+    public String studyList(@ModelAttribute("searchRequest") StudySearchRequestDTO searchRequest,
+                            @RequestParam(defaultValue = "1") int pageNum,
                             @RequestParam(defaultValue = "10") int pageSize,
+                            HttpServletRequest request,
                             Model model, HttpSession session){
 
-        PageInfo<Study> pageInfo = studyService.studyListAll(pageNum, pageSize);
+        //region /study/list?subjectId=&status=&title= 로 들어왔을 경우나 잘못된 입력값 있는 경우
+        Map<String, String[]> params = request.getParameterMap();
+
+        boolean hasSearchParams = params.containsKey("subjectId") ||
+                params.containsKey("status") ||
+                params.containsKey("title");
+
+        if (hasSearchParams) {
+            if(searchRequest.isEmpty()) return "redirect:/study/list";
+            if(!searchRequest.isValid()) return "redirect:/study/list";
+        }
+        //endregion
+
+        //페이징
+        PageInfo<Study> pageInfo = studyService.studyListAll(pageNum, pageSize, searchRequest);
         pageInfo.setPages(Math.max(pageInfo.getPages(), 1));
         model.addAttribute("pageInfo", pageInfo);
 
+        //검색박스
+        StudySearchFormDTO searchFormDTO = new StudySearchFormDTO();
+
+        searchFormDTO.setSearchRequest(searchRequest);
+
+        List<Subject> subjects = subjectService.findAll();
+
+        subjects.sort(Comparator
+                .comparing(Subject::getGrade)
+                .thenComparing(Subject::getSemester)
+                .thenComparing(Subject::getSubjectName));
+
+        searchFormDTO.setSubject(subjects);
+        searchFormDTO.setStatus(Study.Status.values());
+        model.addAttribute("searchFormDTO", searchFormDTO);
+
+        //로그인
         Member loginMember = (Member)session.getAttribute(LOGIN_MEMBER);
         if(loginMember != null) {
             model.addAttribute("memberId", loginMember.getMemberId());

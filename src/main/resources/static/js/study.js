@@ -1,8 +1,28 @@
+/* 스터디 조회 */
+function studyListSearch(){
+    const search_subject = document.getElementById('search_subjectId').value.trim();
+    const search_status = document.getElementById('search_status').value.trim();
+    const search_title = document.getElementById('search_title').value.trim();
+
+    if (!search_subject && !search_status && !search_title) {
+        alert('검색 조건을 하나 이상 입력해주세요.');
+        return;
+    }
+
+    document.getElementById('studySearchForm').submit();
+}
+
+function handleEnterKey(event){
+    if (event.keyCode === 13) {
+        event.preventDefault();
+        studyListSearch();
+    }
+}
+
 function addStudyActivity(studyId){
     window.location.href = `/studyActivity/form?studyId=${studyId}`;
 }
 
-/* 스터디 조회 */
 function edit(studyId){
     window.location.href = `/study/form?studyId=${studyId}`;
 }

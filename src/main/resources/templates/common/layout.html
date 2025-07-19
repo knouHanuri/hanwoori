@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html th:fragment="layout (title, content, links, pageTitle, pageDescription)" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link rel="icon" th:href="@{/images/favicon.ico}" type="image/x-icon">
     <meta charset="utf-8">
     <th:block th:if="${title != null}" th:replace="${title}">타이틀</th:block>
-
     <!--공통 -->
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
     <link th:href="@{/css/common.css}" rel="stylesheet">
