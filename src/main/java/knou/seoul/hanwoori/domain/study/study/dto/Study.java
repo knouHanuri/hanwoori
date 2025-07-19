@@ -19,7 +19,7 @@ public class Study {
     private long memberId;
     private long subjectId;
 
-    @NotBlank(message = "제목입력해라")
+    @NotBlank(message = "스터디명입력해라")
     private String title;
 
     @NotNull(message = "상태입력해라")

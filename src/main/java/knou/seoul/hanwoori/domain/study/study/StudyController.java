@@ -5,6 +5,8 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import knou.seoul.hanwoori.domain.member.dto.Member;
 import knou.seoul.hanwoori.domain.study.study.dto.Study;
+import knou.seoul.hanwoori.domain.study.study.dto.StudySearchFormDTO;
+import knou.seoul.hanwoori.domain.study.study.dto.StudySearchRequestDTO;
 import knou.seoul.hanwoori.domain.study.studyActivity.StudyActivityService;
 import knou.seoul.hanwoori.domain.study.studyActivity.dto.StudyActivity;
 import knou.seoul.hanwoori.domain.study.studyParticipant.StudyParticipantService;
@@ -40,10 +42,26 @@ public class StudyController {
                             @RequestParam(defaultValue = "10") int pageSize,
                             Model model, HttpSession session){
 
+        //페이징
         PageInfo<Study> pageInfo = studyService.studyListAll(pageNum, pageSize);
         pageInfo.setPages(Math.max(pageInfo.getPages(), 1));
         model.addAttribute("pageInfo", pageInfo);
 
+        //검색박스
+        StudySearchFormDTO searchFormDTO = new StudySearchFormDTO();
+
+        List<Subject> subjects = subjectService.findAll();
+
+        subjects.sort(Comparator
+                .comparing(Subject::getGrade)
+                .thenComparing(Subject::getSemester)
+                .thenComparing(Subject::getSubjectName));
+
+        searchFormDTO.setSubject(subjects);
+        searchFormDTO.setStatus(Study.Status.values());
+        model.addAttribute("searchFormDTO", searchFormDTO);
+
+        //로그인
         Member loginMember = (Member)session.getAttribute(LOGIN_MEMBER);
         if(loginMember != null) {
             model.addAttribute("memberId", loginMember.getMemberId());
@@ -148,5 +166,22 @@ public class StudyController {
             model.addAttribute("error", "해당 스터디를 찾을 수 없습니다.");
             return "domain/study/study-list"; // 에러 메시지만 포함된 템플릿 반환
         }
+    }
+
+    @GetMapping("/search")
+    public String studySearch(@ModelAttribute StudySearchRequestDTO request, Model model){
+
+//        PageInfo<Study> pageInfo = studyService.studyListAll(pageNum, pageSize);
+//        pageInfo.setPages(Math.max(pageInfo.getPages(), 1));
+//        model.addAttribute("pageInfo", pageInfo);
+//
+//        Member loginMember = (Member)session.getAttribute(LOGIN_MEMBER);
+//        if(loginMember != null) {
+//            model.addAttribute("memberId", loginMember.getMemberId());
+//        }
+
+        //model.addAttribute("status", Study.Status.values());
+        //model.addAttribute("studyList",studyList);
+        return "domain/study/study-list";
     }
 }
