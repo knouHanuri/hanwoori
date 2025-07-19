@@ -13,6 +13,7 @@
                 </div>
 
                 <div class="row">
+                    <!--검색-->
                     <div class="search-container">
                         <form th:object="${searchRequest}" th:action="@{/study/list}" method="get" class="search-form">
                             <select th:field="*{subjectId}" class="search-select">
@@ -31,18 +32,22 @@
 
                             <!-- 검색어 입력 -->
                             <input type="text" th:field="*{title}" placeholder="스터디명 입력" class="search-input"/>
-<!--                            <input type="text" name="query" th:value="${query}" placeholder="스터디명 입력" class="search-input"/>-->
 
-                            <!-- 검색 버튼 -->
+                            <!-- 검색, 초기화 버튼 -->
                             <button type="submit" class="btn btn-primary">검색</button>
+                            <button type="button" class="btn btn-secondary" onclick="location.href='/study/list'">초기화</button>
                         </form>
                     </div>
+
+                    <!--스터디 생성버튼-->
                     <div class="col p-sm-0">
                         <button class="btn btn-primary float-end"
                                 onclick="location.href='/study/form'"
                                 th:if="${memberId != null}"
                                 type="button">스터디 생성</button>
                     </div>
+
+                    <!--목록-->
                     <table class="table mt-sm-1">
                         <thead>
                             <tr>
@@ -75,36 +80,42 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
 
-            <div class="pagination">
-                <ul class="pagination">
-                    <li class="page-item" th:classappend="${pageInfo.pageNum == 1} ? ' disabled'">
-                        <a class="page-link"
-                           th:href="@{/study/list(pageNum=${pageInfo.pageNum - 1}, pageSize=${pageInfo.pageSize},
-                                                subjectId=${searchRequest.subjectId != null} ? ${searchRequest.subjectId} : null,
-                                                status=${searchRequest.status != null} ? ${searchRequest.status} : null,
-                                                title=${searchRequest.title != null and searchRequest.title != ''} ? ${searchRequest.title} : null)}">
-                            &laquo;</a>
-                    </li>
-                    <li class="page-item" th:each="i : ${#numbers.sequence(1, pageInfo.pages)}" th:classappend="${i == pageInfo.pageNum} ? ' active'">
-                        <a class="page-link" th:text="${i}"
-                           th:href="@{/study/list(pageNum=${i}, pageSize=${pageInfo.pageSize},
-                                                subjectId=${searchRequest.subjectId != null} ? ${searchRequest.subjectId} : null,
-                                                status=${searchRequest.status != null} ? ${searchRequest.status} : null,
-                                                title=${searchRequest.title != null and searchRequest.title != ''} ? ${searchRequest.title} : null)}">
-                        </a>
-                    </li>
-                    <li class="page-item" th:classappend="${pageInfo.pageNum == pageInfo.pages} ? ' disabled'">
-                        <a class="page-link"
-                           th:href="@{/study/list(pageNum=${pageInfo.pageNum + 1}, pageSize=${pageInfo.pageSize},
-                                                subjectId=${searchRequest.subjectId != null} ? ${searchRequest.subjectId} : null,
-                                                status=${searchRequest.status != null} ? ${searchRequest.status} : null,
-                                                title=${searchRequest.title != null and searchRequest.title != ''} ? ${searchRequest.title} : null)}">
-                            &raquo;
-                        </a>
-                    </li>
-                </ul>
+                <!--페이징-->
+                <div class="pagination align-items-center justify-content-between">
+                    <div class="d-flex justify-content-center flex-grow-1">
+                        <ul class="pagination mb-0">
+                            <li class="page-item" th:classappend="${pageInfo.pageNum == 1} ? ' disabled'">
+                                <a class="page-link"
+                                   th:href="@{/study/list(pageNum=${pageInfo.pageNum - 1}, pageSize=${pageInfo.pageSize},
+                                                    subjectId=${searchRequest.subjectId != null} ? ${searchRequest.subjectId} : null,
+                                                    status=${searchRequest.status != null} ? ${searchRequest.status} : null,
+                                                    title=${searchRequest.title != null and searchRequest.title != ''} ? ${searchRequest.title} : null)}">
+                                    &laquo;</a>
+                            </li>
+                            <li class="page-item" th:each="i : ${#numbers.sequence(1, pageInfo.pages)}" th:classappend="${i == pageInfo.pageNum} ? ' active'">
+                                <a class="page-link" th:text="${i}"
+                                   th:href="@{/study/list(pageNum=${i}, pageSize=${pageInfo.pageSize},
+                                                    subjectId=${searchRequest.subjectId != null} ? ${searchRequest.subjectId} : null,
+                                                    status=${searchRequest.status != null} ? ${searchRequest.status} : null,
+                                                    title=${searchRequest.title != null and searchRequest.title != ''} ? ${searchRequest.title} : null)}">
+                                </a>
+                            </li>
+                            <li class="page-item" th:classappend="${pageInfo.pageNum == pageInfo.pages} ? ' disabled'">
+                                <a class="page-link"
+                                   th:href="@{/study/list(pageNum=${pageInfo.pageNum + 1}, pageSize=${pageInfo.pageSize},
+                                                    subjectId=${searchRequest.subjectId != null} ? ${searchRequest.subjectId} : null,
+                                                    status=${searchRequest.status != null} ? ${searchRequest.status} : null,
+                                                    title=${searchRequest.title != null and searchRequest.title != ''} ? ${searchRequest.title} : null)}">
+                                    &raquo;
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="pagination-summary">
+                        <div>총 <span th:text="${pageInfo.total}"></span>건</div>
+                    </div>
+                </div>
             </div>
 
             <script th:inline="javascript">
