@@ -38,17 +38,20 @@ public class StudyController {
     private final StudyParticipantService studyParticipantService;
 
     @GetMapping("/list")
-    public String studyList(@RequestParam(defaultValue = "1") int pageNum,
+    public String studyList(@ModelAttribute("searchRequest") StudySearchRequestDTO searchRequest,
+                            @RequestParam(defaultValue = "1") int pageNum,
                             @RequestParam(defaultValue = "10") int pageSize,
                             Model model, HttpSession session){
 
         //페이징
-        PageInfo<Study> pageInfo = studyService.studyListAll(pageNum, pageSize);
+        PageInfo<Study> pageInfo = studyService.studyListAll(pageNum, pageSize, searchRequest);
         pageInfo.setPages(Math.max(pageInfo.getPages(), 1));
         model.addAttribute("pageInfo", pageInfo);
 
         //검색박스
         StudySearchFormDTO searchFormDTO = new StudySearchFormDTO();
+
+        searchFormDTO.setSearchRequest(searchRequest);
 
         List<Subject> subjects = subjectService.findAll();
 
@@ -166,22 +169,5 @@ public class StudyController {
             model.addAttribute("error", "해당 스터디를 찾을 수 없습니다.");
             return "domain/study/study-list"; // 에러 메시지만 포함된 템플릿 반환
         }
-    }
-
-    @GetMapping("/search")
-    public String studySearch(@ModelAttribute StudySearchRequestDTO request, Model model){
-
-//        PageInfo<Study> pageInfo = studyService.studyListAll(pageNum, pageSize);
-//        pageInfo.setPages(Math.max(pageInfo.getPages(), 1));
-//        model.addAttribute("pageInfo", pageInfo);
-//
-//        Member loginMember = (Member)session.getAttribute(LOGIN_MEMBER);
-//        if(loginMember != null) {
-//            model.addAttribute("memberId", loginMember.getMemberId());
-//        }
-
-        //model.addAttribute("status", Study.Status.values());
-        //model.addAttribute("studyList",studyList);
-        return "domain/study/study-list";
     }
 }

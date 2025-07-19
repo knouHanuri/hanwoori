@@ -1,6 +1,7 @@
 package knou.seoul.hanwoori.domain.study.study.dao;
 
 import knou.seoul.hanwoori.domain.study.study.dto.Study;
+import knou.seoul.hanwoori.domain.study.study.dto.StudySearchRequestDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -12,6 +13,7 @@ public interface StudyDAO {
     void update(Study study);
     Optional<Study> findById(long studyId);
     List<Study> studyListAll();
+    List<Study> studyListSearch(StudySearchRequestDTO searchRequestDTO);
     List<Study> studyListLimited(int limit);
     int delete(long studyId);
 

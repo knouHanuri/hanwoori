@@ -61,7 +61,9 @@ public class StudyServiceImpl implements StudyService {
     @Override
     public PageInfo<Study> studyListAll(int pageNum, int pageSize, @Nullable StudySearchRequestDTO searchRequest) {
         PageHelper.startPage(pageNum, pageSize);
-        List<Study> studyList = StudyDAO.studyListAll();
+        List<Study> studyList = (searchRequest != null)
+                ? StudyDAO.studyListSearch(searchRequest)
+                : StudyDAO.studyListAll();
         return new PageInfo<>(studyList);
     }
 

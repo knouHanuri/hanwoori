@@ -9,6 +9,7 @@ import java.util.List;
 @Getter
 @Setter
 public class StudySearchFormDTO {
+    private StudySearchRequestDTO searchRequest;
     private List<Subject> subject;
     private Study.Status[] status;
 }

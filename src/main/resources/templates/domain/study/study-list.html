@@ -14,23 +14,24 @@
 
                 <div class="row">
                     <div class="search-container">
-                        <form th:action="@{/study/search}" method="get" class="search-form">
-                            <select class="search-select">
+                        <form th:object="${searchRequest}" th:action="@{/study/list}" method="get" class="search-form">
+                            <select th:field="*{subjectId}" class="search-select">
                                 <option value="">과목</option>
                                 <option th:each="subject : ${searchFormDTO.subject}"
                                         th:value="${subject?.subjectId}"
                                         th:text="'[' + ${subject?.grade} + '-' + ${subject?.semester} + '] ' + ${subject?.subjectName}"></option>
                             </select>
 
-                            <select class="search-select">
+                            <select th:field="*{status}" class="search-select">
                                 <option value="">상태</option>
                                 <option th:each="status : ${searchFormDTO.status}"
-                                        th:value="${status.ordinal}"
+                                        th:value="${status.name()}"
                                         th:text="${status.displayName}"></option>
                             </select>
 
                             <!-- 검색어 입력 -->
-                            <input type="text" name="query" th:value="${query}" placeholder="스터디명 입력" class="search-input"/>
+                            <input type="text" th:field="*{title}" placeholder="스터디명 입력" class="search-input"/>
+<!--                            <input type="text" name="query" th:value="${query}" placeholder="스터디명 입력" class="search-input"/>-->
 
                             <!-- 검색 버튼 -->
                             <button type="submit" class="btn btn-primary">검색</button>
@@ -79,13 +80,29 @@
             <div class="pagination">
                 <ul class="pagination">
                     <li class="page-item" th:classappend="${pageInfo.pageNum == 1} ? ' disabled'">
-                        <a class="page-link" th:href="@{/study/list(pageNum=${pageInfo.pageNum - 1}, pageSize=${pageInfo.pageSize})}">&laquo;</a>
+                        <a class="page-link"
+                           th:href="@{/study/list(pageNum=${pageInfo.pageNum - 1}, pageSize=${pageInfo.pageSize},
+                                                subjectId=${searchRequest.subjectId != null} ? ${searchRequest.subjectId} : null,
+                                                status=${searchRequest.status != null} ? ${searchRequest.status} : null,
+                                                title=${searchRequest.title != null and searchRequest.title != ''} ? ${searchRequest.title} : null)}">
+                            &laquo;</a>
                     </li>
                     <li class="page-item" th:each="i : ${#numbers.sequence(1, pageInfo.pages)}" th:classappend="${i == pageInfo.pageNum} ? ' active'">
-                        <a class="page-link" th:href="@{/study/list(pageNum=${i}, pageSize=${pageInfo.pageSize})}" th:text="${i}"></a>
+                        <a class="page-link" th:text="${i}"
+                           th:href="@{/study/list(pageNum=${i}, pageSize=${pageInfo.pageSize},
+                                                subjectId=${searchRequest.subjectId != null} ? ${searchRequest.subjectId} : null,
+                                                status=${searchRequest.status != null} ? ${searchRequest.status} : null,
+                                                title=${searchRequest.title != null and searchRequest.title != ''} ? ${searchRequest.title} : null)}">
+                        </a>
                     </li>
                     <li class="page-item" th:classappend="${pageInfo.pageNum == pageInfo.pages} ? ' disabled'">
-                        <a class="page-link" th:href="@{/study/list(pageNum=${pageInfo.pageNum + 1}, pageSize=${pageInfo.pageSize})}">&raquo;</a>
+                        <a class="page-link"
+                           th:href="@{/study/list(pageNum=${pageInfo.pageNum + 1}, pageSize=${pageInfo.pageSize},
+                                                subjectId=${searchRequest.subjectId != null} ? ${searchRequest.subjectId} : null,
+                                                status=${searchRequest.status != null} ? ${searchRequest.status} : null,
+                                                title=${searchRequest.title != null and searchRequest.title != ''} ? ${searchRequest.title} : null)}">
+                            &raquo;
+                        </a>
                     </li>
                 </ul>
             </div>
