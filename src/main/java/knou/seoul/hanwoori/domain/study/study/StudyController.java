@@ -46,15 +46,16 @@ public class StudyController {
                             HttpServletRequest request,
                             Model model, HttpSession session){
 
-        //region /study/list?subjectId=&status=&title= 로 들어왔을 경우
+        //region /study/list?subjectId=&status=&title= 로 들어왔을 경우나 잘못된 입력값 있는 경우
         Map<String, String[]> params = request.getParameterMap();
 
         boolean hasSearchParams = params.containsKey("subjectId") ||
                 params.containsKey("status") ||
                 params.containsKey("title");
 
-        if (hasSearchParams && searchRequest.isEmpty()) {
-            return "redirect:/study/list";
+        if (hasSearchParams) {
+            if(searchRequest.isEmpty()) return "redirect:/study/list";
+            if(!searchRequest.isValid()) return "redirect:/study/list";
         }
         //endregion
 
