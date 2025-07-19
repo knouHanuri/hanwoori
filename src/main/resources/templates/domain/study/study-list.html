@@ -15,15 +15,15 @@
                 <div class="row">
                     <!--검색-->
                     <div class="search-container">
-                        <form th:object="${searchRequest}" th:action="@{/study/list}" method="get" class="search-form">
-                            <select th:field="*{subjectId}" class="search-select">
+                        <form id="studySearchForm" th:object="${searchRequest}" th:action="@{/study/list}" method="get" class="search-form" onkeydown="handleEnterKey(event)">
+                            <select id="search_subjectId" th:field="*{subjectId}" class="search-select">
                                 <option value="">과목</option>
                                 <option th:each="subject : ${searchFormDTO.subject}"
                                         th:value="${subject?.subjectId}"
                                         th:text="'[' + ${subject?.grade} + '-' + ${subject?.semester} + '] ' + ${subject?.subjectName}"></option>
                             </select>
 
-                            <select th:field="*{status}" class="search-select">
+                            <select id="search_status" th:field="*{status}" class="search-select">
                                 <option value="">상태</option>
                                 <option th:each="status : ${searchFormDTO.status}"
                                         th:value="${status.name()}"
@@ -31,10 +31,10 @@
                             </select>
 
                             <!-- 검색어 입력 -->
-                            <input type="text" th:field="*{title}" placeholder="스터디명 입력" class="search-input"/>
+                            <input id="search_title" type="text" th:field="*{title}" placeholder="스터디명 입력" class="search-input"/>
 
                             <!-- 검색, 초기화 버튼 -->
-                            <button type="submit" class="btn btn-primary">검색</button>
+                            <button type="button" id="searchBtn" class="btn btn-primary" onclick="studyListSearch()">검색</button>
                             <button type="button" class="btn btn-secondary" onclick="location.href='/study/list'">초기화</button>
                         </form>
                     </div>
@@ -84,29 +84,26 @@
                 <!--페이징-->
                 <div class="pagination align-items-center justify-content-between">
                     <div class="d-flex justify-content-center flex-grow-1">
-                        <ul class="pagination mb-0">
+                        <ul class="pagination mb-0" th:with="
+                                baseQuery='pageSize=' + ${pageInfo.pageSize} +
+                                          (${searchRequest.subjectId != null} ? '&subjectId=' + ${searchRequest.subjectId} : '') +
+                                          (${searchRequest.status != null} ? '&status=' + ${searchRequest.status} : '') +
+                                          (${searchRequest.title != null and searchRequest.title != ''} ? '&title=' + ${searchRequest.title} : '')
+                            ">
                             <li class="page-item" th:classappend="${pageInfo.pageNum == 1} ? ' disabled'">
                                 <a class="page-link"
-                                   th:href="@{/study/list(pageNum=${pageInfo.pageNum - 1}, pageSize=${pageInfo.pageSize},
-                                                    subjectId=${searchRequest.subjectId != null} ? ${searchRequest.subjectId} : null,
-                                                    status=${searchRequest.status != null} ? ${searchRequest.status} : null,
-                                                    title=${searchRequest.title != null and searchRequest.title != ''} ? ${searchRequest.title} : null)}">
-                                    &laquo;</a>
+                                   th:href="@{'/study/list?pageNum=' + (${pageInfo.pageNum - 1}) + '&' + ${baseQuery}}">
+                                    &laquo;
+                                </a>
                             </li>
                             <li class="page-item" th:each="i : ${#numbers.sequence(1, pageInfo.pages)}" th:classappend="${i == pageInfo.pageNum} ? ' active'">
                                 <a class="page-link" th:text="${i}"
-                                   th:href="@{/study/list(pageNum=${i}, pageSize=${pageInfo.pageSize},
-                                                    subjectId=${searchRequest.subjectId != null} ? ${searchRequest.subjectId} : null,
-                                                    status=${searchRequest.status != null} ? ${searchRequest.status} : null,
-                                                    title=${searchRequest.title != null and searchRequest.title != ''} ? ${searchRequest.title} : null)}">
+                                   th:href="@{'/study/list?pageNum=' + ${i} + '&' + ${baseQuery}}">
                                 </a>
                             </li>
                             <li class="page-item" th:classappend="${pageInfo.pageNum == pageInfo.pages} ? ' disabled'">
                                 <a class="page-link"
-                                   th:href="@{/study/list(pageNum=${pageInfo.pageNum + 1}, pageSize=${pageInfo.pageSize},
-                                                    subjectId=${searchRequest.subjectId != null} ? ${searchRequest.subjectId} : null,
-                                                    status=${searchRequest.status != null} ? ${searchRequest.status} : null,
-                                                    title=${searchRequest.title != null and searchRequest.title != ''} ? ${searchRequest.title} : null)}">
+                                   th:href="@{'/study/list?pageNum=' + (${pageInfo.pageNum + 1}) + '&' + ${baseQuery}}">
                                     &raquo;
                                 </a>
                             </li>

@@ -1,6 +1,7 @@
 package knou.seoul.hanwoori.domain.study.study;
 
 import com.github.pagehelper.PageInfo;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import knou.seoul.hanwoori.domain.member.dto.Member;
@@ -24,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static knou.seoul.hanwoori.common.SessionConst.LOGIN_MEMBER;
@@ -41,7 +43,20 @@ public class StudyController {
     public String studyList(@ModelAttribute("searchRequest") StudySearchRequestDTO searchRequest,
                             @RequestParam(defaultValue = "1") int pageNum,
                             @RequestParam(defaultValue = "10") int pageSize,
+                            HttpServletRequest request,
                             Model model, HttpSession session){
+
+        //region /study/list?subjectId=&status=&title= 로 들어왔을 경우
+        Map<String, String[]> params = request.getParameterMap();
+
+        boolean hasSearchParams = params.containsKey("subjectId") ||
+                params.containsKey("status") ||
+                params.containsKey("title");
+
+        if (hasSearchParams && searchRequest.isEmpty()) {
+            return "redirect:/study/list";
+        }
+        //endregion
 
         //페이징
         PageInfo<Study> pageInfo = studyService.studyListAll(pageNum, pageSize, searchRequest);
